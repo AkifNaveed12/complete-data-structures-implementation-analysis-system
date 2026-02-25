@@ -22,5 +22,5 @@ This project implements all major data structures and algorithms from scratch in
 See /src for core implementation.
 
 ## Team
-- Member 1:
-- Member 2:
+- Member 1: Muhammad Akif Naveed
+- Member 2: Arslan Shafiq
