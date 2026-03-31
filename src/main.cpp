@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../src/core/linear/array.h" 
+#include "core/linear/array.h"
 using namespace std;
 
 int main() {
@@ -8,7 +8,7 @@ int main() {
     int choice;
 
     do {
-        cout << "\n===== ARRAY Testing MENU =====\n";
+        cout << "\n===== ARRAY MENU =====\n";
         cout << "1. Insert at End\n";
         cout << "2. Insert at Position\n";
         cout << "3. Delete at Position\n";
