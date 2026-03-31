@@ -1,6 +1,7 @@
 #include <iostream>
 #include "core/linear/array.h"
 #include "core/linear/linked_list.h"
+#include "analysis/performance.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ int main() {
         cout << "4. Graph Algorithms     [Under Development]\n";
         cout << "5. Searching & Sorting  [Under Development]\n";
         cout << "6. Hashing              [Under Development]\n";
-        cout << "7. Performance Reports  [Coming Soon]\n";
+        cout << "7. Performance Reports  [Alpha Version* under testing]\n";
         cout << "8. Exit\n";
 
         cout << "\nEnter choice: ";
@@ -67,9 +68,8 @@ int main() {
             case 6:
                 cout << "\n[INFO] This module is under development.\n";
                 break;
-
             case 7:
-                cout << "\n[INFO] Performance analytics module coming soon.\n";
+                Performance::display();
                 break;
 
         }
