@@ -32,7 +32,7 @@ int main() {
         cout << "4. Graph Algorithms     [Under Development]\n";
         cout << "5. Searching & Sorting  [Under Development]\n";
         cout << "6. Hashing              [Under Development]\n";
-        cout << "7. Performance Reports  [Alpha Version* under testing]\n";
+        cout << "7. Performance Reports  [Alpha Version* under Testing]\n";
         cout << "8. Exit\n";
 
         cout << "\nEnter choice: ";
