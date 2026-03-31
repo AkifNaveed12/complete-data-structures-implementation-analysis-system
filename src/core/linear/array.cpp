@@ -1,5 +1,6 @@
 #include <iostream>
 #include "array.h"
+#include "../../analysis/performance.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ void Array::insertEnd(int value) {
     arr[size++] = value;
 
     cout << "[SUCCESS] Inserted at end.\n";
+    Performance::log("Array Insert", 1);
 }
 
 // Insert at index
@@ -64,26 +66,30 @@ void Array::insertAt(int index, int value) {
     display();
 
     cout << "[INFO] Shifts performed: " << shifts << endl;
-    cout << "[INFO] Time Complexity: O(n)\n";
+    //cout << "[INFO] Time Complexity: O(n)\n";
+    Performance::log("Array Insert", shifts);
 }
 
 // Delete
 void Array::deleteAt(int index) {
     if (size == 0) {
         cout << "[ERROR] Array is empty!\n";
+        Performance::log("Array Delete", 1);
         return;
     }
 
     if (index < 0 || index >= size) {
         cout << "[ERROR] Invalid index!\n";
+        Performance::log("Array Delete", 1);
         return;
     }
 
     cout << "\nBefore: ";
     display();
-
+    int shifts = 0;
     for (int i = index; i < size - 1; i++) {
         arr[i] = arr[i + 1];
+        shifts++;
     }
 
     size--;
@@ -92,6 +98,7 @@ void Array::deleteAt(int index) {
     display();
 
     cout << "[INFO] Time Complexity: O(n)\n";
+    Performance::log("Array Delete", shifts);
 }
 
 // Search
@@ -103,12 +110,14 @@ int Array::search(int value) {
         if (arr[i] == value) {
             cout << "[FOUND] At index: " << i << endl;
             cout << "[INFO] Comparisons: " << comparisons << endl;
+            Performance::log("Array Search", comparisons);
             return i;
         }
     }
 
     cout << "[NOT FOUND]\n";
-    cout << "[INFO] Comparisons: " << comparisons << endl;
+    //cout << "[INFO] Comparisons: " << comparisons << endl;
+    Performance::log("Array Search", comparisons);
     return -1;
 }
 
@@ -116,14 +125,18 @@ int Array::search(int value) {
 void Array::display() {
     if (size == 0) {
         cout << "[EMPTY]\n";
+        Performance::log("Array Display", 1);
         return;
     }
-
+    int iterations = 0;
     cout << "[ ";
     for (int i = 0; i < size; i++) {
         cout << arr[i] << " ";
+        iterations++;
+
     }
     cout << "]\n";
+    Performance::log("Array Display", iterations);
 }
 
 // Get size
