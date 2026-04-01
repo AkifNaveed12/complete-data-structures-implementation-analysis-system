@@ -3,14 +3,11 @@
 #include <chrono>
 #include "linked_list.h"
 #include "../../analysis/performance.h"
+#include "../../analysis/visual.h"
 
 using namespace std;
 
 //helper functions for visual representation and delay
-void sleep(int ms) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-}
-
 void printListVisual(Node* head, Node* highlight = nullptr) {
     Node* temp = head;
 
@@ -56,13 +53,13 @@ void LinkedList::insertAtStart(int value) {
     Node* newNode = new Node(value);
 
     cout << "\nInserting at start...\n";
-    sleep(300);
+    sleep_ms(300);
 
     newNode->next = head;
     head = newNode;
 
     printListVisual(head, newNode);
-    sleep(400);
+    sleep_ms(400);
 
     cout << "[SUCCESS] Inserted at start.\n";
 
@@ -93,7 +90,7 @@ void LinkedList::insertAtEnd(int value) {
 
     while (temp->next != nullptr) {
         printListVisual(head, temp);
-        sleep(400);
+        sleep_ms(400);
 
         temp = temp->next;
         steps++;
@@ -103,7 +100,7 @@ void LinkedList::insertAtEnd(int value) {
 
     cout << "\nInserting at end...\n";
     printListVisual(head, newNode);
-    sleep(400);
+    sleep_ms(400);
 
     cout << "[SUCCESS] Inserted at end.\n";
 
@@ -128,7 +125,7 @@ void LinkedList::deleteValue(int value) {
 
     if (head->data == value) {
         cout << "\nDeleting head...\n";
-        sleep(300);
+        sleep_ms(300);
 
         Node* temp = head;
         head = head->next;
@@ -147,7 +144,7 @@ void LinkedList::deleteValue(int value) {
 
     while (temp->next != nullptr && temp->next->data != value) {
         printListVisual(head, temp);
-        sleep(400);
+        sleep_ms(400);
 
         temp = temp->next;
         steps++;
@@ -160,7 +157,7 @@ void LinkedList::deleteValue(int value) {
     }
 
     cout << "\nDeleting node...\n";
-    sleep(300);
+    sleep_ms(300);
 
     Node* delNode = temp->next;
     temp->next = delNode->next;
@@ -181,7 +178,7 @@ void LinkedList::search(int value) {
 
     while (temp != nullptr) {
         printListVisual(head, temp);
-        sleep(400);
+        sleep_ms(400);
 
         if (temp->data == value) {
             cout << "[FOUND] At position: " << pos << endl;

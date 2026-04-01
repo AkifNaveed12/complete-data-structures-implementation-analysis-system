@@ -88,9 +88,10 @@ int main() {
 //array menu implementation
 void arrayMenu(Array &arr) {
     int choice;
+    clearScreen();
 
     do {
-        clearScreen();
+        
         printHeader("ARRAY MODULE");
 
         cout << "1. Insert at End\n";
@@ -150,9 +151,9 @@ void arrayMenu(Array &arr) {
 //linked list menu implementation
 void linkedListMenu(LinkedList &list) {
     int choice;
-
+    clearScreen();
     do {
-        clearScreen();
+        
         printHeader("LINKED LIST MODULE");
 
         cout << "1. Insert at Start\n";

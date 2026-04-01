@@ -3,11 +3,9 @@
 #include <chrono>
 #include "array.h"
 #include "../../analysis/performance.h"
+#include "../../analysis/visual.h"
 
 using namespace std;
-void sleep(int ms) {
-    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
-}
 
 void printArrayVisual(int arr[], int size, int highlight = -1) {
     cout << "[ ";
@@ -51,12 +49,12 @@ void Array::insertEnd(int value) {
     display();
 
     cout << "\nInserting at end...\n";
-    sleep(300);
+    sleep_ms(300);
 
     arr[size] = value;
 
     printArrayVisual(arr, size + 1, size);
-    sleep(400);
+    sleep_ms(400);
 
     size++;
 
@@ -92,11 +90,11 @@ void Array::insertAt(int index, int value) {
         shifts++;
 
         printArrayVisual(arr, size + 1, i);
-        sleep(400);
+        sleep_ms(400);
     }
 
     cout << "\nInserting value...\n";
-    sleep(300);
+    sleep_ms(300);
 
     arr[index] = value;
     size++;
@@ -131,14 +129,14 @@ void Array::deleteAt(int index) {
     int shifts = 0;
 
     cout << "\nDeleting element...\n";
-    sleep(300);
+    sleep_ms(300);
 
     for (int i = index; i < size - 1; i++) {
         arr[i] = arr[i + 1];
         shifts++;
 
         printArrayVisual(arr, size, i);
-        sleep(400);
+        sleep_ms(400);
     }
 
     size--;
@@ -160,7 +158,7 @@ int Array::search(int value) {
         comparisons++;
 
         printArrayVisual(arr, size, i);
-        sleep(400);
+        sleep_ms(400);
 
         if (arr[i] == value) {
             cout << "[FOUND] At index: " << i << endl;
