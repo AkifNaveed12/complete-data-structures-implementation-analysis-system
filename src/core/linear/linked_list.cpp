@@ -1,8 +1,33 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include "linked_list.h"
 #include "../../analysis/performance.h"
+
 using namespace std;
 
+//helper functions for visual representation and delay
+void sleep(int ms) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+}
+
+void printListVisual(Node* head, Node* highlight = nullptr) {
+    Node* temp = head;
+
+    cout << "[ ";
+    while (temp != nullptr) {
+        if (temp == highlight)
+            cout << "(" << temp->data << ")";
+        else
+            cout << temp->data;
+
+        if (temp->next != nullptr)
+            cout << " -> ";
+
+        temp = temp->next;
+    }
+    cout << " ]\n";
+}
 // Node constructor
 Node::Node(int val) {
     data = val;
@@ -25,37 +50,66 @@ LinkedList::LinkedList() {
 
 // Insert at start
 void LinkedList::insertAtStart(int value) {
+    cout << "\nBefore: ";
+    display();
+
     Node* newNode = new Node(value);
+
+    cout << "\nInserting at start...\n";
+    sleep(300);
 
     newNode->next = head;
     head = newNode;
 
+    printListVisual(head, newNode);
+    sleep(400);
+
     cout << "[SUCCESS] Inserted at start.\n";
+
+    cout << "After : ";
+    display();
+
     Performance::log("LinkedList Insert", 1);
 }
-
 // Insert at end
 void LinkedList::insertAtEnd(int value) {
+    cout << "\nBefore: ";
+    display();
+
     Node* newNode = new Node(value);
 
     int steps = 0;
 
     if (head == nullptr) {
         head = newNode;
+        printListVisual(head, newNode);
         Performance::log("LinkedList Insert", 1);
         return;
     }
 
     Node* temp = head;
 
+    cout << "\nTraversing...\n";
+
     while (temp->next != nullptr) {
+        printListVisual(head, temp);
+        sleep(400);
+
         temp = temp->next;
         steps++;
     }
 
     temp->next = newNode;
 
+    cout << "\nInserting at end...\n";
+    printListVisual(head, newNode);
+    sleep(400);
+
     cout << "[SUCCESS] Inserted at end.\n";
+
+    cout << "After : ";
+    display();
+
     Performance::log("LinkedList Insert", steps + 1);
 }
 
@@ -67,21 +121,34 @@ void LinkedList::deleteValue(int value) {
         return;
     }
 
+    cout << "\nBefore: ";
+    display();
+
     int steps = 0;
 
     if (head->data == value) {
+        cout << "\nDeleting head...\n";
+        sleep(300);
+
         Node* temp = head;
         head = head->next;
         delete temp;
 
-        cout << "[SUCCESS] Deleted.\n";
+        cout << "After : ";
+        display();
+
         Performance::log("LinkedList Delete", 1);
         return;
     }
 
     Node* temp = head;
 
+    cout << "\nTraversing...\n";
+
     while (temp->next != nullptr && temp->next->data != value) {
+        printListVisual(head, temp);
+        sleep(400);
+
         temp = temp->next;
         steps++;
     }
@@ -92,11 +159,16 @@ void LinkedList::deleteValue(int value) {
         return;
     }
 
+    cout << "\nDeleting node...\n";
+    sleep(300);
+
     Node* delNode = temp->next;
     temp->next = delNode->next;
     delete delNode;
 
-    cout << "[SUCCESS] Deleted.\n";
+    cout << "After : ";
+    display();
+
     Performance::log("LinkedList Delete", steps + 1);
 }
 
@@ -105,12 +177,18 @@ void LinkedList::search(int value) {
     Node* temp = head;
     int pos = 0;
 
+    cout << "\nSearching...\n";
+
     while (temp != nullptr) {
+        printListVisual(head, temp);
+        sleep(400);
+
         if (temp->data == value) {
             cout << "[FOUND] At position: " << pos << endl;
             Performance::log("LinkedList Search", pos + 1);
             return;
         }
+
         temp = temp->next;
         pos++;
     }
@@ -127,16 +205,14 @@ void LinkedList::display() {
         return;
     }
 
-    Node* temp = head;
+    printListVisual(head);
+
     int steps = 0;
-
-
-    cout << "[ ";
+    Node* temp = head;
     while (temp != nullptr) {
-        cout << temp->data << " ";
-        temp = temp->next;
         steps++;
+        temp = temp->next;
     }
-    cout << "]\n";
+
     Performance::log("LinkedList Display", steps);
 }
