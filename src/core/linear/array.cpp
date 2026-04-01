@@ -1,8 +1,24 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include "array.h"
 #include "../../analysis/performance.h"
 
 using namespace std;
+void sleep(int ms) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+}
+
+void printArrayVisual(int arr[], int size, int highlight = -1) {
+    cout << "[ ";
+    for (int i = 0; i < size; i++) {
+        if (i == highlight)
+            cout << "(" << arr[i] << ") ";
+        else
+            cout << arr[i] << " ";
+    }
+    cout << "]\n";
+}
 
 // Constructor
 Array::Array(int cap) {
@@ -31,9 +47,24 @@ void Array::insertEnd(int value) {
         return;
     }
 
-    arr[size++] = value;
+    cout << "\nBefore: ";
+    display();
+
+    cout << "\nInserting at end...\n";
+    sleep(300);
+
+    arr[size] = value;
+
+    printArrayVisual(arr, size + 1, size);
+    sleep(400);
+
+    size++;
 
     cout << "[SUCCESS] Inserted at end.\n";
+
+    cout << "After : ";
+    display();
+
     Performance::log("Array Insert", 1);
 }
 
@@ -54,19 +85,29 @@ void Array::insertAt(int index, int value) {
 
     int shifts = 0;
 
+    cout << "\nShifting elements...\n";
+
     for (int i = size; i > index; i--) {
         arr[i] = arr[i - 1];
         shifts++;
+
+        printArrayVisual(arr, size + 1, i);
+        sleep(400);
     }
+
+    cout << "\nInserting value...\n";
+    sleep(300);
 
     arr[index] = value;
     size++;
 
-    cout << "After : ";
+    printArrayVisual(arr, size, index);
+
+    cout << "\nAfter : ";
     display();
 
     cout << "[INFO] Shifts performed: " << shifts << endl;
-    //cout << "[INFO] Time Complexity: O(n)\n";
+
     Performance::log("Array Insert", shifts);
 }
 
@@ -86,41 +127,55 @@ void Array::deleteAt(int index) {
 
     cout << "\nBefore: ";
     display();
+
     int shifts = 0;
+
+    cout << "\nDeleting element...\n";
+    sleep(300);
+
     for (int i = index; i < size - 1; i++) {
         arr[i] = arr[i + 1];
         shifts++;
+
+        printArrayVisual(arr, size, i);
+        sleep(400);
     }
 
     size--;
 
-    cout << "After : ";
+    cout << "\nAfter : ";
     display();
 
     cout << "[INFO] Time Complexity: O(n)\n";
+
     Performance::log("Array Delete", shifts);
 }
-
 // Search
 int Array::search(int value) {
     int comparisons = 0;
 
+    cout << "\nSearching...\n";
+
     for (int i = 0; i < size; i++) {
         comparisons++;
+
+        printArrayVisual(arr, size, i);
+        sleep(400);
+
         if (arr[i] == value) {
             cout << "[FOUND] At index: " << i << endl;
             cout << "[INFO] Comparisons: " << comparisons << endl;
+
             Performance::log("Array Search", comparisons);
             return i;
         }
     }
 
     cout << "[NOT FOUND]\n";
-    //cout << "[INFO] Comparisons: " << comparisons << endl;
+
     Performance::log("Array Search", comparisons);
     return -1;
 }
-
 // Display
 void Array::display() {
     if (size == 0) {
@@ -128,15 +183,9 @@ void Array::display() {
         Performance::log("Array Display", 1);
         return;
     }
-    int iterations = 0;
-    cout << "[ ";
-    for (int i = 0; i < size; i++) {
-        cout << arr[i] << " ";
-        iterations++;
 
-    }
-    cout << "]\n";
-    Performance::log("Array Display", iterations);
+    printArrayVisual(arr, size);
+    Performance::log("Array Display", size);
 }
 
 // Get size

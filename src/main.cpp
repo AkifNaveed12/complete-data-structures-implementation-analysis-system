@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include "core/linear/array.h"
 #include "core/linear/linked_list.h"
 #include "analysis/performance.h"
@@ -14,6 +15,9 @@ void printHeader(string title) {
     cout << "\n=================================================\n";
     cout << "   " << title << endl;
     cout << "=================================================\n";
+}
+void clearScreen() {
+    system("cls"); // Windows
 }
 
 int main() {
@@ -86,6 +90,7 @@ void arrayMenu(Array &arr) {
     int choice;
 
     do {
+        clearScreen();
         printHeader("ARRAY MODULE");
 
         cout << "1. Insert at End\n";
@@ -147,6 +152,7 @@ void linkedListMenu(LinkedList &list) {
     int choice;
 
     do {
+        clearScreen();
         printHeader("LINKED LIST MODULE");
 
         cout << "1. Insert at Start\n";
