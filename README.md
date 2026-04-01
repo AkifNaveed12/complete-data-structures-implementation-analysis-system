@@ -24,3 +24,8 @@ See /src for core implementation.
 ## Team
 - Member 1: Muhammad Akif Naveed
 - Member 2: Arslan Shafiq
+
+## how to run
+g++ src/main.cpp src/core/linear/array.cpp src/core/linear/linked_list.cpp src/analysis/performance.cpp -o app
+
+.\app.exe
