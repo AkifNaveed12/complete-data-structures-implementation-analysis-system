@@ -56,6 +56,7 @@ complete-data-structures-implementation-analysis-system/
 │
 ├── docs/
 │   ├── context.md                 ← THIS FILE (updated after every task)
+│   ├── github.md                  ← Git workflow rules (added by User)
 │   ├── idea.md                    ← Product vision and system architecture
 │   ├── planning.md                ← Module-by-module task breakdown
 │   ├── design.md                  ← Qt GUI + CLI design system
@@ -71,178 +72,32 @@ complete-data-structures-implementation-analysis-system/
 ## 3. Implemented Modules (Verified)
 
 ### `src/analysis/visual.h` ✅
-
-**Purpose:** Single output gateway for all module output. No module file may use raw cout.
-
-**Implemented functions:**
-| Function | Description |
-|----------|-------------|
-| `sleep_ms(int ms)` | Platform delay using `<thread>` + `<chrono>` |
-| `printSeparator()` | Prints exactly 30 dashes |
-| `printHeader(string module, string op)` | `[MODULE] op` format |
-| `printStep(int n, string message)` | `Step N: message` format |
-| `printResult(string message)` | `Result: message` format (green) |
-| `printError(string message)` | `Error: message` format (red) |
-| `highlight(int val)` / `highlight(string val)` | Returns `"(val)"` |
-
-**ANSI color constants:** `COL_ACCENT`, `COL_SUCCESS`, `COL_ERROR`, `COL_WARNING`, `COL_MUTED`, `COL_RESET`
-
----
+- **What changed:** Added 6 missing functions (`printSeparator`, `printHeader`, `printStep`, `printResult`, `printError`, `highlight`) and ANSI color constants.
+- **Why changed:** Enforce contract.md §1.1 to be the single output gateway, removing raw cout from modules.
 
 ### `src/analysis/performance.h` / `performance.cpp` ✅
-
-**Purpose:** Track every operation's steps, comparisons, and complexity.
-
-**Record struct:**
-```cpp
-struct Record {
-    string module;
-    string operation;
-    int    steps;
-    int    comparisons;
-    string complexity;  // auto-assigned
-};
-```
-
-**log() signature:** `Performance::log(module, operation, steps, comparisons)`
-
-**Complexity auto-assignment:** All operations mapped from contracts.md §2.4. Unknown operations get `"O(?)"`.
-
-**display():** Formatted table with Module | Operation | Steps | Comparisons | Complexity columns.
-
-**Note:** Uses `std::vector<Record>` — allowed in analysis layer (contracts.md §4 bans STL only from `src/core/`).
-
----
+- **What changed:** Updated `Record` struct and `log()` to take 4 parameters (`module`, `operation`, `steps`, `comparisons`). Added `assignComplexity()` for auto-mapping Big-O notation. Updated `display()` formatting.
+- **Why changed:** Ensure compliance with contract.md §2.2 and design.md §4.4.
 
 ### `src/core/linear/array.h` / `array.cpp` ✅
-
-**Purpose:** Static array data structure, no STL.
-
-**Class:** `Array(int capacity)` — starts empty (no demo data)
-
-**Implemented functions:**
-
-| Function | Description | Performance |
-|----------|-------------|-------------|
-| `insertEnd(int value)` | Inserts at end if not full | `Array::InsertEnd`, steps=1, O(1) |
-| `insertAt(int index, int value)` | Inserts at index with shift animation | `Array::InsertAtIndex`, steps=shifts, O(n) |
-| `deleteAt(int index)` | Deletes at index with shift animation | `Array::DeleteAtIndex`, steps=shifts, O(n) |
-| `search(int value)` | Linear search with step-by-step visualization | `Array::Search`, steps=comparisons, O(n) |
-| `display()` | Shows current array state (NOT logged) | — |
-
-**Visualization:** `[ 10 | (20) | 30 ]` with active element in parentheses at each step.
-**Phase flow:** BEFORE → Step N (each shift/check) → AFTER ✅
-**Edge cases:** Empty, overflow, invalid index ✅
-
----
+- **What changed:** Eliminated raw `cout` calls, replaced with `visual.h` utilities. Adjusted `Performance::log` signatures. Implemented proper `BEFORE → STEP N → AFTER` phase flow. Removed preloaded demo data in constructor.
+- **Why changed:** Address contract violations regarding visualization formatting and performance tracking.
 
 ### `src/core/linear/linked_list.h` / `linked_list.cpp` ✅
-
-#### SinglyLinkedList (`LinkedList` class)
-
-| Function | Description | Log |
-|----------|-------------|-----|
-| `insertAtStart(int value)` | O(1) insert at head | `LinkedList::InsertStart`, steps=1 |
-| `insertAtEnd(int value)` | O(n) traverse + append | `LinkedList::InsertEnd`, steps=n |
-| `deleteValue(int value)` | O(n) find + unlink | `LinkedList::Delete` |
-| `search(int value)` | O(n) linear scan | `LinkedList::Search` |
-| `display()` | `val → val → NULL` format (NOT logged) | — |
-
-**Visualization format:** `10 → (20) → 30 → NULL`
-
-#### DoublyLinkedList ✅ (M1 — NEW)
-
-| Function | Description | Log |
-|----------|-------------|-----|
-| `insertStart(int value)` | O(1), updates prev/next/head | `DoublyLL::InsertStart` |
-| `insertEnd(int value)` | O(n), updates tail | `DoublyLL::InsertEnd` |
-| `deleteByValue(int value)` | O(n), handles head/tail/middle | `DoublyLL::Delete` |
-| `search(int value)` | O(n) linear scan | `DoublyLL::Search` |
-| `display()` | `NULL ← val ↔ (val) ↔ val → NULL` (NOT logged) | — |
-
-**Visualization format:** `NULL ← 10 ↔ (20) ↔ 30 → NULL`
-
-#### CircularLinkedList ✅ (M1 — NEW)
-
-| Function | Description | Log |
-|----------|-------------|-----|
-| `insertStart(int value)` | O(n) — finds tail to re-link | `CircularLL::InsertStart` |
-| `insertEnd(int value)` | O(n) — traverses to tail | `CircularLL::InsertEnd` |
-| `deleteByValue(int value)` | O(n), handles head/general case | `CircularLL::Delete` |
-| `search(int value)` | O(n) bounded by size | `CircularLL::Search` |
-| `display()` | `val → val → (val) → [HEAD]` (NOT logged) | — |
-
-**Visualization format:** `10 → (20) → 30 → [HEAD]`
-
----
+- **What changed:** Added `DoublyLinkedList` (with `DNode`) and `CircularLinkedList` (with `CNode`). Implemented `insertStart`, `insertEnd`, `deleteByValue`, and `search` for both. Replaced all raw `cout` for SinglyLL with `visual.h` functions.
+- **Why changed:** Accomplished Module 1 goals outlined in planning.md (M1-T0 through M1-T6).
 
 ### `src/main.cpp` ✅
+- **What changed:** Added new submenus for Doubly Linked List and Circular Linked List. Created module runner functions `runDoublyLLModule` and `runCircularLLModule`. Removed internal `printHeader` implementation to use `visual.h`.
+- **Why changed:** To route users to newly added Module 1 capabilities while honoring architecture boundaries.
 
-**Purpose:** Control layer — routes user to modules via menu. No business logic.
-
-**Module runners:**
-- `runArrayModule(Array& arr)` — Array submenu
-- `runLinkedListModule(LinkedList& list)` — Singly LL submenu
-- `runDoublyLLModule(DoublyLinkedList& dll)` — Doubly LL submenu ✅ NEW
-- `runCircularLLModule(CircularLinkedList& cll)` — Circular LL submenu ✅ NEW
-
-**Menu structure:**
-```
-Main Menu
-  1. Linear Data Structures
-     1. Array
-     2. Singly Linked List
-     3. Doubly Linked List     ← NEW
-     4. Circular Linked List   ← NEW
-     5. Back
-  2-6. [Under Development]
-  7. Performance Report
-  8. Exit
-```
+### `tests/test_linked_list.cpp` ✅
+- **What changed:** Created comprehensive testing script covering Singly, Doubly, and Circular linked lists.
+- **Why changed:** To cover all 7 testing criteria outlined in contracts.md §7 (Normal, empty, not found, boundary edge cases, format checks, and log verification).
 
 ---
 
-## 4. Visualization Strategy (Current)
-
-All visualization goes through `visual.h` only. No raw `cout` in any module.
-
-Every operation follows the **BEFORE → STEP N → AFTER** phase contract:
-
-```
-------------------------------
-[MODULE] operation: value
-------------------------------
-Step 1: BEFORE:
-[ 10 | 20 | 30 ]
-Step 2: Shifting (30) right to index 3
-[ 10 | 20 | (30) | 30 ]
-...
-Result: AFTER: value inserted
-[ 10 | 20 | 99 | 30 ]
-```
-
-**Timing delays:**
-- Array shift: 200ms
-- LL/tree traversal: 300ms  
-- Major transitions (BEFORE/AFTER): 500ms
-
----
-
-## 5. Performance Tracking Status
-
-`Performance::log(module, operation, steps, comparisons)` called after every operation.
-
-Current operation log names:
-- `Array::InsertEnd`, `Array::InsertAtIndex`, `Array::DeleteAtIndex`, `Array::Search`
-- `LinkedList::InsertStart`, `LinkedList::InsertEnd`, `LinkedList::Delete`, `LinkedList::Search`
-- `DoublyLL::InsertStart`, `DoublyLL::InsertEnd`, `DoublyLL::Delete`, `DoublyLL::Search`
-- `CircularLL::InsertStart`, `CircularLL::InsertEnd`, `CircularLL::Delete`, `CircularLL::Search`
-
-Complexity auto-assigned from `performance.cpp::assignComplexity()`.
-
----
-
-## 6. Known Limitations
+## 4. Known Limitations
 
 | Limitation | Notes |
 |-----------|-------|
@@ -250,26 +105,10 @@ Complexity auto-assigned from `performance.cpp::assignComplexity()`.
 | No persistence — performance logs reset on exit | SQLite planned in future phase |
 | No GUI | Qt GUI planned in future phase |
 | Circular LL `insertStart` is O(n) due to tail-finding traversal | Could be optimized with tail pointer |
-| `display()` is called in main menu's "Current state" display — does not log | By design (display ≠ logged operation) |
 
 ---
 
-## 7. Last Change Summary
-
-| Task | Files Modified | What Changed | Why |
-|------|---------------|--------------|-----|
-| PRE-FIX-1 | `analysis/visual.h` | Added 6 missing functions + ANSI colors | Contract violation: only `sleep_ms` existed |
-| PRE-FIX-2 | `analysis/performance.h`, `.cpp` | Full 4-param log(), formatted report, complexity labels | Contract violation: wrong signature |
-| PRE-FIX-3 | `core/linear/array.cpp` | Removed all raw cout, used visual.h, fixed log names, removed demo data | Contract violations |
-| PRE-FIX-4 | `core/linear/linked_list.cpp` | Same as array.cpp fixes | Contract violations |
-| PRE-FIX-5 | `src/main.cpp` | Removed local printHeader(), used visual.h | Architecture boundary violation |
-| M1-T0–T3 | `linked_list.h`, `linked_list.cpp` | Added DoublyLinkedList + CircularLinkedList (full impl) | Module 1 of roadmap |
-| M1-T4 | `src/main.cpp` | Wired Doubly + Circular LL into menu | Module 1 integration |
-| M1-T5 | `tests/test_linked_list.cpp` | Complete test file for all 3 LL variants | Module 1 testing |
-
----
-
-## 8. Module Status
+## 5. Module Status
 
 | Module | Status |
 |--------|--------|
