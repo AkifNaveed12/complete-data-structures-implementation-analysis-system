@@ -1,4 +1,4 @@
-# CDSIAS — System Architecture Document
+﻿# CDSIAS â€” System Architecture Document
 
 ## architecture.md
 
@@ -10,36 +10,36 @@ The system is divided into 5 clean, non-overlapping layers. Each layer has one r
 
 ```mermaid
 graph TD
-    subgraph CONTROL["🎮 CONTROL LAYER — main.cpp"]
+    subgraph CONTROL["ðŸŽ® CONTROL LAYER â€” main.cpp"]
         MENU[Menu Controller]
         NAV[Module Navigator]
     end
 
-    subgraph VISUAL["🎨 VISUALIZATION LAYER — visual.h"]
+    subgraph VISUAL["ðŸŽ¨ VISUALIZATION LAYER â€” visual.h"]
         CLI[CLI Renderer]
         ANIM[Animation Engine - sleep_ms]
         FMT[Output Formatter]
     end
 
-    subgraph CORE["⚙️ CORE LAYER — src/core/"]
-        LINEAR[Linear DS\nArray · SLL · DLL · CLL]
-        SQ[Stack & Queue\nStatic · Dynamic · Circular · Priority · Deque]
-        TREE[Trees\nBT · BST · AVL · Heap]
-        GRAPH[Graph\nBFS · DFS · Dijkstra · MST]
-        SS[Searching & Sorting\nLinear · Binary · Bubble · Merge · Quick · ...]
-        HASH[Hashing\nChaining · Linear Probe]
+    subgraph CORE["âš™ï¸ CORE LAYER â€” src/core/"]
+        LINEAR[Linear DS\nArray Â· SLL Â· DLL Â· CLL]
+        SQ[Stack & Queue\nStatic Â· Dynamic Â· Circular Â· Priority Â· Deque]
+        TREE[Trees\nBT Â· BST Â· AVL Â· Heap]
+        GRAPH[Graph\nBFS Â· DFS Â· Dijkstra Â· MST]
+        SS[Searching & Sorting\nLinear Â· Binary Â· Bubble Â· Merge Â· Quick Â· ...]
+        HASH[Hashing\nChaining Â· Linear Probe]
     end
 
-    subgraph ANALYSIS["📊 ANALYSIS LAYER — src/analysis/"]
+    subgraph ANALYSIS["ðŸ“Š ANALYSIS LAYER â€” src/analysis/"]
         PERF[Performance Logger\nperformance.cpp]
         REPORT[Report Generator]
     end
 
-    subgraph DATA["🗄️ DATA LAYER — Future"]
+    subgraph DATA["ðŸ-„ï¸ DATA LAYER â€” Future"]
         SQLITE[(SQLite DB)]
     end
 
-    subgraph GUI["🖥️ GUI LAYER — Future Qt"]
+    subgraph GUI["ðŸ–¥ï¸ GUI LAYER â€” Future Qt"]
         QTWIN[Qt Main Window]
         QTANIM[Qt Animation Engine]
         QTCHART[Qt Charts]
@@ -97,7 +97,7 @@ graph LR
 
 ---
 
-## 3. CORE LAYER — MODULE DEPENDENCY MAP
+## 3. CORE LAYER â€” MODULE DEPENDENCY MAP
 
 ```mermaid
 graph TD
@@ -125,15 +125,15 @@ graph TD
     TR --> BT[binary_tree.cpp]
     TR --> BST[bst.cpp]
     TR --> AVL[avl.cpp]
-    TR --> HEAP[heap.cpp\nMinHeap · MaxHeap]
+    TR --> HEAP[heap.cpp\nMinHeap Â· MaxHeap]
 
-    GR --> GREPR[graph.cpp\nAdjList · AdjMatrix]
+    GR --> GREPR[graph.cpp\nAdjList Â· AdjMatrix]
     GR --> BFS[bfs.cpp]
     GR --> DFS[dfs.cpp]
     GR --> DIJ[dijkstra.cpp]
-    GR --> MST[mst.cpp\nKruskal · Prim]
+    GR --> MST[mst.cpp\nKruskal Â· Prim]
 
-    SORT --> SRCH[searching.cpp\nLinear · Binary]
+    SORT --> SRCH[searching.cpp\nLinear Â· Binary]
     SORT --> BUBBLE[sorting.cpp\nBubble]
     SORT --> SEL[sorting.cpp\nSelection]
     SORT --> INS[sorting.cpp\nInsertion]
@@ -150,7 +150,7 @@ graph TD
 
 ```mermaid
 flowchart TD
-    START([System Launch]) --> SPLASH[Splash Screen\nCDSIAS — Data Structure Visualizer]
+    START([System Launch]) --> SPLASH[Splash Screen\nCDSIAS â€” Data Structure Visualizer]
     SPLASH --> DASH[Main Dashboard\n8 Module Buttons]
 
     DASH --> M1[Linear Structures]
@@ -162,27 +162,27 @@ flowchart TD
     DASH --> M7[Performance Reports]
     DASH --> EXIT([Exit])
 
-    M1 --> M1OP[Select Structure\nArray · SLL · DLL · CLL]
-    M1OP --> M1ACT[Select Operation\nInsert · Delete · Search · Display]
+    M1 --> M1OP[Select Structure\nArray Â· SLL Â· DLL Â· CLL]
+    M1OP --> M1ACT[Select Operation\nInsert Â· Delete Â· Search Â· Display]
 
-    M2 --> M2OP[Select Structure\nStack · Queue · CircQ · PriorQ · Deque]
-    M2OP --> M2ACT[Select Operation\nPush·Pop · Enqueue·Dequeue · etc]
+    M2 --> M2OP[Select Structure\nStack Â· Queue Â· CircQ Â· PriorQ Â· Deque]
+    M2OP --> M2ACT[Select Operation\nPushÂ·Pop Â· EnqueueÂ·Dequeue Â· etc]
 
-    M3 --> M3OP[Select Tree\nBT · BST · AVL · Heap]
-    M3OP --> M3ACT[Select Operation\nInsert · Delete · Traversal · Rotate]
+    M3 --> M3OP[Select Tree\nBT Â· BST Â· AVL Â· Heap]
+    M3OP --> M3ACT[Select Operation\nInsert Â· Delete Â· Traversal Â· Rotate]
 
-    M4 --> M4OP[Select Algo\nBFS · DFS · Dijkstra · Kruskal · Prim]
+    M4 --> M4OP[Select Algo\nBFS Â· DFS Â· Dijkstra Â· Kruskal Â· Prim]
     M4OP --> M4ACT[Enter Graph\nNodes + Edges]
 
-    M5 --> M5OP[Select Type\nSearching · Sorting]
+    M5 --> M5OP[Select Type\nSearching Â· Sorting]
     M5OP --> M5ACT[Select Algorithm]
 
-    M6 --> M6OP[Select Method\nChaining · Linear Probe]
-    M6OP --> M6ACT[Select Operation\nInsert · Search · Delete]
+    M6 --> M6OP[Select Method\nChaining Â· Linear Probe]
+    M6OP --> M6ACT[Select Operation\nInsert Â· Search Â· Delete]
 
     M1ACT & M2ACT & M3ACT & M4ACT & M5ACT & M6ACT --> INPUT[Enter Value / Parameters]
     INPUT --> VIZ[Step-by-Step\nVisualization]
-    VIZ --> LOG[Performance Logged\nsteps · comparisons · complexity]
+    VIZ --> LOG[Performance Logged\nsteps Â· comparisons Â· complexity]
     LOG --> RESULT[Show Result Message]
     RESULT --> CONT{Continue?}
     CONT -- Yes --> DASH
@@ -208,9 +208,9 @@ sequenceDiagram
     MOD->>VIS: printHeader("Array", "Insert at Index 3")
     MOD->>VIS: printStep(1, "BEFORE: [10][20][30][40]")
     MOD->>VIS: sleep_ms(300)
-    MOD->>VIS: printStep(2, "Shifting [40] → right")
+    MOD->>VIS: printStep(2, "Shifting [40] â†’ right")
     MOD->>VIS: sleep_ms(200)
-    MOD->>VIS: printStep(3, "Shifting [30] → right")
+    MOD->>VIS: printStep(3, "Shifting [30] â†’ right")
     MOD->>VIS: sleep_ms(200)
     MOD->>MOD: Internal pointer/index manipulation
     MOD->>VIS: printResult("AFTER: [10][20][30](99)[40]")
@@ -326,19 +326,20 @@ graph LR
 ## 10. LAYER COMMUNICATION RULES
 
 ```
-┌────────────────────────────────────────────────────────┐
-│  ALLOWED COMMUNICATION PATHS                           │
-│                                                        │
-│  Control  →  Core         ✅ (call DS operations)      │
-│  Core     →  Visual       ✅ (output via visual.h)     │
-│  Core     →  Analysis     ✅ (log via Performance::log) │
-│  Control  →  Analysis     ✅ (request report)           │
-│                                                        │
-│  FORBIDDEN PATHS                                       │
-│                                                        │
-│  Core  →  Control         ❌ (DS logic never calls menu)│
-│  Visual →  Core           ❌ (renderer never triggers DS)│
-│  Visual →  Analysis       ❌ (output has no logging)    │
-│  Analysis → Core          ❌ (logger never calls DS)    │
-└────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  ALLOWED COMMUNICATION PATHS                           â”‚
+â”‚                                                        â”‚
+â”‚  Control  â†’  Core         âœ… (call DS operations)      â”‚
+â”‚  Core     â†’  Visual       âœ… (output via visual.h)     â”‚
+â”‚  Core     â†’  Analysis     âœ… (log via Performance::log) â”‚
+â”‚  Control  â†’  Analysis     âœ… (request report)           â”‚
+â”‚                                                        â”‚
+â”‚  FORBIDDEN PATHS                                       â”‚
+â”‚                                                        â”‚
+â”‚  Core  â†’  Control         âŒ (DS logic never calls menu)â”‚
+â”‚  Visual â†’  Core           âŒ (renderer never triggers DS)â”‚
+â”‚  Visual â†’  Analysis       âŒ (output has no logging)    â”‚
+â”‚  Analysis â†’ Core          âŒ (logger never calls DS)    â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
+

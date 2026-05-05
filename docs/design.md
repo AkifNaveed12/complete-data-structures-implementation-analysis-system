@@ -1,8 +1,8 @@
-# CDSIAS — Design System & UI/UX Document
+﻿# CDSIAS â€” Design System & UI/UX Document
 
 ## design.md
 
-> This document defines every visual, aesthetic, and interaction design decision for the CDSIAS Qt GUI. Every screen, every color, every animation, every widget — defined here. The CLI phase follows a simplified version of these same design principles.
+> This document defines every visual, aesthetic, and interaction design decision for the CDSIAS Qt GUI. Every screen, every color, every animation, every widget â€” defined here. The CLI phase follows a simplified version of these same design principles.
 
 ---
 
@@ -10,11 +10,11 @@
 
 | Principle                 | Description                                                                          |
 | ------------------------- | ------------------------------------------------------------------------------------ |
-| **Dark & Modern**         | Deep dark background, neon accent highlights — feels like a professional IDE         |
+| **Dark & Modern**         | Deep dark background, neon accent highlights â€” feels like a professional IDE         |
 | **Classy Minimal**        | No clutter. Every pixel has purpose. Information is never hidden, never overwhelming |
 | **Animated Clarity**      | Every operation animates slowly enough to understand, fast enough to stay engaging   |
-| **Module Color Identity** | Each module has its own accent color — instantly recognizable                        |
-| **Typography-first**      | Clean monospace for data, clean sans-serif for UI — no mixing                        |
+| **Module Color Identity** | Each module has its own accent color â€” instantly recognizable                        |
+| **Typography-first**      | Clean monospace for data, clean sans-serif for UI â€” no mixing                        |
 | **Zero Confusion**        | User always knows where they are, what module they're in, what operation is running  |
 
 ---
@@ -24,32 +24,32 @@
 ### 2.1 Base Palette
 
 ```
-Background (primary)    #0D0D0D    — near-black
-Background (card)       #141414    — slightly lighter dark
-Background (panel)      #1A1A2E    — deep navy dark (panels & sidebars)
-Surface (elevated)      #1E1E2E    — elevated card surfaces
-Border                  #2A2A3E    — subtle borders
+Background (primary)    #0D0D0D    â€” near-black
+Background (card)       #141414    â€” slightly lighter dark
+Background (panel)      #1A1A2E    â€” deep navy dark (panels & sidebars)
+Surface (elevated)      #1E1E2E    â€” elevated card surfaces
+Border                  #2A2A3E    â€” subtle borders
 ```
 
 ### 2.2 Typography Colors
 
 ```
-Text primary            #E8E8F0    — soft white (main content)
-Text secondary          #8888AA    — muted purple-grey (labels, hints)
-Text disabled           #444466    — very muted (inactive items)
-Text code / data        #A8E6CF    — soft mint (values in DS visualization)
+Text primary            #E8E8F0    â€” soft white (main content)
+Text secondary          #8888AA    â€” muted purple-grey (labels, hints)
+Text disabled           #444466    â€” very muted (inactive items)
+Text code / data        #A8E6CF    â€” soft mint (values in DS visualization)
 ```
 
 ### 2.3 Module Accent Colors (Each Module = One Identity Color)
 
 ```
-Linear Structures       #4FC3F7    — sky blue
-Stack & Queue           #FFB74D    — warm amber
-Trees                   #81C784    — soft green
-Graph                   #E57373    — muted red-coral
-Searching & Sorting     #CE93D8    — soft lavender
-Hashing                 #4DB6AC    — teal
-Performance             #FFF176    — soft yellow
+Linear Structures       #4FC3F7    â€” sky blue
+Stack & Queue           #FFB74D    â€” warm amber
+Trees                   #81C784    â€” soft green
+Graph                   #E57373    â€” muted red-coral
+Searching & Sorting     #CE93D8    â€” soft lavender
+Hashing                 #4DB6AC    â€” teal
+Performance             #FFF176    â€” soft yellow
 ```
 
 ### 2.4 State Colors
@@ -57,13 +57,13 @@ Performance             #FFF176    — soft yellow
 ```
 Highlight / Active      (module accent color)
 Highlighted element     accent with 50% brighter + border glow
-Success                 #69F0AE    — bright mint green
-Error                   #FF5370    — bright red
-Warning                 #FFD740    — bright amber
-Visited (graph/tree)    #546E7A    — steel blue-grey
+Success                 #69F0AE    â€” bright mint green
+Error                   #FF5370    â€” bright red
+Warning                 #FFD740    â€” bright amber
+Visited (graph/tree)    #546E7A    â€” steel blue-grey
 Current node            (module accent)
-Comparison element      #FF9800    — orange
-Swap indicator          #FF5370    — red
+Comparison element      #FF9800    â€” orange
+Swap indicator          #FF5370    â€” red
 ```
 
 ### 2.5 Qt Stylesheet Definitions
@@ -168,11 +168,11 @@ QHeaderView::section {
 ### 3.2 Font Hierarchy
 
 ```
-Level 1 — App Identity:    CDSIAS  [28px Bold Segoe UI] [accent color]
-Level 2 — Screen Name:     Array Module  [20px SemiBold]
-Level 3 — Section Labels:  Current Operation: Insert at Index  [14px Regular]
-Level 4 — Data Display:    [ 10 ][ 20 ][ (30) ][ 40 ]  [15px JetBrains Mono]
-Level 5 — Step Output:     Step 2: Shifting (30) right  [13px JetBrains Mono]
+Level 1 â€” App Identity:    CDSIAS  [28px Bold Segoe UI] [accent color]
+Level 2 â€” Screen Name:     Array Module  [20px SemiBold]
+Level 3 â€” Section Labels:  Current Operation: Insert at Index  [14px Regular]
+Level 4 â€” Data Display:    [ 10 ][ 20 ][ (30) ][ 40 ]  [15px JetBrains Mono]
+Level 5 â€” Step Output:     Step 2: Shifting (30) right  [13px JetBrains Mono]
 ```
 
 ---
@@ -182,137 +182,137 @@ Level 5 — Step Output:     Step 2: Shifting (30) right  [13px JetBrains Mono]
 ### 4.1 Splash Screen Layout
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                                                             │
-│                    [CDSIAS LOGO / ICON]                     │
-│                                                             │
-│          CDSIAS — Data Structure Visualizer                 │
-│      Comprehensive DS Implementation & Analysis             │
-│                                                             │
-│                  ┌─────────────────┐                        │
-│                  │   Start System  │  [accent button]       │
-│                  └─────────────────┘                        │
-│                                                             │
-│                  ┌─────────────────┐                        │
-│                  │     Login       │  [outline button]      │
-│                  └─────────────────┘  [Future - disabled]   │
-│                                                             │
-│                  ┌─────────────────┐                        │
-│                  │      Exit       │  [ghost button]        │
-│                  └─────────────────┘                        │
-│                                                             │
-│                    Version 1.0.0                            │
-│           Akif Naveed · Arslan Shafiq                       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚                                                             â”‚
+â”‚                    [CDSIAS LOGO / ICON]                     â”‚
+â”‚                                                             â”‚
+â”‚          CDSIAS â€” Data Structure Visualizer                 â”‚
+â”‚      Comprehensive DS Implementation & Analysis             â”‚
+â”‚                                                             â”‚
+â”‚                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                        â”‚
+â”‚                  â”‚   Start System  â”‚  [accent button]       â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                        â”‚
+â”‚                                                             â”‚
+â”‚                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                        â”‚
+â”‚                  â”‚     Login       â”‚  [outline button]      â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  [Future - disabled]   â”‚
+â”‚                                                             â”‚
+â”‚                  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                        â”‚
+â”‚                  â”‚      Exit       â”‚  [ghost button]        â”‚
+â”‚                  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                        â”‚
+â”‚                                                             â”‚
+â”‚                    Version 1.0.0                            â”‚
+â”‚           Akif Naveed Â· Arslan Shafiq                       â”‚
+â”‚                                                             â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 4.2 Main Dashboard Layout
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  CDSIAS                               [Performance] [Info]  │  ← Top bar
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│         DATA STRUCTURE LABORATORY                           │
-│         Choose a module to begin                            │
-│                                                             │
-│  ┌──────────────────┐  ┌──────────────────┐                 │
-│  │ 🔵 Linear        │  │ 🟡 Stack & Queue │                 │
-│  │    Structures    │  │                  │                 │
-│  └──────────────────┘  └──────────────────┘                 │
-│  ┌──────────────────┐  ┌──────────────────┐                 │
-│  │ 🟢 Trees         │  │ 🔴 Graph Algo    │                 │
-│  │                  │  │                  │                 │
-│  └──────────────────┘  └──────────────────┘                 │
-│  ┌──────────────────┐  ┌──────────────────┐                 │
-│  │ 🟣 Search/Sort   │  │ 🟦 Hashing       │                 │
-│  │                  │  │                  │                 │
-│  └──────────────────┘  └──────────────────┘                 │
-│  ┌──────────────────────────────────────┐                   │
-│  │ 🟡 Performance Analytics             │                   │
-│  └──────────────────────────────────────┘                   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  CDSIAS                               [Performance] [Info]  â”‚  â† Top bar
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                             â”‚
+â”‚         DATA STRUCTURE LABORATORY                           â”‚
+â”‚         Choose a module to begin                            â”‚
+â”‚                                                             â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                 â”‚
+â”‚  â”‚ ðŸ”µ Linear        â”‚  â”‚ ðŸŸ¡ Stack & Queue â”‚                 â”‚
+â”‚  â”‚    Structures    â”‚  â”‚                  â”‚                 â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                 â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                 â”‚
+â”‚  â”‚ ðŸŸ¢ Trees         â”‚  â”‚ ðŸ”´ Graph Algo    â”‚                 â”‚
+â”‚  â”‚                  â”‚  â”‚                  â”‚                 â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                 â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                 â”‚
+â”‚  â”‚ ðŸŸ£ Search/Sort   â”‚  â”‚ ðŸŸ¦ Hashing       â”‚                 â”‚
+â”‚  â”‚                  â”‚  â”‚                  â”‚                 â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                 â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”                   â”‚
+â”‚  â”‚ ðŸŸ¡ Performance Analytics             â”‚                   â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜                   â”‚
+â”‚                                                             â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 4.3 Module Operation Screen Layout (3-Panel)
 
 ```
-┌───────────┬─────────────────────────────────┬──────────────┐
-│           │                                 │              │
-│ SIDEBAR   │     VISUALIZATION CANVAS        │  STEP LOG    │
-│           │                                 │              │
-│ Module:   │   [ 10 ][ 20 ][ (30) ][ 40 ]   │ Step 1: ...  │
-│ Array     │                                 │ Step 2: ...  │
-│           │   ↕ ↕ ↕ ↕ (animation here)     │ Step 3: ...  │
-│ Operation:│                                 │              │
-│ Insert    │                                 │ Result: ...  │
-│           ├────────────────────────────────┤              │
-│ [Input]   │  Operation: Insert at Index 2  │ Performance: │
-│ Value: __ │  Steps: 3  | Complexity: O(n)  │ Steps: 3     │
-│ Index: __ │                                │ O(n)         │
-│           ├─────────────────────────────── ┤              │
-│ [Run]     │  [◀ Back]         [Next ▶]     │              │
-│ [Reset]   │                                │              │
-│           │                                │              │
-└───────────┴─────────────────────────────── ┴──────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚           â”‚                                 â”‚              â”‚
+â”‚ SIDEBAR   â”‚     VISUALIZATION CANVAS        â”‚  STEP LOG    â”‚
+â”‚           â”‚                                 â”‚              â”‚
+â”‚ Module:   â”‚   [ 10 ][ 20 ][ (30) ][ 40 ]   â”‚ Step 1: ...  â”‚
+â”‚ Array     â”‚                                 â”‚ Step 2: ...  â”‚
+â”‚           â”‚   â†• â†• â†• â†• (animation here)     â”‚ Step 3: ...  â”‚
+â”‚ Operation:â”‚                                 â”‚              â”‚
+â”‚ Insert    â”‚                                 â”‚ Result: ...  â”‚
+â”‚           â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤              â”‚
+â”‚ [Input]   â”‚  Operation: Insert at Index 2  â”‚ Performance: â”‚
+â”‚ Value: __ â”‚  Steps: 3  | Complexity: O(n)  â”‚ Steps: 3     â”‚
+â”‚ Index: __ â”‚                                â”‚ O(n)         â”‚
+â”‚           â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”¤              â”‚
+â”‚ [Run]     â”‚  [â-€ Back]         [Next â–¶]     â”‚              â”‚
+â”‚ [Reset]   â”‚                                â”‚              â”‚
+â”‚           â”‚                                â”‚              â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 4.4 Performance Report Screen
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  ◀ Back              PERFORMANCE REPORT                     │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Module        │ Operation       │ Steps │ Compare │ O()   │
-│  ──────────────┼─────────────────┼───────┼─────────┼────── │
-│  Array         │ InsertAtIndex   │   3   │   0     │ O(n)  │
-│  Array         │ Search          │   4   │   4     │ O(n)  │
-│  BST           │ Insert          │   3   │   3     │O(logn)│
-│  BubbleSort    │ Sort(n=4)       │   6   │   6     │ O(n²) │
-│                                                             │
-│  Total operations: 4                                        │
-│                                                             │
-│  [Clear Report]                          [Export (Future)]  │
-└─────────────────────────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  â-€ Back              PERFORMANCE REPORT                     â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚                                                             â”‚
+â”‚  Module        â”‚ Operation       â”‚ Steps â”‚ Compare â”‚ O()   â”‚
+â”‚  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€ â”‚
+â”‚  Array         â”‚ InsertAtIndex   â”‚   3   â”‚   0     â”‚ O(n)  â”‚
+â”‚  Array         â”‚ Search          â”‚   4   â”‚   4     â”‚ O(n)  â”‚
+â”‚  BST           â”‚ Insert          â”‚   3   â”‚   3     â”‚O(logn)â”‚
+â”‚  BubbleSort    â”‚ Sort(n=4)       â”‚   6   â”‚   6     â”‚ O(nÂ²) â”‚
+â”‚                                                             â”‚
+â”‚  Total operations: 4                                        â”‚
+â”‚                                                             â”‚
+â”‚  [Clear Report]                          [Export (Future)]  â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
 
-## 5. VISUALIZATION DESIGN — PER MODULE
+## 5. VISUALIZATION DESIGN â€” PER MODULE
 
 ### 5.1 Array Visualization
 
 **Element Box Design:**
 
 ```
-Normal element:      ┌─────┐
-                     │  20 │    width: 60px, height: 60px
-                     └─────┘    border: 1px #2A2A3E, border-radius: 6px
+Normal element:      â”Œâ”€â”€â”€â”€â”€â”
+                     â”‚  20 â”‚    width: 60px, height: 60px
+                     â””â”€â”€â”€â”€â”€â”˜    border: 1px #2A2A3E, border-radius: 6px
                                 font: JetBrains Mono 15px #A8E6CF
 
-Active/highlighted:  ┌─────┐
-                     │ (30)│    border: 2px module-accent-color
-                     └─────┘    background: accent color at 15% opacity
+Active/highlighted:  â”Œâ”€â”€â”€â”€â”€â”
+                     â”‚ (30)â”‚    border: 2px module-accent-color
+                     â””â”€â”€â”€â”€â”€â”˜    background: accent color at 15% opacity
                                 text: accent color, font-weight: 600
                                 glow effect: box-shadow: 0 0 12px accent
 
-Being shifted:       ┌─────┐
-                     │  40 │    border: 2px #FFD740 (warning amber)
-                     └─────┘    moving with QPropertyAnimation translateX
+Being shifted:       â”Œâ”€â”€â”€â”€â”€â”
+                     â”‚  40 â”‚    border: 2px #FFD740 (warning amber)
+                     â””â”€â”€â”€â”€â”€â”˜    moving with QPropertyAnimation translateX
 ```
 
 **Index labels:** Small text below each box, color `#8888AA`, font size 11px
-**Arrow indicators:** Between boxes, thin `→` in `#2A2A3E`
+**Arrow indicators:** Between boxes, thin `â†’` in `#2A2A3E`
 
-**Animation — Insert at Index:**
+**Animation â€” Insert at Index:**
 
 - Elements slide right with `QPropertyAnimation` on `x` position
 - Duration per shift: 200ms
 - Easing: `QEasingCurve::OutQuad`
-- New element fades in: `QPropertyAnimation` on `opacity`, 0→1, 300ms
+- New element fades in: `QPropertyAnimation` on `opacity`, 0â†’1, 300ms
 
 ---
 
@@ -321,13 +321,13 @@ Being shifted:       ┌─────┐
 **Node Design:**
 
 ```
-Normal node:   ┌──────┬───┐
-               │  20  │ → │    left box: data, right box: next pointer
-               └──────┴───┘    data box width: 50px, pointer box: 20px
+Normal node:   â”Œâ”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”
+               â”‚  20  â”‚ â†’ â”‚    left box: data, right box: next pointer
+               â””â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”˜    data box width: 50px, pointer box: 20px
 
-Active node:   ┌──────┬───┐
-               │ (20) │ → │    data box border: 2px accent, glow
-               └──────┴───┘
+Active node:   â”Œâ”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”
+               â”‚ (20) â”‚ â†’ â”‚    data box border: 2px accent, glow
+               â””â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”˜
 ```
 
 **NULL indicator:** Small box `[ NULL ]` at chain end, color `#444466`
@@ -335,20 +335,20 @@ Active node:   ┌──────┬───┐
 **Doubly LL node:**
 
 ```
-┌───┬──────┬───┐
-│ ← │  20  │ → │    three-part: prev, data, next
-└───┴──────┴───┘
+â”Œâ”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”
+â”‚ â† â”‚  20  â”‚ â†’ â”‚    three-part: prev, data, next
+â””â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”˜
 ```
 
 **Circular LL:** Last node's arrow curves back to first node with arc
 
-**Animation — Traversal:**
+**Animation â€” Traversal:**
 
 - Each node highlights in sequence: accent color border + glow
 - Duration: 300ms per node
 - Previous node returns to normal before next highlights
 
-**Animation — Insert:**
+**Animation â€” Insert:**
 
 - New node fades in from opacity 0 at the correct position
 - Arrow animates drawing (width grows from 0)
@@ -361,23 +361,23 @@ Active node:   ┌──────┬───┐
 **Stack container:** Vertical rectangle, bottom-aligned
 
 ```
-    ┌─────────┐  ← TOP indicator label
-    │  (40)   │  ← top element, accent border
-    ├─────────┤
-    │   30    │
-    ├─────────┤
-    │   20    │
-    ├─────────┤
-    │   10    │
-    └─────────┘  ← BOTTOM
+    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â† TOP indicator label
+    â”‚  (40)   â”‚  â† top element, accent border
+    â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+    â”‚   30    â”‚
+    â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+    â”‚   20    â”‚
+    â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+    â”‚   10    â”‚
+    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â† BOTTOM
 ```
 
-**Animation — Push:**
+**Animation â€” Push:**
 
 - New element slides down from top (translateY animation, 300ms)
 - TOP label moves up
 
-**Animation — Pop:**
+**Animation â€” Pop:**
 
 - Top element slides up and fades out
 - Duration: 300ms
@@ -389,17 +389,17 @@ Active node:   ┌──────┬───┐
 **Queue display:** Horizontal, left to right
 
 ```
-FRONT →  ┌────┐┌────┐┌────┐┌────┐  ← REAR
-          │ 10 ││ 20 ││ 30 ││(40)│
-          └────┘└────┘└────┘└────┘
+FRONT â†’  â”Œâ”€â”€â”€â”€â”â”Œâ”€â”€â”€â”€â”â”Œâ”€â”€â”€â”€â”â”Œâ”€â”€â”€â”€â”  â† REAR
+          â”‚ 10 â”‚â”‚ 20 â”‚â”‚ 30 â”‚â”‚(40)â”‚
+          â””â”€â”€â”€â”€â”˜â””â”€â”€â”€â”€â”˜â””â”€â”€â”€â”€â”˜â””â”€â”€â”€â”€â”˜
 ```
 
-**Animation — Enqueue:**
+**Animation â€” Enqueue:**
 
 - New element slides in from the right, 300ms
 - REAR label moves right
 
-**Animation — Dequeue:**
+**Animation â€” Dequeue:**
 
 - Front element slides left and fades out, 300ms
 - All elements shift left (translateX), 200ms each
@@ -411,16 +411,16 @@ FRONT →  ┌────┐┌────┐┌────┐┌────
 **Node Design:**
 
 ```
-Normal:       ○ 50        circle radius: 28px
+Normal:       â-‹ 50        circle radius: 28px
               border: 2px #2A2A3E
               fill: #1E1E2E
               text: #E8E8F0, JetBrains Mono 14px
 
-Active:       ○(50)       border: 2px accent
+Active:       â-‹(50)       border: 2px accent
               fill: accent at 20% opacity
               glow: 0 0 14px accent
 
-Visited:      ○ 50        border: 2px #546E7A
+Visited:      â-‹ 50        border: 2px #546E7A
               fill: #546E7A at 20% opacity
               text: #8888AA
 ```
@@ -438,12 +438,12 @@ Active edge:     2px accent color (when traversing)
 - Root at top-center, children spread with calculated horizontal gap
 - Canvas scrollable if tree grows large
 
-**Animation — Insert:**
+**Animation â€” Insert:**
 
 - Path from root to insertion point: each edge and node highlights in sequence (300ms per level)
 - New node: scale animation from 0.0 to 1.0, 400ms, `QEasingCurve::OutBack` (slight bounce)
 
-**Animation — AVL Rotation:**
+**Animation â€” AVL Rotation:**
 
 - Nodes involved in rotation highlighted in amber
 - Pause 400ms
@@ -457,23 +457,23 @@ Active edge:     2px accent color (when traversing)
 **Node Design:**
 
 ```
-Normal node:     ○ 0       circle, radius: 24px
+Normal node:     â-‹ 0       circle, radius: 24px
                            border: 2px #2A2A3E, fill: #1E1E2E
 
-BFS/DFS current: ○(0)      border: 2px accent (module red/blue)
+BFS/DFS current: â-‹(0)      border: 2px accent (module red/blue)
                            glow: 0 0 16px accent
 
-Visited node:    ○ 0       fill: #546E7A at 30%, border: #546E7A
+Visited node:    â-‹ 0       fill: #546E7A at 30%, border: #546E7A
 
-Shortest path:   ○ 0       border: 2px #69F0AE (green), fill: green 20%
+Shortest path:   â-‹ 0       border: 2px #69F0AE (green), fill: green 20%
 ```
 
 **Edges:**
 
 ```
-Undirected:      ──────────    1px #2A2A3E
-Directed:        ──────────►  1px #2A2A3E with arrowhead
-Active edge:     ──────────    2px accent color
+Undirected:      â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€    1px #2A2A3E
+Directed:        â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º  1px #2A2A3E with arrowhead
+Active edge:     â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€    2px accent color
 ```
 
 **Node placement:** Force-directed or manual grid layout. Minimum distance between nodes: 80px.
@@ -489,7 +489,7 @@ Active edge:     ──────────    2px accent color
 
 - Distance table shown on right panel
 - Current relaxation edge highlights in accent
-- Updated distance shown with brief flash (yellow → settles to white)
+- Updated distance shown with brief flash (yellow â†’ settles to white)
 
 ---
 
@@ -502,7 +502,7 @@ Same as Array module element design.
 
 ```
 Comparing:  [ 10 ][ (30) ][ (20) ][ 40 ]
-                   ↑──── comparing ────↑   label in accent
+                   â†‘â”€â”€â”€â”€ comparing â”€â”€â”€â”€â†‘   label in accent
 ```
 
 **Swap animation:**
@@ -527,20 +527,20 @@ Comparing:  [ 10 ][ (30) ][ (20) ][ 40 ]
 **Hash Table Design:**
 
 ```
-[0]  ─────────────
-[1]  → ┌────┐ → ┌────┐ → NULL   (chaining)
-       │  8 │   │ 15 │
-       └────┘   └────┘
-[2]  ─────────────
-[3]  ─────────────
+[0]  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+[1]  â†’ â”Œâ”€â”€â”€â”€â” â†’ â”Œâ”€â”€â”€â”€â” â†’ NULL   (chaining)
+       â”‚  8 â”‚   â”‚ 15 â”‚
+       â””â”€â”€â”€â”€â”˜   â””â”€â”€â”€â”€â”˜
+[2]  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+[3]  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ```
 
 **Linear Probe table:**
 
 ```
-┌────┬────┬────┬────┬────┬────┬────┐
-│  _ │  8 │  9 │ 22 │  _ │  _ │  _ │
-└────┴────┴────┴────┴────┴────┴────┘
+â”Œâ”€â”€â”€â”€â”¬â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”
+â”‚  _ â”‚  8 â”‚  9 â”‚ 22 â”‚  _ â”‚  _ â”‚  _ â”‚
+â””â”€â”€â”€â”€â”´â”€â”€â”€â”€â”´â”€â”€â”€â”€â”´â”€â”€â”€â”€â”´â”€â”€â”€â”€â”´â”€â”€â”€â”€â”´â”€â”€â”€â”€â”˜
   [0]  [1]  [2]  [3]  [4]  [5]  [6]
 ```
 
@@ -581,7 +581,7 @@ Comparing:  [ 10 ][ (30) ][ (20) ][ 40 ]
 
 ```
 Background: module accent color
-Text: #0D0D0D (dark — high contrast)
+Text: #0D0D0D (dark â€” high contrast)
 Border: none
 Border-radius: 10px
 Padding: 12px 28px
@@ -607,7 +607,7 @@ Hover: background #1E1E2E
 Background: transparent
 Text: #8888AA
 Border: none
-Hover: text color → #E8E8F0
+Hover: text color â†’ #E8E8F0
 ```
 
 **Danger (Clear / Delete):**
@@ -623,21 +623,21 @@ Hover: background #FF5370 at 10%
 
 ## 8. ICON SYSTEM
 
-All icons from **Qt's built-in QStyle** or custom SVG — monoline style, 20px:
+All icons from **Qt's built-in QStyle** or custom SVG â€” monoline style, 20px:
 
 | Module            | Icon                           |
 | ----------------- | ------------------------------ |
-| Linear Structures | `[]→[]→[]` (linked chain icon) |
+| Linear Structures | `[]â†’[]â†’[]` (linked chain icon) |
 | Stack & Queue     | stack of cards icon            |
 | Trees             | branching tree icon            |
 | Graph             | dots connected by lines        |
 | Sorting           | ascending bars                 |
 | Hashing           | `#` symbol                     |
 | Performance       | bar chart icon                 |
-| Back              | `←` arrow                      |
-| Run               | `▶` play triangle              |
+| Back              | `â†` arrow                      |
+| Run               | `â–¶` play triangle              |
 | Reset             | circular arrow                 |
-| Exit              | `✕`                            |
+| Exit              | `âœ•`                            |
 
 Icon color: matches module accent or `#8888AA` for neutral
 
@@ -647,15 +647,15 @@ Icon color: matches module accent or `#8888AA` for neutral
 
 All screen transitions use `QStackedWidget` with:
 
-- Fade out current screen: opacity 1→0, 125ms
+- Fade out current screen: opacity 1â†’0, 125ms
 - Swap widget
-- Fade in new screen: opacity 0→1, 125ms
-- Total: 250ms — smooth, not distracting
+- Fade in new screen: opacity 0â†’1, 125ms
+- Total: 250ms â€” smooth, not distracting
 
 Breadcrumb always visible in top bar:
 
 ```
-CDSIAS  →  Linear Structures  →  Array  →  Insert at Index
+CDSIAS  â†’  Linear Structures  â†’  Array  â†’  Insert at Index
 ```
 
 ---
@@ -696,7 +696,7 @@ All color calls go through `visual.h` only.
 | Step log panel width         | 280px (fixed)              |
 | Visualization canvas         | fills remaining width      |
 | Max tree canvas height       | 600px (scrollable beyond)  |
-| Graph canvas size            | 700px × 500px (scrollable) |
+| Graph canvas size            | 700px Ã- 500px (scrollable) |
 | Array max elements displayed | 12 (scroll for more)       |
 
 ---
@@ -707,7 +707,7 @@ All color calls go through `visual.h` only.
 
 ```
 Visualization canvas shows:
-  [ Empty — no elements ]
+  [ Empty â€” no elements ]
   in muted grey #444466, centered, JetBrains Mono 14px italic
 ```
 
@@ -725,3 +725,4 @@ Performance Report shows:
   "No operations logged yet."
   in #8888AA centered
 ```
+

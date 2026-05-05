@@ -1,4 +1,4 @@
-# CDSIAS — System Contracts Document
+﻿# CDSIAS â€” System Contracts Document
 
 ## contracts.md
 
@@ -16,19 +16,19 @@ If a module file contains `cout <<` anywhere, it is a contract violation.
 
 ---
 
-### 1.2 Phase Contract — Every Operation, Every Time
+### 1.2 Phase Contract â€” Every Operation, Every Time
 
 Every operation in every module **must** follow this exact phase sequence:
 
 ```
-BEFORE → STEP 1 → STEP 2 → ... → STEP N → AFTER
+BEFORE â†’ STEP 1 â†’ STEP 2 â†’ ... â†’ STEP N â†’ AFTER
 ```
 
 - **BEFORE:** Print the full structure as it exists before the operation
 - **STEP N:** Print the full structure with the active element highlighted at each intermediate step
 - **AFTER:** Print the final state of the full structure
 
-**"Full structure"** means the entire array/list/tree/graph — never partial.
+**"Full structure"** means the entire array/list/tree/graph â€” never partial.
 
 ---
 
@@ -63,7 +63,7 @@ Active/current element is always wrapped in parentheses:
 
 - `highlight(val)` returns `"(val)"`
 - Example: element `42` highlighted = `(42)`
-- Example in array: `[ 10 ][ (42) ][ 30 ]` — only active element has parens
+- Example in array: `[ 10 ][ (42) ][ 30 ]` â€” only active element has parens
 
 ---
 
@@ -73,12 +73,12 @@ Active/current element is always wrapped in parentheses:
 | ---------------------------------------------- | --------------- |
 | Array element shift                            | `sleep_ms(200)` |
 | Linked list / tree traversal step              | `sleep_ms(300)` |
-| Major state transition (BEFORE→AFTER boundary) | `sleep_ms(500)` |
+| Major state transition (BEFOREâ†’AFTER boundary) | `sleep_ms(500)` |
 | AVL rotation step                              | `sleep_ms(400)` |
 | Graph traversal step                           | `sleep_ms(300)` |
 | Sorting swap                                   | `sleep_ms(200)` |
 
-Delays are mandatory — removing them breaks the visualization experience.
+Delays are mandatory â€” removing them breaks the visualization experience.
 
 ---
 
@@ -151,40 +151,40 @@ Performance::log(
 | BST           | Insert            | depth of new node                  |
 | BST           | Search            | depth of found node                |
 | AVL           | Insert            | depth + rotations performed        |
-| Heap          | Insert            | log₂(n) heapify steps              |
+| Heap          | Insert            | logâ‚‚(n) heapify steps              |
 | BFS           | Traverse          | V + E (vertices + edges)           |
 | DFS           | Traverse          | V + E                              |
-| Dijkstra      | Shortest Path     | V × V (relaxations)                |
-| Bubble Sort   | Sort              | n² comparisons                     |
+| Dijkstra      | Shortest Path     | V Ã- V (relaxations)                |
+| Bubble Sort   | Sort              | nÂ² comparisons                     |
 | Merge Sort    | Sort              | n log n steps                      |
-| Binary Search | Search            | log₂(n) steps                      |
+| Binary Search | Search            | logâ‚‚(n) steps                      |
 | Hash          | Insert (probe)    | probe count                        |
 
 ### 2.4 Complexity Label Assignment Contract
 
 ```cpp
-// performance.cpp maps operation → complexity label
-"Array::InsertEnd"      → "O(1)"
-"Array::InsertAtIndex"  → "O(n)"
-"Array::Search"         → "O(n)"
-"LinkedList::Search"    → "O(n)"
-"LinkedList::InsertEnd" → "O(n)"
-"Stack::Push"           → "O(1)"
-"Stack::Pop"            → "O(1)"
-"Queue::Enqueue"        → "O(1)"
-"BST::Search"           → "O(log n) avg / O(n) worst"
-"AVL::Insert"           → "O(log n)"
-"Heap::Insert"          → "O(log n)"
-"BFS"                   → "O(V+E)"
-"DFS"                   → "O(V+E)"
-"Dijkstra"              → "O(V²)"
-"BubbleSort"            → "O(n²)"
-"MergeSort"             → "O(n log n)"
-"QuickSort"             → "O(n log n) avg"
-"LinearSearch"          → "O(n)"
-"BinarySearch"          → "O(log n)"
-"HashInsert::Chaining"  → "O(1) avg"
-"HashInsert::Probe"     → "O(1) avg / O(n) worst"
+// performance.cpp maps operation â†’ complexity label
+"Array::InsertEnd"      â†’ "O(1)"
+"Array::InsertAtIndex"  â†’ "O(n)"
+"Array::Search"         â†’ "O(n)"
+"LinkedList::Search"    â†’ "O(n)"
+"LinkedList::InsertEnd" â†’ "O(n)"
+"Stack::Push"           â†’ "O(1)"
+"Stack::Pop"            â†’ "O(1)"
+"Queue::Enqueue"        â†’ "O(1)"
+"BST::Search"           â†’ "O(log n) avg / O(n) worst"
+"AVL::Insert"           â†’ "O(log n)"
+"Heap::Insert"          â†’ "O(log n)"
+"BFS"                   â†’ "O(V+E)"
+"DFS"                   â†’ "O(V+E)"
+"Dijkstra"              â†’ "O(VÂ²)"
+"BubbleSort"            â†’ "O(nÂ²)"
+"MergeSort"             â†’ "O(n log n)"
+"QuickSort"             â†’ "O(n log n) avg"
+"LinearSearch"          â†’ "O(n)"
+"BinarySearch"          â†’ "O(log n)"
+"HashInsert::Chaining"  â†’ "O(1) avg"
+"HashInsert::Probe"     â†’ "O(1) avg / O(n) worst"
 ```
 
 ---
@@ -196,7 +196,7 @@ Performance::log(
 Every module exposes a single entry function called from main.cpp:
 
 ```cpp
-// In main.cpp — module routers
+// In main.cpp â€” module routers
 void runArrayModule();
 void runLinkedListModule();
 void runStackQueueModule();
@@ -227,11 +227,11 @@ Each module must have exactly these files:
 
 ```
 src/core/<folder>/
-    <name>.h        ← class definition, no implementation
-    <name>.cpp      ← implementation only
+    <name>.h        â† class definition, no implementation
+    <name>.cpp      â† implementation only
 
 tests/
-    test_<name>.cpp ← all test cases for that module
+    test_<name>.cpp â† all test cases for that module
 ```
 
 Header contains:
@@ -251,25 +251,25 @@ No implementation in headers. No circular includes.
 The following are **permanently banned** in all files under `src/core/`:
 
 ```cpp
-#include <vector>      ❌
-#include <list>        ❌
-#include <stack>       ❌
-#include <queue>       ❌
-#include <map>         ❌
-#include <set>         ❌
-#include <algorithm>   ❌
-#include <string>      ⚠️  // Only allowed in visual.h for formatting
-std::sort(...)         ❌
-std::find(...)         ❌
-std::push_back(...)    ❌
+#include <vector>      âŒ
+#include <list>        âŒ
+#include <stack>       âŒ
+#include <queue>       âŒ
+#include <map>         âŒ
+#include <set>         âŒ
+#include <algorithm>   âŒ
+#include <string>      âš ï¸  // Only allowed in visual.h for formatting
+std::sort(...)         âŒ
+std::find(...)         âŒ
+std::push_back(...)    âŒ
 ```
 
 Allowed everywhere:
 
 ```cpp
-#include <iostream>    ✅  // only in visual.h, never in modules
-#include <chrono>      ✅  // for timing in performance.cpp
-#include <cstring>     ✅  // memcpy, memset if needed
+#include <iostream>    âœ…  // only in visual.h, never in modules
+#include <chrono>      âœ…  // for timing in performance.cpp
+#include <cstring>     âœ…  // memcpy, memset if needed
 ```
 
 Note: `std::string` and `std::cout` are allowed **only** inside `visual.h` because that file is the output layer. They must never appear in core module files.
@@ -370,8 +370,8 @@ After **every single task** (every commit), `docs/context.md` must be updated wi
 
 ### Functions Changed
 
-- `DoublyLinkedList::insertEnd()` — added
-- `DoublyLinkedList::display()` — added
+- `DoublyLinkedList::insertEnd()` â€” added
+- `DoublyLinkedList::display()` â€” added
 
 ### What Changed
 
@@ -383,9 +383,9 @@ After **every single task** (every commit), `docs/context.md` must be updated wi
 
 ### Current System State
 
-- Array module: complete ✅
-- Singly LL: complete ✅
-- Doubly LL: core logic done, visualization pending ⏳
+- Array module: complete âœ…
+- Singly LL: complete âœ…
+- Doubly LL: core logic done, visualization pending â³
 ```
 
 Failing to update context.md after a task = task not complete.
@@ -397,13 +397,13 @@ Failing to update context.md after a task = task not complete.
 Every module test file must include these categories:
 
 ```
-1. Normal cases     — typical inputs, expected outputs
-2. Edge: empty      — operation on empty structure
-3. Edge: overflow   — insert beyond capacity
-4. Edge: not found  — search/delete non-existent value
-5. Edge: boundary   — first/last element operations
-6. Visualization    — verify output format matches contract
-7. Performance      — verify Performance::log was called
+1. Normal cases     â€” typical inputs, expected outputs
+2. Edge: empty      â€” operation on empty structure
+3. Edge: overflow   â€” insert beyond capacity
+4. Edge: not found  â€” search/delete non-existent value
+5. Edge: boundary   â€” first/last element operations
+6. Visualization    â€” verify output format matches contract
+7. Performance      â€” verify Performance::log was called
 ```
 
 Test format:
@@ -415,7 +415,7 @@ Test format:
 // Actual: [run and observe]
 ```
 
-Tests are manual (run → observe output) for now. No test framework.
+Tests are manual (run â†’ observe output) for now. No test framework.
 
 ---
 
@@ -425,13 +425,13 @@ Tests are manual (run → observe output) for now. No test framework.
 type: module - description
 
 type options:
-  feat     → new working feature
-  fix      → bug fix
-  test     → test file or test result
-  docs     → documentation only
-  chore    → config, structure, cleanup
-  audit    → review result
-  refactor → restructure, no behavior change
+  feat     â†’ new working feature
+  fix      â†’ bug fix
+  test     â†’ test file or test result
+  docs     â†’ documentation only
+  chore    â†’ config, structure, cleanup
+  audit    â†’ review result
+  refactor â†’ restructure, no behavior change
 ```
 
 **One commit per task. No bundling multiple tasks into one commit.**
@@ -496,3 +496,4 @@ Analysis Layer   never produces visualization output
 ```
 
 Any code that crosses these boundaries must be refactored immediately before proceeding.
+
