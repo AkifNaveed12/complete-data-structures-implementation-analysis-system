@@ -1,192 +1,263 @@
-#include <iostream>
-#include <thread>
-#include <chrono>
+// ============================================================
+//  CDSIAS — Array Module
+//  src/core/linear/array.cpp
+//
+//  All output goes through visual.h ONLY — no raw cout.
+//  Performance::log() called after every operation.
+//  Follows BEFORE → STEP N → AFTER phase contract.
+//  contracts.md §1, §2, §3
+// ============================================================
+
+#include <string>
 #include "array.h"
-#include "../../analysis/performance.h"
 #include "../../analysis/visual.h"
+#include "../../analysis/performance.h"
 
 using namespace std;
 
-void printArrayVisual(int arr[], int size, int highlight = -1) {
-    cout << "[ ";
+// --------------------------------------------------------
+// Internal helper: print the full array state
+// Active element shown as (val), all others as plain val.
+// contracts.md §1.2, §1.4
+// --------------------------------------------------------
+static void printArrayState(int arr[], int size, int activeIndex = -1) {
+    string line = "[ ";
     for (int i = 0; i < size; i++) {
-        if (i == highlight)
-            cout << "(" << arr[i] << ") ";
+        if (i == activeIndex)
+            line += highlight(arr[i]);
         else
-            cout << arr[i] << " ";
+            line += to_string(arr[i]);
+        if (i < size - 1) line += " | ";
     }
-    cout << "]\n";
+    line += " ]";
+    cout << line << "\n";
 }
 
-// Constructor
+// --------------------------------------------------------
+// Constructor — starts EMPTY (no demo data)
+// --------------------------------------------------------
 Array::Array(int cap) {
     capacity = cap;
-    size = 0;
-    arr = new int[capacity];
-
-    // Default demo data
-    int demo[] = {10, 20, 30, 40, 50};
-    int demoSize = 5;
-
-    for (int i = 0; i < demoSize; i++) {
-        arr[size++] = demo[i];
-    }
+    size     = 0;
+    arr      = new int[capacity];
 }
 
+// --------------------------------------------------------
 // Destructor
+// --------------------------------------------------------
 Array::~Array() {
     delete[] arr;
 }
 
-// Insert at end
-void Array::insertEnd(int value) {
-    if (size >= capacity) {
-        cout << "[ERROR] Array is full!\n";
-        return;
-    }
-
-    cout << "\nBefore: ";
-    display();
-
-    cout << "\nInserting at end...\n";
-    sleep_ms(300);
-
-    arr[size] = value;
-
-    printArrayVisual(arr, size + 1, size);
-    sleep_ms(400);
-
-    size++;
-
-    cout << "[SUCCESS] Inserted at end.\n";
-
-    cout << "After : ";
-    display();
-
-    Performance::log("Array Insert", 1);
+// --------------------------------------------------------
+// getSize
+// --------------------------------------------------------
+int Array::getSize() {
+    return size;
 }
 
-// Insert at index
-void Array::insertAt(int index, int value) {
-    if (index < 0 || index > size) {
-        cout << "[ERROR] Invalid index!\n";
+// --------------------------------------------------------
+// display — show full current array state
+// NOTE: display is NOT logged (contracts §3 — display is UI only)
+// --------------------------------------------------------
+void Array::display() {
+    if (size == 0) {
+        printError("Structure is empty");
         return;
     }
+    printArrayState(arr, size);
+}
 
+// --------------------------------------------------------
+// insertEnd — O(1)
+// contracts.md §2.3
+// --------------------------------------------------------
+void Array::insertEnd(int value) {
+    printHeader("Array", "Insert at End: " + to_string(value));
+
+    // Edge case: overflow
     if (size >= capacity) {
-        cout << "[ERROR] Array is full!\n";
+        printError("Structure is full (capacity: " + to_string(capacity) + ")");
+        Performance::log("Array", "InsertEnd", 0, 0);
         return;
     }
 
-    cout << "\nBefore: ";
-    display();
+    // BEFORE
+    printStep(1, "BEFORE:");
+    if (size == 0)
+        cout << "[ empty ]\n";
+    else
+        printArrayState(arr, size);
 
-    int shifts = 0;
+    sleep_ms(500);
 
-    cout << "\nShifting elements...\n";
+    // Insert
+    arr[size] = value;
+    size++;
 
+    // AFTER
+    printStep(2, "Placing " + highlight(value) + " at end (index " + to_string(size-1) + ")");
+    printArrayState(arr, size, size - 1);
+    sleep_ms(300);
+
+    printResult("AFTER: " + to_string(value) + " inserted at index " + to_string(size - 1));
+    printArrayState(arr, size);
+
+    // Log: InsertEnd = 1 step, 0 comparisons
+    Performance::log("Array", "InsertEnd", 1, 0);
+}
+
+// --------------------------------------------------------
+// insertAt — O(n)
+// contracts.md §2.3
+// --------------------------------------------------------
+void Array::insertAt(int index, int value) {
+    printHeader("Array", "Insert at Index " + to_string(index) + ": " + to_string(value));
+
+    // Edge case: invalid index
+    if (index < 0 || index > size) {
+        printError("Invalid index [" + to_string(index) + "], valid range [0.." + to_string(size) + "]");
+        Performance::log("Array", "InsertAtIndex", 0, 0);
+        return;
+    }
+
+    // Edge case: overflow
+    if (size >= capacity) {
+        printError("Structure is full (capacity: " + to_string(capacity) + ")");
+        Performance::log("Array", "InsertAtIndex", 0, 0);
+        return;
+    }
+
+    // BEFORE
+    printStep(1, "BEFORE:");
+    if (size == 0)
+        cout << "[ empty ]\n";
+    else
+        printArrayState(arr, size);
+    sleep_ms(500);
+
+    int stepNum = 2;
+    int shifts  = 0;
+
+    // Shift elements right one by one (animation)
     for (int i = size; i > index; i--) {
         arr[i] = arr[i - 1];
         shifts++;
 
-        printArrayVisual(arr, size + 1, i);
-        sleep_ms(400);
+        printStep(stepNum++, "Shifting " + highlight(arr[i]) + " right to index " + to_string(i));
+        printArrayState(arr, size + 1, i);
+        sleep_ms(200);  // array shift delay (contracts.md §1.5)
     }
 
-    cout << "\nInserting value...\n";
-    sleep_ms(300);
-
+    // Place new element
     arr[index] = value;
     size++;
 
-    printArrayVisual(arr, size, index);
-
-    cout << "\nAfter : ";
-    display();
-
-    cout << "[INFO] Shifts performed: " << shifts << endl;
-
-    Performance::log("Array Insert", shifts);
-}
-
-// Delete
-void Array::deleteAt(int index) {
-    if (size == 0) {
-        cout << "[ERROR] Array is empty!\n";
-        Performance::log("Array Delete", 1);
-        return;
-    }
-
-    if (index < 0 || index >= size) {
-        cout << "[ERROR] Invalid index!\n";
-        Performance::log("Array Delete", 1);
-        return;
-    }
-
-    cout << "\nBefore: ";
-    display();
-
-    int shifts = 0;
-
-    cout << "\nDeleting element...\n";
+    printStep(stepNum++, "Placing " + highlight(value) + " at index " + to_string(index));
+    printArrayState(arr, size, index);
     sleep_ms(300);
 
+    printResult("AFTER: " + to_string(value) + " inserted at index " + to_string(index) +
+                " | Shifts: " + to_string(shifts));
+    printArrayState(arr, size);
+
+    // Log: steps = shifts performed, comparisons = 0
+    Performance::log("Array", "InsertAtIndex", shifts, 0);
+}
+
+// --------------------------------------------------------
+// deleteAt — O(n)
+// contracts.md §2.3
+// --------------------------------------------------------
+void Array::deleteAt(int index) {
+    printHeader("Array", "Delete at Index " + to_string(index));
+
+    // Edge case: empty
+    if (size == 0) {
+        printError("Structure is empty");
+        Performance::log("Array", "DeleteAtIndex", 0, 0);
+        return;
+    }
+
+    // Edge case: invalid index
+    if (index < 0 || index >= size) {
+        printError("Invalid index [" + to_string(index) + "], valid range [0.." + to_string(size - 1) + "]");
+        Performance::log("Array", "DeleteAtIndex", 0, 0);
+        return;
+    }
+
+    // BEFORE
+    printStep(1, "BEFORE:");
+    printArrayState(arr, size);
+    sleep_ms(500);
+
+    int deletedVal = arr[index];
+    int stepNum    = 2;
+    int shifts     = 0;
+
+    // Highlight element being deleted
+    printStep(stepNum++, "Marking " + highlight(deletedVal) + " at index " + to_string(index) + " for deletion");
+    printArrayState(arr, size, index);
+    sleep_ms(500);
+
+    // Shift elements left one by one
     for (int i = index; i < size - 1; i++) {
         arr[i] = arr[i + 1];
         shifts++;
 
-        printArrayVisual(arr, size, i);
-        sleep_ms(400);
+        printStep(stepNum++, "Shifting " + highlight(arr[i]) + " left to index " + to_string(i));
+        printArrayState(arr, size, i);
+        sleep_ms(200);  // array shift delay (contracts.md §1.5)
     }
 
     size--;
 
-    cout << "\nAfter : ";
-    display();
+    printResult("AFTER: " + to_string(deletedVal) + " deleted | Shifts: " + to_string(shifts));
+    if (size == 0)
+        cout << "[ empty ]\n";
+    else
+        printArrayState(arr, size);
 
-    cout << "[INFO] Time Complexity: O(n)\n";
-
-    Performance::log("Array Delete", shifts);
+    // Log: steps = shifts performed
+    Performance::log("Array", "DeleteAtIndex", shifts, 0);
 }
-// Search
-int Array::search(int value) {
-    int comparisons = 0;
 
-    cout << "\nSearching...\n";
+// --------------------------------------------------------
+// search — O(n) linear search
+// contracts.md §2.3
+// --------------------------------------------------------
+int Array::search(int value) {
+    printHeader("Array", "Search: " + to_string(value));
+
+    // Edge case: empty
+    if (size == 0) {
+        printError("Structure is empty");
+        Performance::log("Array", "Search", 0, 0);
+        return -1;
+    }
+
+    // BEFORE
+    printStep(1, "BEFORE:");
+    printArrayState(arr, size);
+    sleep_ms(500);
+
+    int comparisons = 0;
 
     for (int i = 0; i < size; i++) {
         comparisons++;
-
-        printArrayVisual(arr, size, i);
-        sleep_ms(400);
+        printStep(i + 2, "Checking " + highlight(arr[i]) + " at index " + to_string(i));
+        printArrayState(arr, size, i);
+        sleep_ms(300);  // traversal delay (contracts.md §1.5)
 
         if (arr[i] == value) {
-            cout << "[FOUND] At index: " << i << endl;
-            cout << "[INFO] Comparisons: " << comparisons << endl;
-
-            Performance::log("Array Search", comparisons);
+            printResult("Value " + to_string(value) + " found at index " + to_string(i) +
+                        " | Comparisons: " + to_string(comparisons));
+            Performance::log("Array", "Search", comparisons, comparisons);
             return i;
         }
     }
 
-    cout << "[NOT FOUND]\n";
-
-    Performance::log("Array Search", comparisons);
+    printResult("Value " + to_string(value) + " not found | Comparisons: " + to_string(comparisons));
+    Performance::log("Array", "Search", comparisons, comparisons);
     return -1;
-}
-// Display
-void Array::display() {
-    if (size == 0) {
-        cout << "[EMPTY]\n";
-        Performance::log("Array Display", 1);
-        return;
-    }
-
-    printArrayVisual(arr, size);
-    Performance::log("Array Display", size);
-}
-
-// Get size
-int Array::getSize() {
-    return size;
 }

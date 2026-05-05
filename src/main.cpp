@@ -1,45 +1,66 @@
+// ============================================================
+//  CDSIAS — Control Layer
+//  src/main.cpp
+//
+//  Menu-driven navigation ONLY.
+//  No business logic here — only routing to modules.
+//  All visual output through visual.h.
+//  contracts.md §3.1, §10 (Architecture Boundary)
+// ============================================================
+
 #include <iostream>
 #include <cstdlib>
 #include "core/linear/array.h"
 #include "core/linear/linked_list.h"
 #include "analysis/performance.h"
+#include "analysis/visual.h"
 
 using namespace std;
 
-// Function declarations
-void arrayMenu(Array &arr);
-void linkedListMenu(LinkedList &list);
+// --------------------------------------------------------
+// Forward declarations — module runners
+// --------------------------------------------------------
+void runArrayModule(Array& arr);
+void runLinkedListModule(LinkedList& list);
+void runDoublyLLModule(DoublyLinkedList& dll);
+void runCircularLLModule(CircularLinkedList& cll);
 
-// Utility function for clean screen separation
-void printHeader(string title) {
-    cout << "\n=================================================\n";
-    cout << "   " << title << endl;
-    cout << "=================================================\n";
-}
+// --------------------------------------------------------
+// Utility
+// --------------------------------------------------------
 void clearScreen() {
-    system("cls"); // Windows
+    system("cls");
 }
 
+// --------------------------------------------------------
+// Main entry point
+// --------------------------------------------------------
 int main() {
-
-    Array arr(100);
-    LinkedList list;
+    Array              arr(100);
+    LinkedList         list;
+    DoublyLinkedList   dll;
+    CircularLinkedList cll;
 
     int choice;
 
     do {
-        printHeader("DATA STRUCTURE IMPLEMENTATION SYSTEM");
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  CDSIAS — Data Structure Laboratory" << COL_RESET << "\n";
+        cout << "  Comprehensive DS Implementation & Analysis\n";
+        printSeparator();
 
-        cout << "1. Linear Data Structures\n";
-        cout << "2. Stack & Queue        [Under Development]\n";
-        cout << "3. Trees                [Under Development]\n";
-        cout << "4. Graph Algorithms     [Under Development]\n";
-        cout << "5. Searching & Sorting  [Under Development]\n";
-        cout << "6. Hashing              [Under Development]\n";
-        cout << "7. Performance Reports  [Alpha Version* under Testing]\n";
-        cout << "8. Exit\n";
-
-        cout << "\nEnter choice: ";
+        cout << "\n";
+        cout << "  1. Linear Data Structures\n";
+        cout << "  2. Stack & Queue           [Under Development]\n";
+        cout << "  3. Trees                   [Under Development]\n";
+        cout << "  4. Graph Algorithms        [Under Development]\n";
+        cout << "  5. Searching & Sorting     [Under Development]\n";
+        cout << "  6. Hashing                 [Under Development]\n";
+        cout << "  7. Performance Report\n";
+        cout << "  8. Exit\n";
+        cout << "\n";
+        cout << "  Enter choice: ";
         cin >> choice;
 
         switch (choice) {
@@ -47,21 +68,25 @@ int main() {
             case 1: {
                 int subChoice;
                 do {
-                    printHeader("LINEAR DATA STRUCTURES");
-
-                    cout << "1. Array\n";
-                    cout << "2. Linked List\n";
-                    cout << "3. Back\n";
-
-                    cout << "\nEnter choice: ";
+                    clearScreen();
+                    printSeparator();
+                    cout << COL_ACCENT << "  LINEAR DATA STRUCTURES" << COL_RESET << "\n";
+                    printSeparator();
+                    cout << "\n";
+                    cout << "  1. Array (Singly)\n";
+                    cout << "  2. Singly Linked List\n";
+                    cout << "  3. Doubly Linked List\n";
+                    cout << "  4. Circular Linked List\n";
+                    cout << "  5. Back\n";
+                    cout << "\n  Enter choice: ";
                     cin >> subChoice;
 
-                    switch (subChoice) {
-                        case 1: arrayMenu(arr); break;
-                        case 2: linkedListMenu(list); break;
-                    }
+                    if (subChoice == 1) runArrayModule(arr);
+                    else if (subChoice == 2) runLinkedListModule(list);
+                    else if (subChoice == 3) runDoublyLLModule(dll);
+                    else if (subChoice == 4) runCircularLLModule(cll);
 
-                } while (subChoice != 3);
+                } while (subChoice != 5);
                 break;
             }
 
@@ -70,107 +95,143 @@ int main() {
             case 4:
             case 5:
             case 6:
-                cout << "\n[INFO] This module is under development.\n";
-                break;
-            case 7:
-                Performance::display();
+                cout << "\n";
+                printError("Module under development");
+                cout << "\n  Press Enter to continue...\n";
+                cin.ignore();
+                cin.get();
                 break;
 
+            case 7:
+                Performance::display();
+                cout << "\n  Press Enter to continue...\n";
+                cin.ignore();
+                cin.get();
+                break;
+
+            case 8:
+                break;
+
+            default:
+                printError("Invalid choice — enter 1 to 8");
+                break;
         }
 
     } while (choice != 8);
 
-    cout << "\n[EXIT] Thank you for using CDSIAS.\n";
+    printSeparator();
+    cout << COL_SUCCESS << "  Thank you for using CDSIAS." << COL_RESET << "\n";
+    printSeparator();
 
     return 0;
 }
 
-//array menu implementation
-void arrayMenu(Array &arr) {
+// ============================================================
+//  ARRAY MODULE RUNNER
+// ============================================================
+void runArrayModule(Array& arr) {
     int choice;
-    clearScreen();
 
     do {
-        
-        printHeader("ARRAY MODULE");
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  ARRAY MODULE" << COL_RESET << "\n";
+        printSeparator();
 
-        cout << "1. Insert at End\n";
-        cout << "2. Insert at Position\n";
-        cout << "3. Delete at Position\n";
-        cout << "4. Search Element\n";
-        cout << "5. Display Array\n";
-        cout << "6. Back\n";
+        cout << "\n  Current state: ";
+        arr.display();
+        cout << "\n";
 
-        cout << "\nEnter choice: ";
+        cout << "  1. Insert at End\n";
+        cout << "  2. Insert at Index\n";
+        cout << "  3. Delete at Index\n";
+        cout << "  4. Search\n";
+        cout << "  5. Display\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
         cin >> choice;
 
         switch (choice) {
 
             case 1: {
                 int val;
-                cout << "Enter value: ";
+                cout << "  Value: ";
                 cin >> val;
                 arr.insertEnd(val);
                 break;
             }
 
             case 2: {
-                int val, index;
-                cout << "Enter index: ";
-                cin >> index;
-                cout << "Enter value: ";
+                int val, idx;
+                cout << "  Index: ";
+                cin >> idx;
+                cout << "  Value: ";
                 cin >> val;
-                arr.insertAt(index, val);
+                arr.insertAt(idx, val);
                 break;
             }
 
             case 3: {
-                int index;
-                cout << "Enter index: ";
-                cin >> index;
-                arr.deleteAt(index);
+                int idx;
+                cout << "  Index: ";
+                cin >> idx;
+                arr.deleteAt(idx);
                 break;
             }
 
             case 4: {
                 int val;
-                cout << "Enter value: ";
+                cout << "  Value to search: ";
                 cin >> val;
                 arr.search(val);
                 break;
             }
 
             case 5:
+                cout << "\n";
                 arr.display();
                 break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
         }
 
     } while (choice != 6);
 }
 
-//linked list menu implementation
-void linkedListMenu(LinkedList &list) {
+// ============================================================
+//  LINKED LIST MODULE RUNNER
+// ============================================================
+void runLinkedListModule(LinkedList& list) {
     int choice;
-    clearScreen();
+
     do {
-        
-        printHeader("LINKED LIST MODULE");
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  SINGLY LINKED LIST MODULE" << COL_RESET << "\n";
+        printSeparator();
 
-        cout << "1. Insert at Start\n";
-        cout << "2. Insert at End\n";
-        cout << "3. Delete by Value\n";
-        cout << "4. Search\n";
-        cout << "5. Display\n";
-        cout << "6. Back\n";
+        cout << "\n  Current state: ";
+        list.display();
+        cout << "\n";
 
-        cout << "\nEnter choice: ";
+        cout << "  1. Insert at Start\n";
+        cout << "  2. Insert at End\n";
+        cout << "  3. Delete by Value\n";
+        cout << "  4. Search\n";
+        cout << "  5. Display\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
         cin >> choice;
 
         switch (choice) {
 
             case 1: {
                 int val;
-                cout << "Enter value: ";
+                cout << "  Value: ";
                 cin >> val;
                 list.insertAtStart(val);
                 break;
@@ -178,7 +239,7 @@ void linkedListMenu(LinkedList &list) {
 
             case 2: {
                 int val;
-                cout << "Enter value: ";
+                cout << "  Value: ";
                 cin >> val;
                 list.insertAtEnd(val);
                 break;
@@ -186,7 +247,7 @@ void linkedListMenu(LinkedList &list) {
 
             case 3: {
                 int val;
-                cout << "Enter value: ";
+                cout << "  Value to delete: ";
                 cin >> val;
                 list.deleteValue(val);
                 break;
@@ -194,15 +255,160 @@ void linkedListMenu(LinkedList &list) {
 
             case 4: {
                 int val;
-                cout << "Enter value: ";
+                cout << "  Value to search: ";
                 cin >> val;
                 list.search(val);
                 break;
             }
 
             case 5:
+                cout << "\n";
                 list.display();
                 break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 6);
+}
+
+// ============================================================
+//  DOUBLY LINKED LIST MODULE RUNNER — M1-T4
+// ============================================================
+void runDoublyLLModule(DoublyLinkedList& dll) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  DOUBLY LINKED LIST MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state: ";
+        dll.display();
+        cout << "\n";
+
+        cout << "  1. Insert at Start\n";
+        cout << "  2. Insert at End\n";
+        cout << "  3. Delete by Value\n";
+        cout << "  4. Search\n";
+        cout << "  5. Display\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                dll.insertStart(val);
+                break;
+            }
+            case 2: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                dll.insertEnd(val);
+                break;
+            }
+            case 3: {
+                int val;
+                cout << "  Value to delete: ";
+                cin >> val;
+                dll.deleteByValue(val);
+                break;
+            }
+            case 4: {
+                int val;
+                cout << "  Value to search: ";
+                cin >> val;
+                dll.search(val);
+                break;
+            }
+            case 5:
+                cout << "\n";
+                dll.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 6);
+}
+
+// ============================================================
+//  CIRCULAR LINKED LIST MODULE RUNNER — M1-T6
+// ============================================================
+void runCircularLLModule(CircularLinkedList& cll) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  CIRCULAR LINKED LIST MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state: ";
+        cll.display();
+        cout << "\n";
+
+        cout << "  1. Insert at Start\n";
+        cout << "  2. Insert at End\n";
+        cout << "  3. Delete by Value\n";
+        cout << "  4. Search\n";
+        cout << "  5. Display\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                cll.insertStart(val);
+                break;
+            }
+            case 2: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                cll.insertEnd(val);
+                break;
+            }
+            case 3: {
+                int val;
+                cout << "  Value to delete: ";
+                cin >> val;
+                cll.deleteByValue(val);
+                break;
+            }
+            case 4: {
+                int val;
+                cout << "  Value to search: ";
+                cin >> val;
+                cll.search(val);
+                break;
+            }
+            case 5:
+                cout << "\n";
+                cll.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
         }
 
     } while (choice != 6);
