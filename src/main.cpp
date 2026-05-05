@@ -22,6 +22,8 @@ using namespace std;
 // --------------------------------------------------------
 void runArrayModule(Array& arr);
 void runLinkedListModule(LinkedList& list);
+void runDoublyLLModule(DoublyLinkedList& dll);
+void runCircularLLModule(CircularLinkedList& cll);
 
 // --------------------------------------------------------
 // Utility
@@ -34,8 +36,10 @@ void clearScreen() {
 // Main entry point
 // --------------------------------------------------------
 int main() {
-    Array      arr(100);   // capacity 100, starts empty
-    LinkedList list;       // starts empty
+    Array              arr(100);
+    LinkedList         list;
+    DoublyLinkedList   dll;
+    CircularLinkedList cll;
 
     int choice;
 
@@ -71,14 +75,18 @@ int main() {
                     cout << "\n";
                     cout << "  1. Array (Singly)\n";
                     cout << "  2. Singly Linked List\n";
-                    cout << "  3. Back\n";
+                    cout << "  3. Doubly Linked List\n";
+                    cout << "  4. Circular Linked List\n";
+                    cout << "  5. Back\n";
                     cout << "\n  Enter choice: ";
                     cin >> subChoice;
 
                     if (subChoice == 1) runArrayModule(arr);
                     else if (subChoice == 2) runLinkedListModule(list);
+                    else if (subChoice == 3) runDoublyLLModule(dll);
+                    else if (subChoice == 4) runCircularLLModule(cll);
 
-                } while (subChoice != 3);
+                } while (subChoice != 5);
                 break;
             }
 
@@ -256,6 +264,144 @@ void runLinkedListModule(LinkedList& list) {
             case 5:
                 cout << "\n";
                 list.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 6);
+}
+
+// ============================================================
+//  DOUBLY LINKED LIST MODULE RUNNER — M1-T4
+// ============================================================
+void runDoublyLLModule(DoublyLinkedList& dll) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  DOUBLY LINKED LIST MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state: ";
+        dll.display();
+        cout << "\n";
+
+        cout << "  1. Insert at Start\n";
+        cout << "  2. Insert at End\n";
+        cout << "  3. Delete by Value\n";
+        cout << "  4. Search\n";
+        cout << "  5. Display\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                dll.insertStart(val);
+                break;
+            }
+            case 2: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                dll.insertEnd(val);
+                break;
+            }
+            case 3: {
+                int val;
+                cout << "  Value to delete: ";
+                cin >> val;
+                dll.deleteByValue(val);
+                break;
+            }
+            case 4: {
+                int val;
+                cout << "  Value to search: ";
+                cin >> val;
+                dll.search(val);
+                break;
+            }
+            case 5:
+                cout << "\n";
+                dll.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 6);
+}
+
+// ============================================================
+//  CIRCULAR LINKED LIST MODULE RUNNER — M1-T6
+// ============================================================
+void runCircularLLModule(CircularLinkedList& cll) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  CIRCULAR LINKED LIST MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state: ";
+        cll.display();
+        cout << "\n";
+
+        cout << "  1. Insert at Start\n";
+        cout << "  2. Insert at End\n";
+        cout << "  3. Delete by Value\n";
+        cout << "  4. Search\n";
+        cout << "  5. Display\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                cll.insertStart(val);
+                break;
+            }
+            case 2: {
+                int val;
+                cout << "  Value: ";
+                cin >> val;
+                cll.insertEnd(val);
+                break;
+            }
+            case 3: {
+                int val;
+                cout << "  Value to delete: ";
+                cin >> val;
+                cll.deleteByValue(val);
+                break;
+            }
+            case 4: {
+                int val;
+                cout << "  Value to search: ";
+                cin >> val;
+                cll.search(val);
+                break;
+            }
+            case 5:
+                cout << "\n";
+                cll.display();
                 break;
         }
 
