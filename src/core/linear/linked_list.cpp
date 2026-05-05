@@ -1,215 +1,264 @@
-#include <iostream>
-#include <thread>
-#include <chrono>
+// ============================================================
+//  CDSIAS — Singly Linked List Module
+//  src/core/linear/linked_list.cpp
+//
+//  All output goes through visual.h ONLY — no raw cout.
+//  Performance::log() called after every operation.
+//  Follows BEFORE → STEP N → AFTER phase contract.
+//  contracts.md §1, §2, §3
+// ============================================================
+
+#include <string>
 #include "linked_list.h"
-#include "../../analysis/performance.h"
 #include "../../analysis/visual.h"
+#include "../../analysis/performance.h"
 
 using namespace std;
 
-//helper functions for visual representation and delay
-void printListVisual(Node* head, Node* highlight = nullptr) {
-    Node* temp = head;
+// --------------------------------------------------------
+// Internal helper: print full list state
+// Active node shown as (val), others as plain val.
+// Format: (10) → 20 → 30 → NULL  (contracts.md §1.2)
+// --------------------------------------------------------
+static void printListState(Node* head, Node* activeNode = nullptr) {
+    if (head == nullptr) {
+        cout << "NULL\n";
+        return;
+    }
 
-    cout << "[ ";
+    Node* temp = head;
+    string line = "";
+
     while (temp != nullptr) {
-        if (temp == highlight)
-            cout << "(" << temp->data << ")";
+        if (temp == activeNode)
+            line += highlight(temp->data);
         else
-            cout << temp->data;
+            line += to_string(temp->data);
 
         if (temp->next != nullptr)
-            cout << " -> ";
+            line += " → ";
+        else
+            line += " → NULL";
 
         temp = temp->next;
     }
-    cout << " ]\n";
+    cout << line << "\n";
 }
+
+// --------------------------------------------------------
 // Node constructor
+// --------------------------------------------------------
 Node::Node(int val) {
     data = val;
     next = nullptr;
 }
 
-// LinkedList constructor
+// --------------------------------------------------------
+// LinkedList constructor — starts EMPTY (no demo data)
+// --------------------------------------------------------
 LinkedList::LinkedList() {
     head = nullptr;
-
-    // Default demo data
-    Node* n1 = new Node(10);
-    Node* n2 = new Node(20);
-    Node* n3 = new Node(30);
-
-    head = n1;
-    n1->next = n2;
-    n2->next = n3;
 }
 
-// Insert at start
+// --------------------------------------------------------
+// display — show full current list state
+// NOTE: display is NOT logged
+// --------------------------------------------------------
+void LinkedList::display() {
+    if (head == nullptr) {
+        printError("Structure is empty");
+        return;
+    }
+    printListState(head);
+}
+
+// --------------------------------------------------------
+// insertAtStart — O(1)
+// contracts.md §2.3
+// --------------------------------------------------------
 void LinkedList::insertAtStart(int value) {
-    cout << "\nBefore: ";
-    display();
+    printHeader("LinkedList", "Insert at Start: " + to_string(value));
 
+    // BEFORE
+    printStep(1, "BEFORE:");
+    printListState(head);
+    sleep_ms(500);
+
+    // Create node
     Node* newNode = new Node(value);
-
-    cout << "\nInserting at start...\n";
+    printStep(2, "Creating new node " + highlight(value));
     sleep_ms(300);
 
+    // Link
     newNode->next = head;
     head = newNode;
 
-    printListVisual(head, newNode);
-    sleep_ms(400);
+    printStep(3, "Linking " + highlight(value) + " → rest of list");
+    printListState(head, newNode);
+    sleep_ms(300);
 
-    cout << "[SUCCESS] Inserted at start.\n";
+    printResult("AFTER: " + to_string(value) + " inserted at start");
+    printListState(head);
 
-    cout << "After : ";
-    display();
-
-    Performance::log("LinkedList Insert", 1);
+    // steps = 1 (no traversal), comparisons = 0
+    Performance::log("LinkedList", "InsertStart", 1, 0);
 }
-// Insert at end
+
+// --------------------------------------------------------
+// insertAtEnd — O(n)
+// contracts.md §2.3
+// --------------------------------------------------------
 void LinkedList::insertAtEnd(int value) {
-    cout << "\nBefore: ";
-    display();
+    printHeader("LinkedList", "Insert at End: " + to_string(value));
+
+    // BEFORE
+    printStep(1, "BEFORE:");
+    printListState(head);
+    sleep_ms(500);
 
     Node* newNode = new Node(value);
-
-    int steps = 0;
+    int steps = 1;
 
     if (head == nullptr) {
         head = newNode;
-        printListVisual(head, newNode);
-        Performance::log("LinkedList Insert", 1);
+        printStep(2, "List is empty — " + highlight(value) + " becomes head");
+        printListState(head, newNode);
+        sleep_ms(300);
+        printResult("AFTER: " + to_string(value) + " inserted (first node)");
+        printListState(head);
+        Performance::log("LinkedList", "InsertEnd", 1, 0);
         return;
     }
 
     Node* temp = head;
-
-    cout << "\nTraversing...\n";
+    int stepNum = 2;
 
     while (temp->next != nullptr) {
-        printListVisual(head, temp);
-        sleep_ms(400);
-
+        printStep(stepNum++, "Traversing: at node " + highlight(temp->data));
+        printListState(head, temp);
+        sleep_ms(300);  // traversal delay (contracts.md §1.5)
         temp = temp->next;
         steps++;
     }
 
+    // Reached last node
+    printStep(stepNum++, "Reached last node " + highlight(temp->data) + " → attaching new node");
     temp->next = newNode;
+    printListState(head, newNode);
+    sleep_ms(300);
 
-    cout << "\nInserting at end...\n";
-    printListVisual(head, newNode);
-    sleep_ms(400);
+    printResult("AFTER: " + to_string(value) + " inserted at end | Steps: " + to_string(steps));
+    printListState(head);
 
-    cout << "[SUCCESS] Inserted at end.\n";
-
-    cout << "After : ";
-    display();
-
-    Performance::log("LinkedList Insert", steps + 1);
+    Performance::log("LinkedList", "InsertEnd", steps, 0);
 }
 
-// Delete by value
+// --------------------------------------------------------
+// deleteValue — O(n)
+// contracts.md §2.3
+// --------------------------------------------------------
 void LinkedList::deleteValue(int value) {
+    printHeader("LinkedList", "Delete Value: " + to_string(value));
+
+    // Edge case: empty
     if (head == nullptr) {
-        cout << "[ERROR] List is empty!\n";
-        Performance::log("LinkedList Delete", 1);
+        printError("Structure is empty");
+        Performance::log("LinkedList", "Delete", 0, 0);
         return;
     }
 
-    cout << "\nBefore: ";
-    display();
+    // BEFORE
+    printStep(1, "BEFORE:");
+    printListState(head);
+    sleep_ms(500);
 
     int steps = 0;
+    int comparisons = 0;
 
+    // Check head
     if (head->data == value) {
-        cout << "\nDeleting head...\n";
-        sleep_ms(300);
-
+        comparisons++;
+        printStep(2, "Found " + highlight(value) + " at head — removing");
         Node* temp = head;
         head = head->next;
         delete temp;
-
-        cout << "After : ";
-        display();
-
-        Performance::log("LinkedList Delete", 1);
+        printListState(head);
+        sleep_ms(300);
+        printResult("AFTER: " + to_string(value) + " deleted from head");
+        printListState(head == nullptr ? nullptr : head);
+        Performance::log("LinkedList", "Delete", 1, comparisons);
         return;
     }
 
     Node* temp = head;
+    int stepNum = 2;
 
-    cout << "\nTraversing...\n";
+    while (temp->next != nullptr) {
+        comparisons++;
+        printStep(stepNum++, "Checking next: " + highlight(temp->next->data));
+        printListState(head, temp->next);
+        sleep_ms(300);
 
-    while (temp->next != nullptr && temp->next->data != value) {
-        printListVisual(head, temp);
-        sleep_ms(400);
+        if (temp->next->data == value) {
+            steps = comparisons;
+            printStep(stepNum++, "Found " + highlight(value) + " — unlinking");
+            Node* delNode = temp->next;
+            temp->next = delNode->next;
+            delete delNode;
 
-        temp = temp->next;
-        steps++;
-    }
-
-    if (temp->next == nullptr) {
-        cout << "[NOT FOUND]\n";
-        Performance::log("LinkedList Delete", steps);
-        return;
-    }
-
-    cout << "\nDeleting node...\n";
-    sleep_ms(300);
-
-    Node* delNode = temp->next;
-    temp->next = delNode->next;
-    delete delNode;
-
-    cout << "After : ";
-    display();
-
-    Performance::log("LinkedList Delete", steps + 1);
-}
-
-// Search
-void LinkedList::search(int value) {
-    Node* temp = head;
-    int pos = 0;
-
-    cout << "\nSearching...\n";
-
-    while (temp != nullptr) {
-        printListVisual(head, temp);
-        sleep_ms(400);
-
-        if (temp->data == value) {
-            cout << "[FOUND] At position: " << pos << endl;
-            Performance::log("LinkedList Search", pos + 1);
+            printResult("AFTER: " + to_string(value) + " deleted | Steps: " + to_string(steps));
+            printListState(head);
+            Performance::log("LinkedList", "Delete", steps, comparisons);
             return;
         }
+        temp = temp->next;
+    }
 
+    // Not found
+    printResult("Value " + to_string(value) + " not found");
+    Performance::log("LinkedList", "Delete", comparisons, comparisons);
+}
+
+// --------------------------------------------------------
+// search — O(n)
+// contracts.md §2.3
+// --------------------------------------------------------
+void LinkedList::search(int value) {
+    printHeader("LinkedList", "Search: " + to_string(value));
+
+    // Edge case: empty
+    if (head == nullptr) {
+        printError("Structure is empty");
+        Performance::log("LinkedList", "Search", 0, 0);
+        return;
+    }
+
+    // BEFORE
+    printStep(1, "BEFORE:");
+    printListState(head);
+    sleep_ms(500);
+
+    Node* temp = head;
+    int pos = 0;
+    int comparisons = 0;
+    int stepNum = 2;
+
+    while (temp != nullptr) {
+        comparisons++;
+        printStep(stepNum++, "Checking " + highlight(temp->data) + " at position " + to_string(pos));
+        printListState(head, temp);
+        sleep_ms(300);  // traversal delay
+
+        if (temp->data == value) {
+            printResult("Value " + to_string(value) + " found at position " + to_string(pos) +
+                        " | Comparisons: " + to_string(comparisons));
+            Performance::log("LinkedList", "Search", pos + 1, comparisons);
+            return;
+        }
         temp = temp->next;
         pos++;
     }
 
-    cout << "[NOT FOUND]\n";
-    Performance::log("LinkedList Search", pos + 1);
-}
-
-// Display
-void LinkedList::display() {
-    if (head == nullptr) {
-        cout << "[EMPTY]\n";
-        Performance::log("LinkedList Display", 1);
-        return;
-    }
-
-    printListVisual(head);
-
-    int steps = 0;
-    Node* temp = head;
-    while (temp != nullptr) {
-        steps++;
-        temp = temp->next;
-    }
-
-    Performance::log("LinkedList Display", steps);
+    printResult("Value " + to_string(value) + " not found | Comparisons: " + to_string(comparisons));
+    Performance::log("LinkedList", "Search", comparisons, comparisons);
 }
