@@ -14,6 +14,7 @@
 #include "core/linear/linked_list.h"
 #include "core/stack_queue/stack.h"
 #include "core/stack_queue/queue.h"
+#include "core/trees/bt.h"
 #include "analysis/performance.h"
 #include "analysis/visual.h"
 
@@ -32,6 +33,7 @@ void runSimpleQueueModule(SimpleQueue& queue);
 void runCircularQueueModule(CircularQueue& queue);
 void runPriorityQueueModule(PriorityQueue& queue);
 void runDequeModule(Deque& queue);
+void runBTModule(BinaryTree& tree);
 
 // --------------------------------------------------------
 // Utility
@@ -54,6 +56,7 @@ int main() {
     CircularQueue      cQueue(100);
     PriorityQueue      pQueue;
     Deque              dq;
+    BinaryTree         bt;
 
     int choice;
 
@@ -149,7 +152,28 @@ int main() {
                 break;
             }
 
-            case 3:
+            case 3: {
+                int subChoice;
+                do {
+                    clearScreen();
+                    printSeparator();
+                    cout << COL_ACCENT << "  TREES" << COL_RESET << "\n";
+                    printSeparator();
+                    cout << "\n";
+                    cout << "  1. Binary Tree\n";
+                    cout << "  2. Binary Search Tree (BST) [Under Development]\n";
+                    cout << "  3. AVL Tree [Under Development]\n";
+                    cout << "  4. Heap (Min/Max) [Under Development]\n";
+                    cout << "  5. Back\n";
+                    cout << "\n  Enter choice: ";
+                    cin >> subChoice;
+
+                    if (subChoice == 1) runBTModule(bt);
+
+                } while (subChoice != 5);
+                break;
+            }
+
             case 4:
             case 5:
             case 6:
@@ -800,4 +824,60 @@ void runDequeModule(Deque& queue) {
     } while (choice != 6);
 }
 
+// ============================================================
+//  BINARY TREE MODULE RUNNER — M3-T0
+// ============================================================
+void runBTModule(BinaryTree& tree) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  BINARY TREE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        tree.display();
+        cout << "\n";
+
+        cout << "  1. Insert (Level-Order)\n";
+        cout << "  2. In-order Traversal\n";
+        cout << "  3. Pre-order Traversal\n";
+        cout << "  4. Post-order Traversal\n";
+        cout << "  5. Display Tree\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to insert: ";
+                cin >> val;
+                tree.insert(val);
+                break;
+            }
+            case 2:
+                tree.inorder();
+                break;
+            case 3:
+                tree.preorder();
+                break;
+            case 4:
+                tree.postorder();
+                break;
+            case 5:
+                cout << "\n";
+                tree.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 6);
+}
 
