@@ -17,6 +17,7 @@
 #include "../src/core/trees/bt.h"
 #include "../src/core/trees/bst.h"
 #include "../src/core/trees/avl.h"
+#include "../src/core/trees/heap.h"
 #include "../src/analysis/performance.h"
 #include "../src/analysis/visual.h"
 
@@ -152,6 +153,40 @@ void testAVL() {
 }
 
 // ============================================================
+//  HEAP TESTS
+// ============================================================
+void testHeap() {
+    printSeparator();
+    cout << COL_ACCENT << "  TEST: Heap (Min & Max)" << COL_RESET << "\n";
+    printSeparator();
+
+    Heap minH(10, true);
+    Heap maxH(10, false);
+
+    cout << "\n[T4.1] MinHeap Insert: 50, 30, 20, 10\n";
+    minH.insert(50);
+    minH.insert(30);
+    minH.insert(20);
+    minH.insert(10); // Should heapify up to root
+
+    cout << "\n[T4.2] MinHeap Extract\n";
+    minH.extract(); // Should extract 10
+
+    cout << "\n[T4.3] MaxHeap Insert: 10, 20, 30, 50\n";
+    maxH.insert(10);
+    maxH.insert(20);
+    maxH.insert(30);
+    maxH.insert(50); // Should heapify up to root
+
+    cout << "\n[T4.4] MaxHeap Extract\n";
+    maxH.extract(); // Should extract 50
+
+    cout << "\n[T4.5] Extract empty MaxHeap\n";
+    Heap emptyH(5, false);
+    emptyH.extract();
+}
+
+// ============================================================
 //  MAIN
 // ============================================================
 int main() {
@@ -163,6 +198,7 @@ int main() {
     testBinaryTree();
     testBST();
     testAVL();
+    testHeap();
 
     // Performance report at end
     cout << "\n";

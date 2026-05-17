@@ -17,6 +17,7 @@
 #include "core/trees/bt.h"
 #include "core/trees/bst.h"
 #include "core/trees/avl.h"
+#include "core/trees/heap.h"
 #include "analysis/performance.h"
 #include "analysis/visual.h"
 
@@ -38,6 +39,7 @@ void runDequeModule(Deque& queue);
 void runBTModule(BinaryTree& tree);
 void runBSTModule(BinarySearchTree& tree);
 void runAVLModule(AVLTree& tree);
+void runHeapModule(Heap& minH, Heap& maxH);
 
 // --------------------------------------------------------
 // Utility
@@ -63,6 +65,8 @@ int main() {
     BinaryTree         bt;
     BinarySearchTree   bst;
     AVLTree            avl;
+    Heap               minHeap(100, true);
+    Heap               maxHeap(100, false);
 
     int choice;
 
@@ -169,7 +173,7 @@ int main() {
                     cout << "  1. Binary Tree\n";
                     cout << "  2. Binary Search Tree (BST)\n";
                     cout << "  3. AVL Tree\n";
-                    cout << "  4. Heap (Min/Max) [Under Development]\n";
+                    cout << "  4. Heap (Min/Max)\n";
                     cout << "  5. Back\n";
                     cout << "\n  Enter choice: ";
                     cin >> subChoice;
@@ -177,6 +181,7 @@ int main() {
                     if (subChoice == 1) runBTModule(bt);
                     else if (subChoice == 2) runBSTModule(bst);
                     else if (subChoice == 3) runAVLModule(avl);
+                    else if (subChoice == 4) runHeapModule(minHeap, maxHeap);
 
                 } while (subChoice != 5);
                 break;
@@ -994,6 +999,67 @@ void runAVLModule(AVLTree& tree) {
 
     } while (choice != 3);
 }
+
+// ============================================================
+//  HEAP MODULE RUNNER — M3-T3
+// ============================================================
+void runHeapModule(Heap& minH, Heap& maxH) {
+    int choice;
+    bool useMinHeap = true;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  HEAP MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current Mode: " << (useMinHeap ? "Min-Heap" : "Max-Heap") << "\n";
+        cout << "  Current state:\n";
+        if (useMinHeap) minH.display();
+        else maxH.display();
+        cout << "\n";
+
+        cout << "  1. Insert\n";
+        cout << "  2. Extract Root\n";
+        cout << "  3. Toggle Mode (Min/Max)\n";
+        cout << "  4. Display\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to insert: ";
+                cin >> val;
+                if (useMinHeap) minH.insert(val);
+                else maxH.insert(val);
+                break;
+            }
+            case 2:
+                if (useMinHeap) minH.extract();
+                else maxH.extract();
+                break;
+            case 3:
+                useMinHeap = !useMinHeap;
+                cout << "\n  Switched to " << (useMinHeap ? "Min-Heap" : "Max-Heap") << " mode.\n";
+                break;
+            case 4:
+                cout << "\n";
+                if (useMinHeap) minH.display();
+                else maxH.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+
 
 
 
