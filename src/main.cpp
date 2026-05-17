@@ -29,6 +29,7 @@ void runCircularLLModule(CircularLinkedList& cll);
 void runStaticStackModule(StaticStack& stack);
 void runDynamicStackModule(DynamicStack& stack);
 void runSimpleQueueModule(SimpleQueue& queue);
+void runCircularQueueModule(CircularQueue& queue);
 
 // --------------------------------------------------------
 // Utility
@@ -48,6 +49,7 @@ int main() {
     StaticStack        sStack(100);
     DynamicStack       dStack;
     SimpleQueue        sQueue(100);
+    CircularQueue      cQueue(100);
 
     int choice;
 
@@ -124,7 +126,7 @@ int main() {
                             printSeparator();
                             cout << "\n";
                             cout << "  1. Simple Queue (Array-based)\n";
-                            cout << "  2. Circular Queue [Under Development]\n";
+                            cout << "  2. Circular Queue (Array-based)\n";
                             cout << "  3. Priority Queue [Under Development]\n";
                             cout << "  4. Deque [Under Development]\n";
                             cout << "  5. Back\n";
@@ -132,6 +134,7 @@ int main() {
                             cin >> qChoice;
 
                             if (qChoice == 1) runSimpleQueueModule(sQueue);
+                            else if (qChoice == 2) runCircularQueueModule(cQueue);
 
                         } while (qChoice != 5);
                     }
@@ -621,4 +624,58 @@ void runSimpleQueueModule(SimpleQueue& queue) {
 
     } while (choice != 5);
 }
+
+// ============================================================
+//  CIRCULAR QUEUE MODULE RUNNER — M2-T3
+// ============================================================
+void runCircularQueueModule(CircularQueue& queue) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  CIRCULAR QUEUE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        queue.display();
+        cout << "\n";
+
+        cout << "  1. Enqueue\n";
+        cout << "  2. Dequeue\n";
+        cout << "  3. Peek\n";
+        cout << "  4. Display\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to enqueue: ";
+                cin >> val;
+                queue.enqueue(val);
+                break;
+            }
+            case 2:
+                queue.dequeue();
+                break;
+            case 3:
+                queue.peek();
+                break;
+            case 4:
+                cout << "\n";
+                queue.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+
 

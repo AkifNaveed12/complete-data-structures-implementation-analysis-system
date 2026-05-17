@@ -29,4 +29,25 @@ public:
     void display();
 };
 
+// -------------------------------------------------------
+// CIRCULAR QUEUE (Array-based)
+// -------------------------------------------------------
+class CircularQueue {
+private:
+    int* arr;
+    int  capacity;
+    int  front;
+    int  rear;
+    int  size;
+
+public:
+    CircularQueue(int cap);
+    ~CircularQueue();
+
+    void enqueue(int value);
+    void dequeue();
+    void peek();
+    void display();
+};
+
 #endif

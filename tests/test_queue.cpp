@@ -69,6 +69,62 @@ void testSimpleQueue() {
 }
 
 // ============================================================
+//  CIRCULAR QUEUE TESTS
+// ============================================================
+void testCircularQueue() {
+    printSeparator();
+    cout << COL_ACCENT << "  TEST: CircularQueue" << COL_RESET << "\n";
+    printSeparator();
+
+    CircularQueue cQueue(3); // capacity 3
+
+    // 1. Normal cases
+    cout << "\n[T4.1] Enqueue: 10\n";
+    cQueue.enqueue(10);
+
+    cout << "\n[T4.2] Enqueue: 20\n";
+    cQueue.enqueue(20);
+
+    cout << "\n[T4.3] Peek\n";
+    cQueue.peek();
+
+    cout << "\n[T4.4] Enqueue: 30 (should become full)\n";
+    cQueue.enqueue(30);
+
+    // 2. Edge: Overflow
+    cout << "\n[T4.5] Enqueue: 40 to full queue (should show Error)\n";
+    cQueue.enqueue(40);
+
+    // 3. Normal dequeue
+    cout << "\n[T4.6] Dequeue (should dequeue 10)\n";
+    cQueue.dequeue();
+
+    // 4. Wrap-around enqueue
+    cout << "\n[T4.7] Enqueue: 50 (wrap around to index 0)\n";
+    cQueue.enqueue(50);
+
+    // 5. Wrap-around dequeue
+    cout << "\n[T4.8] Dequeue (should dequeue 20)\n";
+    cQueue.dequeue();
+
+    cout << "\n[T4.9] Dequeue (should dequeue 30)\n";
+    cQueue.dequeue();
+
+    cout << "\n[T4.10] Dequeue (should dequeue 50)\n";
+    cQueue.dequeue();
+
+    // 6. Edge: Underflow
+    cout << "\n[T4.11] Dequeue from empty queue (should show Error)\n";
+    cQueue.dequeue();
+
+    cout << "\n[T4.12] Peek empty queue (should show Error)\n";
+    cQueue.peek();
+    
+    cout << "\n[T4.13] Display empty queue\n";
+    cQueue.display();
+}
+
+// ============================================================
 //  MAIN
 // ============================================================
 int main() {
@@ -78,6 +134,7 @@ int main() {
     printSeparator();
 
     testSimpleQueue();
+    testCircularQueue();
 
     // Performance report at end
     cout << "\n";
