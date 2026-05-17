@@ -29,6 +29,9 @@ void runCircularLLModule(CircularLinkedList& cll);
 void runStaticStackModule(StaticStack& stack);
 void runDynamicStackModule(DynamicStack& stack);
 void runSimpleQueueModule(SimpleQueue& queue);
+void runCircularQueueModule(CircularQueue& queue);
+void runPriorityQueueModule(PriorityQueue& queue);
+void runDequeModule(Deque& queue);
 
 // --------------------------------------------------------
 // Utility
@@ -48,6 +51,9 @@ int main() {
     StaticStack        sStack(100);
     DynamicStack       dStack;
     SimpleQueue        sQueue(100);
+    CircularQueue      cQueue(100);
+    PriorityQueue      pQueue;
+    Deque              dq;
 
     int choice;
 
@@ -124,14 +130,17 @@ int main() {
                             printSeparator();
                             cout << "\n";
                             cout << "  1. Simple Queue (Array-based)\n";
-                            cout << "  2. Circular Queue [Under Development]\n";
-                            cout << "  3. Priority Queue [Under Development]\n";
-                            cout << "  4. Deque [Under Development]\n";
+                            cout << "  2. Circular Queue (Array-based)\n";
+                            cout << "  3. Priority Queue (Linked List-based)\n";
+                            cout << "  4. Deque (Doubly Linked List-based)\n";
                             cout << "  5. Back\n";
                             cout << "\n  Enter choice: ";
                             cin >> qChoice;
 
                             if (qChoice == 1) runSimpleQueueModule(sQueue);
+                            else if (qChoice == 2) runCircularQueueModule(cQueue);
+                            else if (qChoice == 3) runPriorityQueueModule(pQueue);
+                            else if (qChoice == 4) runDequeModule(dq);
 
                         } while (qChoice != 5);
                     }
@@ -621,4 +630,174 @@ void runSimpleQueueModule(SimpleQueue& queue) {
 
     } while (choice != 5);
 }
+
+// ============================================================
+//  CIRCULAR QUEUE MODULE RUNNER — M2-T3
+// ============================================================
+void runCircularQueueModule(CircularQueue& queue) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  CIRCULAR QUEUE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        queue.display();
+        cout << "\n";
+
+        cout << "  1. Enqueue\n";
+        cout << "  2. Dequeue\n";
+        cout << "  3. Peek\n";
+        cout << "  4. Display\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to enqueue: ";
+                cin >> val;
+                queue.enqueue(val);
+                break;
+            }
+            case 2:
+                queue.dequeue();
+                break;
+            case 3:
+                queue.peek();
+                break;
+            case 4:
+                cout << "\n";
+                queue.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+
+// ============================================================
+//  PRIORITY QUEUE MODULE RUNNER — M2-T4
+// ============================================================
+void runPriorityQueueModule(PriorityQueue& queue) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  PRIORITY QUEUE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        queue.display();
+        cout << "\n";
+
+        cout << "  1. Enqueue (Insert with Priority)\n";
+        cout << "  2. Dequeue (Extract Max)\n";
+        cout << "  3. Peek\n";
+        cout << "  4. Display\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val, prio;
+                cout << "  Value to enqueue: ";
+                cin >> val;
+                cout << "  Priority (higher number = higher priority): ";
+                cin >> prio;
+                queue.enqueue(val, prio);
+                break;
+            }
+            case 2:
+                queue.dequeue();
+                break;
+            case 3:
+                queue.peek();
+                break;
+            case 4:
+                cout << "\n";
+                queue.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+
+// ============================================================
+//  DEQUE MODULE RUNNER — M2-T5
+// ============================================================
+void runDequeModule(Deque& queue) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  DEQUE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        queue.display();
+        cout << "\n";
+
+        cout << "  1. Insert Front\n";
+        cout << "  2. Insert Rear\n";
+        cout << "  3. Delete Front\n";
+        cout << "  4. Delete Rear\n";
+        cout << "  5. Display\n";
+        cout << "  6. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to insert at front: ";
+                cin >> val;
+                queue.insertFront(val);
+                break;
+            }
+            case 2: {
+                int val;
+                cout << "  Value to insert at rear: ";
+                cin >> val;
+                queue.insertRear(val);
+                break;
+            }
+            case 3:
+                queue.deleteFront();
+                break;
+            case 4:
+                queue.deleteRear();
+                break;
+            case 5:
+                cout << "\n";
+                queue.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 5) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 6);
+}
+
 

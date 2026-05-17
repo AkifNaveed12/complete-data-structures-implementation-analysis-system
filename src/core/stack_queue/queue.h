@@ -29,4 +29,79 @@ public:
     void display();
 };
 
+// -------------------------------------------------------
+// CIRCULAR QUEUE (Array-based)
+// -------------------------------------------------------
+class CircularQueue {
+private:
+    int* arr;
+    int  capacity;
+    int  front;
+    int  rear;
+    int  size;
+
+public:
+    CircularQueue(int cap);
+    ~CircularQueue();
+
+    void enqueue(int value);
+    void dequeue();
+    void peek();
+    void display();
+};
+
+// -------------------------------------------------------
+// PRIORITY QUEUE (Linked-List based)
+// -------------------------------------------------------
+
+struct PNode {
+    int    data;
+    int    priority; // higher number = higher priority, or lower number = higher priority? Let's assume higher number = higher priority.
+    PNode* next;
+    PNode(int val, int prio);
+};
+
+class PriorityQueue {
+private:
+    PNode* frontNode;
+    int    size;
+
+public:
+    PriorityQueue();
+    ~PriorityQueue();
+
+    void enqueue(int value, int priority);
+    void dequeue();
+    void peek();
+    void display();
+};
+
+// -------------------------------------------------------
+// DEQUE (Doubly Linked-List based)
+// -------------------------------------------------------
+
+struct DQNode {
+    int     data;
+    DQNode* next;
+    DQNode* prev;
+    DQNode(int val);
+};
+
+class Deque {
+private:
+    DQNode* frontNode;
+    DQNode* rearNode;
+    int     size;
+
+public:
+    Deque();
+    ~Deque();
+
+    void insertFront(int value);
+    void insertRear(int value);
+    void deleteFront();
+    void deleteRear();
+    void display();
+};
+
 #endif
