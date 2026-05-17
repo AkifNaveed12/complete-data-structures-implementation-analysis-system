@@ -175,6 +175,49 @@ void testPriorityQueue() {
 }
 
 // ============================================================
+//  DEQUE TESTS
+// ============================================================
+void testDeque() {
+    printSeparator();
+    cout << COL_ACCENT << "  TEST: Deque" << COL_RESET << "\n";
+    printSeparator();
+
+    Deque dq;
+
+    // 1. Normal cases
+    cout << "\n[T6.1] Insert Front: 20\n";
+    dq.insertFront(20);
+
+    cout << "\n[T6.2] Insert Rear: 30\n";
+    dq.insertRear(30);
+
+    cout << "\n[T6.3] Insert Front: 10\n";
+    dq.insertFront(10);
+
+    // Queue should be: 10 <-> 20 <-> 30
+
+    // 2. Normal deletes
+    cout << "\n[T6.4] Delete Rear (should delete 30)\n";
+    dq.deleteRear();
+
+    cout << "\n[T6.5] Delete Front (should delete 10)\n";
+    dq.deleteFront();
+
+    cout << "\n[T6.6] Delete Front (should delete 20)\n";
+    dq.deleteFront();
+
+    // 3. Edge: Underflow
+    cout << "\n[T6.7] Delete Front from empty (should show Error)\n";
+    dq.deleteFront();
+
+    cout << "\n[T6.8] Delete Rear from empty (should show Error)\n";
+    dq.deleteRear();
+    
+    cout << "\n[T6.9] Display empty deque\n";
+    dq.display();
+}
+
+// ============================================================
 //  MAIN
 // ============================================================
 int main() {
@@ -186,6 +229,7 @@ int main() {
     testSimpleQueue();
     testCircularQueue();
     testPriorityQueue();
+    testDeque();
 
     // Performance report at end
     cout << "\n";

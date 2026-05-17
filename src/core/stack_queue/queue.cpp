@@ -510,3 +510,217 @@ void PriorityQueue::peek() {
     printResult("Front element is " + to_string(frontNode->data) + " (Priority: " + to_string(frontNode->priority) + ")");
     Performance::log("PriorityQueue", "Peek", 1, 0);
 }
+
+// ============================================================
+// DEQUE IMPLEMENTATION
+// ============================================================
+
+// --------------------------------------------------------
+// Internal helper: print full deque state
+// Format: FRONT <-> [ 10 ] <-> [ 20 ] <-> [ 30 ] <-> REAR
+// --------------------------------------------------------
+static void printDequeState(DQNode* frontNode, DQNode* activeNode = nullptr) {
+    if (frontNode == nullptr) {
+        cout << "[ empty ]\n";
+        return;
+    }
+
+    cout << "FRONT <-> ";
+    DQNode* cur = frontNode;
+    while (cur != nullptr) {
+        if (cur == activeNode) {
+            cout << "[ " << highlight(cur->data) << " ]";
+        } else {
+            cout << "[ " << cur->data << " ]";
+        }
+        
+        if (cur->next != nullptr) {
+            cout << " <-> ";
+        }
+        cur = cur->next;
+    }
+    cout << " <-> REAR\n";
+}
+
+// --------------------------------------------------------
+// DQNode Constructor
+// --------------------------------------------------------
+DQNode::DQNode(int val) {
+    data = val;
+    next = nullptr;
+    prev = nullptr;
+}
+
+// --------------------------------------------------------
+// Constructor
+// --------------------------------------------------------
+Deque::Deque() {
+    frontNode = nullptr;
+    rearNode = nullptr;
+    size = 0;
+}
+
+// --------------------------------------------------------
+// Destructor
+// --------------------------------------------------------
+Deque::~Deque() {
+    DQNode* cur = frontNode;
+    while (cur != nullptr) {
+        DQNode* nxt = cur->next;
+        delete cur;
+        cur = nxt;
+    }
+}
+
+// --------------------------------------------------------
+// display
+// --------------------------------------------------------
+void Deque::display() {
+    if (size == 0) {
+        printError("Structure is empty");
+        return;
+    }
+    printDequeState(frontNode);
+}
+
+// --------------------------------------------------------
+// insertFront — O(1)
+// --------------------------------------------------------
+void Deque::insertFront(int value) {
+    printHeader("Deque", "Insert Front: " + to_string(value));
+
+    printStep(1, "BEFORE:");
+    printDequeState(frontNode);
+    sleep_ms(500);
+
+    DQNode* newNode = new DQNode(value);
+    printStep(2, "Creating new node " + highlight(value));
+    sleep_ms(300);
+
+    if (frontNode == nullptr) {
+        frontNode = rearNode = newNode;
+    } else {
+        newNode->next = frontNode;
+        frontNode->prev = newNode;
+        frontNode = newNode;
+    }
+    size++;
+
+    printStep(3, "Inserting at front");
+    printDequeState(frontNode, newNode);
+    sleep_ms(300);
+
+    printResult("AFTER: " + to_string(value) + " inserted at front");
+    printDequeState(frontNode);
+
+    Performance::log("Deque", "InsertFront", 1, 0);
+}
+
+// --------------------------------------------------------
+// insertRear — O(1)
+// --------------------------------------------------------
+void Deque::insertRear(int value) {
+    printHeader("Deque", "Insert Rear: " + to_string(value));
+
+    printStep(1, "BEFORE:");
+    printDequeState(frontNode);
+    sleep_ms(500);
+
+    DQNode* newNode = new DQNode(value);
+    printStep(2, "Creating new node " + highlight(value));
+    sleep_ms(300);
+
+    if (rearNode == nullptr) {
+        frontNode = rearNode = newNode;
+    } else {
+        newNode->prev = rearNode;
+        rearNode->next = newNode;
+        rearNode = newNode;
+    }
+    size++;
+
+    printStep(3, "Inserting at rear");
+    printDequeState(frontNode, newNode);
+    sleep_ms(300);
+
+    printResult("AFTER: " + to_string(value) + " inserted at rear");
+    printDequeState(frontNode);
+
+    Performance::log("Deque", "InsertRear", 1, 0);
+}
+
+// --------------------------------------------------------
+// deleteFront — O(1)
+// --------------------------------------------------------
+void Deque::deleteFront() {
+    printHeader("Deque", "Delete Front");
+
+    if (size == 0) {
+        printError("Structure is empty");
+        Performance::log("Deque", "DeleteFront", 0, 0);
+        return;
+    }
+
+    printStep(1, "BEFORE:");
+    printDequeState(frontNode);
+    sleep_ms(500);
+
+    int deletedValue = frontNode->data;
+
+    printStep(2, "Deleting from front");
+    printDequeState(frontNode, frontNode);
+    sleep_ms(500);
+
+    DQNode* delNode = frontNode;
+    frontNode = frontNode->next;
+    if (frontNode != nullptr) {
+        frontNode->prev = nullptr;
+    } else {
+        rearNode = nullptr; // List became empty
+    }
+    delete delNode;
+    size--;
+
+    printResult("AFTER: " + to_string(deletedValue) + " deleted from front");
+    printDequeState(frontNode);
+
+    Performance::log("Deque", "DeleteFront", 1, 0);
+}
+
+// --------------------------------------------------------
+// deleteRear — O(1)
+// --------------------------------------------------------
+void Deque::deleteRear() {
+    printHeader("Deque", "Delete Rear");
+
+    if (size == 0) {
+        printError("Structure is empty");
+        Performance::log("Deque", "DeleteRear", 0, 0);
+        return;
+    }
+
+    printStep(1, "BEFORE:");
+    printDequeState(frontNode);
+    sleep_ms(500);
+
+    int deletedValue = rearNode->data;
+
+    printStep(2, "Deleting from rear");
+    printDequeState(frontNode, rearNode);
+    sleep_ms(500);
+
+    DQNode* delNode = rearNode;
+    rearNode = rearNode->prev;
+    if (rearNode != nullptr) {
+        rearNode->next = nullptr;
+    } else {
+        frontNode = nullptr; // List became empty
+    }
+    delete delNode;
+    size--;
+
+    printResult("AFTER: " + to_string(deletedValue) + " deleted from rear");
+    printDequeState(frontNode);
+
+    Performance::log("Deque", "DeleteRear", 1, 0);
+}

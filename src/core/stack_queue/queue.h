@@ -76,4 +76,32 @@ public:
     void display();
 };
 
+// -------------------------------------------------------
+// DEQUE (Doubly Linked-List based)
+// -------------------------------------------------------
+
+struct DQNode {
+    int     data;
+    DQNode* next;
+    DQNode* prev;
+    DQNode(int val);
+};
+
+class Deque {
+private:
+    DQNode* frontNode;
+    DQNode* rearNode;
+    int     size;
+
+public:
+    Deque();
+    ~Deque();
+
+    void insertFront(int value);
+    void insertRear(int value);
+    void deleteFront();
+    void deleteRear();
+    void display();
+};
+
 #endif
