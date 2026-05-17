@@ -4,5 +4,6 @@
 #include "32HU2WC4SU/moc_ArrayView.cpp"
 #include "32HU2WC4SU/moc_LinkedListView.cpp"
 #include "32HU2WC4SU/moc_ModulePanel.cpp"
+#include "32HU2WC4SU/moc_PerformanceView.cpp"
 #include "32HU2WC4SU/moc_StackQueueView.cpp"
 #include "32HU2WC4SU/moc_TreeView.cpp"

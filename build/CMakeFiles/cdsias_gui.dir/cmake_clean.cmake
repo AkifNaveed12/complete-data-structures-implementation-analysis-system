@@ -31,6 +31,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/cdsias_gui.dir/src/gui/modules/LinkedListView.cpp.obj.d"
   "CMakeFiles/cdsias_gui.dir/src/gui/modules/ModulePanel.cpp.obj"
   "CMakeFiles/cdsias_gui.dir/src/gui/modules/ModulePanel.cpp.obj.d"
+  "CMakeFiles/cdsias_gui.dir/src/gui/modules/PerformanceView.cpp.obj"
+  "CMakeFiles/cdsias_gui.dir/src/gui/modules/PerformanceView.cpp.obj.d"
   "CMakeFiles/cdsias_gui.dir/src/gui/modules/StackQueueView.cpp.obj"
   "CMakeFiles/cdsias_gui.dir/src/gui/modules/StackQueueView.cpp.obj.d"
   "CMakeFiles/cdsias_gui.dir/src/gui/modules/TreeView.cpp.obj"

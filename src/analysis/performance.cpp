@@ -150,3 +150,9 @@ void Performance::clear() {
 int Performance::count() {
     return (int)logs.size();
 }
+// --------------------------------------------------------
+// Expose logs for GUI
+// --------------------------------------------------------
+const vector<Record>& Performance::getLogs() {
+    return logs;
+}

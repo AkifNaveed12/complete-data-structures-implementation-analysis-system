@@ -37,6 +37,7 @@ set(GUI_SOURCES
     src/gui/modules/LinkedListView.cpp
     src/gui/modules/StackQueueView.cpp
     src/gui/modules/TreeView.cpp
+    src/gui/modules/PerformanceView.cpp
 )
 
 add_executable(cdsias_gui

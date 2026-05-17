@@ -43,6 +43,9 @@ public:
 
     // Total operations logged
     static int count();
+
+    // Expose logs for GUI
+    static const vector<Record>& getLogs();
 };
 
 #endif

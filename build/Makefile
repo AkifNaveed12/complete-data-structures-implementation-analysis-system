@@ -538,6 +538,30 @@ src/gui/modules/ModulePanel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cdsias_gui.dir\build.make CMakeFiles/cdsias_gui.dir/src/gui/modules/ModulePanel.cpp.s
 .PHONY : src/gui/modules/ModulePanel.cpp.s
 
+src/gui/modules/PerformanceView.obj: src/gui/modules/PerformanceView.cpp.obj
+.PHONY : src/gui/modules/PerformanceView.obj
+
+# target to build an object file
+src/gui/modules/PerformanceView.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cdsias_gui.dir\build.make CMakeFiles/cdsias_gui.dir/src/gui/modules/PerformanceView.cpp.obj
+.PHONY : src/gui/modules/PerformanceView.cpp.obj
+
+src/gui/modules/PerformanceView.i: src/gui/modules/PerformanceView.cpp.i
+.PHONY : src/gui/modules/PerformanceView.i
+
+# target to preprocess a source file
+src/gui/modules/PerformanceView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cdsias_gui.dir\build.make CMakeFiles/cdsias_gui.dir/src/gui/modules/PerformanceView.cpp.i
+.PHONY : src/gui/modules/PerformanceView.cpp.i
+
+src/gui/modules/PerformanceView.s: src/gui/modules/PerformanceView.cpp.s
+.PHONY : src/gui/modules/PerformanceView.s
+
+# target to generate assembly for a file
+src/gui/modules/PerformanceView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cdsias_gui.dir\build.make CMakeFiles/cdsias_gui.dir/src/gui/modules/PerformanceView.cpp.s
+.PHONY : src/gui/modules/PerformanceView.cpp.s
+
 src/gui/modules/StackQueueView.obj: src/gui/modules/StackQueueView.cpp.obj
 .PHONY : src/gui/modules/StackQueueView.obj
 
@@ -669,6 +693,9 @@ help:
 	@echo ... src/gui/modules/ModulePanel.obj
 	@echo ... src/gui/modules/ModulePanel.i
 	@echo ... src/gui/modules/ModulePanel.s
+	@echo ... src/gui/modules/PerformanceView.obj
+	@echo ... src/gui/modules/PerformanceView.i
+	@echo ... src/gui/modules/PerformanceView.s
 	@echo ... src/gui/modules/StackQueueView.obj
 	@echo ... src/gui/modules/StackQueueView.i
 	@echo ... src/gui/modules/StackQueueView.s

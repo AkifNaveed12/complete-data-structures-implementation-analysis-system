@@ -4,12 +4,14 @@
 #include "modules/LinkedListView.h"
 #include "modules/StackQueueView.h"
 #include "modules/TreeView.h"
+#include "modules/PerformanceView.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
 #include <QApplication>
+#include <QTabWidget>
 
 // ============================================================
 // Module accent colors — design.md §2.3
@@ -152,18 +154,26 @@ void MainWindow::setupDashboard() {
     // Module stack
     m_moduleStack = new QStackedWidget(body);
 
-    // M0: Array
-    m_moduleStack->addWidget(new ArrayView(m_moduleStack));
-    // M1: Linked List (Singly + Doubly + Circular)
-    m_moduleStack->addWidget(new LinkedListView(m_moduleStack));
-    // M2: Stack & Queue (all 6 structures)
+    // M0: Linear Structures (Array + Linked List grouped in a modern QTabWidget)
+    QTabWidget* linearTabs = new QTabWidget(m_moduleStack);
+    linearTabs->setStyleSheet(R"(
+        QTabWidget::pane { border: none; }
+        QTabBar::tab { background: #1a1a2e; color: #8888aa; padding: 12px 30px; font-size: 15px; border-top-left-radius: 6px; border-top-right-radius: 6px; margin-right: 4px; }
+        QTabBar::tab:selected { background: #1e1e2e; color: #4FC3F7; font-weight: bold; border-bottom: 2px solid #4FC3F7; }
+        QTabBar::tab:hover:!selected { background: #252540; }
+    )");
+    linearTabs->addTab(new ArrayView(linearTabs), "Array");
+    linearTabs->addTab(new LinkedListView(linearTabs), "Linked List");
+    m_moduleStack->addWidget(linearTabs);
+
+    // M1: Stack & Queue
     m_moduleStack->addWidget(new StackQueueView(m_moduleStack));
-    // M3: Trees (BT, BST, AVL, Heap)
+    // M2: Trees
     m_moduleStack->addWidget(new TreeView(m_moduleStack));
 
-    // M4-M6: Placeholder panels (future phases)
+    // M3-M5: Placeholder panels
     static const char* PH[] = {
-        "Searching & Sorting", "Hashing", "Performance Report"
+        "Graph Algorithms", "Searching & Sorting", "Hashing"
     };
     for (int i = 0; i < 3; i++) {
         QWidget* ph = new QWidget(m_moduleStack);
@@ -171,7 +181,7 @@ void MainWindow::setupDashboard() {
         QLabel* lbl = new QLabel(
             QString("<span style='font-size:22px;font-weight:bold;color:%1;'>%2</span>"
                     "<br><br><span style='color:#444466;font-size:14px;'>Module coming in next phase</span>")
-                .arg(MODULE_DEFS[i+4].accent).arg(PH[i]),
+                .arg(MODULE_DEFS[i+3].accent).arg(PH[i]),
             ph);
         lbl->setAlignment(Qt::AlignCenter);
         lbl->setTextFormat(Qt::RichText);
@@ -179,6 +189,9 @@ void MainWindow::setupDashboard() {
         pvl->addWidget(lbl);
         m_moduleStack->addWidget(ph);
     }
+
+    // M6: Performance Report
+    m_moduleStack->addWidget(new PerformanceView(m_moduleStack));
 
     bl->addWidget(m_moduleStack, 1);
     vl->addWidget(body, 1);

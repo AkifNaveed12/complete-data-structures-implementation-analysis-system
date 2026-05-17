@@ -6045,6 +6045,7 @@ cdsias_gui_autogen/timestamp: C:/Qt/6.11.0/mingw_64/include/QtCore/QObject \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QPushButton \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QSplitter \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QStackedWidget \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/QTableWidget \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QTextEdit \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
@@ -6074,6 +6075,8 @@ cdsias_gui_autogen/timestamp: C:/Qt/6.11.0/mingw_64/include/QtCore/QObject \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstyle.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstyleoption.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtabbar.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtableview.h \
+  C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtablewidget.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtabwidget.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtextedit.h \
   C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
@@ -6545,12 +6548,18 @@ cdsias_gui_autogen/timestamp: C:/Qt/6.11.0/mingw_64/include/QtCore/QObject \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/LinkedListView.h \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/ModulePanel.cpp \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/ModulePanel.h \
+  D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.cpp \
+  D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.h \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/StackQueueView.cpp \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/StackQueueView.h \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/TreeView.cpp \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/TreeView.h \
   D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/visual_qt.cpp
 
+
+D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.h:
+
+D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.cpp:
 
 cdsias_gui_autogen/moc_predefs.h:
 
@@ -6832,6 +6841,8 @@ C:/mingw64/include/c++/15.2.0/bits/enable_special_members.h:
 
 C:/Qt/6.11.0/mingw_64/include/QtCore/qmalloc.h:
 
+C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtableview.h:
+
 C:/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h:
 
 C:/mingw64/include/c++/15.2.0/bits/charconv.h:
@@ -6945,6 +6956,8 @@ C:/mingw64/x86_64-w64-mingw32/include/assert.h:
 C:/Qt/6.11.0/mingw_64/lib/cmake/Qt6Gui/Qt6QWindowsIntegrationPluginConfig.cmake:
 
 C:/Qt/6.11.0/mingw_64/include/QtGui/qwindowdefs_win.h:
+
+C:/Qt/6.11.0/mingw_64/include/QtWidgets/QTableWidget:
 
 C:/Qt/6.11.0/mingw_64/include/QtGui/qtransform.h:
 
@@ -7717,6 +7730,8 @@ C:/mingw64/include/c++/15.2.0/bits/stl_algobase.h:
 C:/mingw64/include/c++/15.2.0/tr1/special_function_util.h:
 
 C:/mingw64/x86_64-w64-mingw32/include/malloc.h:
+
+C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtablewidget.h:
 
 C:/Qt/6.11.0/mingw_64/include/QtWidgets/qpushbutton.h:
 

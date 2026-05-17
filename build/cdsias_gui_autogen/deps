@@ -190,6 +190,7 @@ cdsias_gui_autogen/timestamp: \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/QPushButton \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/QSplitter \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/QStackedWidget \
+	C:/Qt/6.11.0/mingw_64/include/QtWidgets/QTableWidget \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/QTextEdit \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/QVBoxLayout \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/QWidget \
@@ -219,6 +220,8 @@ cdsias_gui_autogen/timestamp: \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstyle.h \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qstyleoption.h \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtabbar.h \
+	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtableview.h \
+	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtablewidget.h \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtabwidget.h \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtextedit.h \
 	C:/Qt/6.11.0/mingw_64/include/QtWidgets/qtwidgets-config.h \
@@ -689,6 +692,8 @@ cdsias_gui_autogen/timestamp: \
 	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/LinkedListView.h \
 	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/ModulePanel.cpp \
 	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/ModulePanel.h \
+	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.cpp \
+	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.h \
 	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/StackQueueView.cpp \
 	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/StackQueueView.h \
 	D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/TreeView.cpp \

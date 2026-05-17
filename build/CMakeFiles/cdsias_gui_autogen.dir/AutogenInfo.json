@@ -363,6 +363,12 @@
 			null
 		],
 		[
+			"D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.h",
+			"MU",
+			"32HU2WC4SU/moc_PerformanceView.cpp",
+			null
+		],
+		[
 			"D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/StackQueueView.h",
 			"MU",
 			"32HU2WC4SU/moc_StackQueueView.cpp",
@@ -524,6 +530,11 @@
 		],
 		[
 			"D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/ModulePanel.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/Workspace/Projects/cdsias-dsa-engine/complete-data-structures-implementation-analysis-system/src/gui/modules/PerformanceView.cpp",
 			"MU",
 			null
 		],
