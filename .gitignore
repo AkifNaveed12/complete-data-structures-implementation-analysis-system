@@ -39,3 +39,10 @@
 
 # debug information files
 *.dwo
+
+# Build and IDE directories
+build/
+.vscode/
+.idea/
+CMakeCache.txt
+CMakeFiles/
