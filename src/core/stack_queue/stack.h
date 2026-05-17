@@ -26,6 +26,7 @@ public:
     void pop();
     void peek();
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI: fills top-to-bottom
 };
 
 // -------------------------------------------------------
@@ -51,6 +52,7 @@ public:
     void pop();
     void peek();
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
 
 #endif

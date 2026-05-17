@@ -205,3 +205,10 @@ void Heap::extract() {
 
     Performance::log(type, "Extract", steps, comparisons);
 }
+
+// GUI Helper
+int Heap::getSnapshot(int* out, int maxSize) const {
+    int count = size < maxSize ? size : maxSize;
+    for (int i = 0; i < count; i++) out[i] = array[i];
+    return count;
+}

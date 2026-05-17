@@ -1,6 +1,9 @@
 #include "MainWindow.h"
 #include "modules/ModulePanel.h"
 #include "modules/ArrayView.h"
+#include "modules/LinkedListView.h"
+#include "modules/StackQueueView.h"
+#include "modules/TreeView.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -149,21 +152,26 @@ void MainWindow::setupDashboard() {
     // Module stack
     m_moduleStack = new QStackedWidget(body);
 
-    // M0: Array (real)
+    // M0: Array
     m_moduleStack->addWidget(new ArrayView(m_moduleStack));
+    // M1: Linked List (Singly + Doubly + Circular)
+    m_moduleStack->addWidget(new LinkedListView(m_moduleStack));
+    // M2: Stack & Queue (all 6 structures)
+    m_moduleStack->addWidget(new StackQueueView(m_moduleStack));
+    // M3: Trees (BT, BST, AVL, Heap)
+    m_moduleStack->addWidget(new TreeView(m_moduleStack));
 
-    // M1-M6: placeholder
+    // M4-M6: Placeholder panels (future phases)
     static const char* PH[] = {
-        "Stack & Queue", "Trees", "Graph Algorithms",
         "Searching & Sorting", "Hashing", "Performance Report"
     };
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 3; i++) {
         QWidget* ph = new QWidget(m_moduleStack);
         ph->setStyleSheet("background:#0d0d0d;");
         QLabel* lbl = new QLabel(
             QString("<span style='font-size:22px;font-weight:bold;color:%1;'>%2</span>"
                     "<br><br><span style='color:#444466;font-size:14px;'>Module coming in next phase</span>")
-                .arg(MODULE_DEFS[i+1].accent).arg(PH[i]),
+                .arg(MODULE_DEFS[i+4].accent).arg(PH[i]),
             ph);
         lbl->setAlignment(Qt::AlignCenter);
         lbl->setTextFormat(Qt::RichText);

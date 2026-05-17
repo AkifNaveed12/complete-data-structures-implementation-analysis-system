@@ -303,3 +303,21 @@ void DynamicStack::peek() {
 }
 
 
+
+
+// ============================================================
+// GUI Helper: getSnapshot -- fills int[] top-to-bottom
+// ============================================================
+int StaticStack::getSnapshot(int* out, int maxSize) const {
+    int count = 0;
+    for (int i = top; i >= 0 && count < maxSize; i--)
+        out[count++] = arr[i];
+    return count;
+}
+
+int DynamicStack::getSnapshot(int* out, int maxSize) const {
+    int count = 0;
+    SNode* cur = topNode;
+    while (cur && count < maxSize) { out[count++] = cur->data; cur = cur->next; }
+    return count;
+}

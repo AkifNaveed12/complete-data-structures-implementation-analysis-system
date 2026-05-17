@@ -29,6 +29,9 @@ public:
     void insert(int value);
     void extract();
     void display();
+    int  getSnapshot(int* out, int maxSize) const;
+    bool isMin()    const { return isMinHeap; }
+    int  getSize()  const { return size; }
 };
 
 #endif

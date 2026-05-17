@@ -782,3 +782,33 @@ bool CircularLinkedList::search(int value) {
 }
 
 
+
+
+// ============================================================
+// GUI Helper: getSnapshot
+// ============================================================
+int LinkedList::getSnapshot(int* out, int maxSize) const {
+    int count = 0;
+    Node* cur = head;
+    while (cur && count < maxSize) { out[count++] = cur->data; cur = cur->next; }
+    return count;
+}
+
+int DoublyLinkedList::getSnapshot(int* out, int maxSize) const {
+    int count = 0;
+    DNode* cur = head;
+    while (cur && count < maxSize) { out[count++] = cur->data; cur = cur->next; }
+    return count;
+}
+
+int CircularLinkedList::getSnapshot(int* out, int maxSize) const {
+    if (!head || size == 0) return 0;
+    int count = 0;
+    CNode* cur = head;
+    do {
+        if (count >= maxSize) break;
+        out[count++] = cur->data;
+        cur = cur->next;
+    } while (cur != head);
+    return count;
+}

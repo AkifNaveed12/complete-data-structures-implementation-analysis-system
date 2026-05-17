@@ -26,6 +26,7 @@ public:
     void preorder();
     void postorder();
     void display();
+    TreeNode* getRoot() const { return root; }
 };
 
 #endif

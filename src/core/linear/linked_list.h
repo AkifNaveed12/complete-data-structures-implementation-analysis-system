@@ -30,6 +30,7 @@ public:
     void deleteValue(int value);
     void search(int value);
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
 
 // -------------------------------------------------------
@@ -57,10 +58,8 @@ public:
     void deleteByValue(int value);
     bool search(int value);
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
-
-// -------------------------------------------------------
-// CIRCULAR LINKED LIST
 // contracts.md §5: class CircularLinkedList
 // -------------------------------------------------------
 
@@ -83,6 +82,7 @@ public:
     void deleteByValue(int value);
     bool search(int value);
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
 
 #endif

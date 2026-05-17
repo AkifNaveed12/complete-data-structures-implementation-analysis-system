@@ -23,9 +23,10 @@ public:
     ~BinarySearchTree();
 
     void insert(int value);
-    void remove(int value); // Changed from 'delete' because 'delete' is a C++ keyword
+    void remove(int value);
     void search(int value);
     void display();
+    TreeNode* getRoot() const { return root; }
 };
 
 #endif

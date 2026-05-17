@@ -724,3 +724,25 @@ void Deque::deleteRear() {
 
     Performance::log("Deque", "DeleteRear", 1, 0);
 }
+
+
+// ============================================================
+// GUI Helper: getSnapshot
+// ============================================================
+int SimpleQueue::getSnapshot(int* out, int maxSize) const {
+    int count = 0;
+    for (int i = front; i <= rear && count < maxSize; i++)
+        out[count++] = arr[i];
+    return count;
+}
+
+int CircularQueue::getSnapshot(int* out, int maxSize) const {
+    if (size == 0) return 0;
+    int count = 0;
+    int i = front;
+    while (count < size && count < maxSize) {
+        out[count++] = arr[i];
+        i = (i + 1) % capacity;
+    }
+    return count;
+}

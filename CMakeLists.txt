@@ -34,6 +34,9 @@ set(GUI_SOURCES
     src/gui/GlobalGuiNotifier.cpp
     src/gui/modules/ModulePanel.cpp
     src/gui/modules/ArrayView.cpp
+    src/gui/modules/LinkedListView.cpp
+    src/gui/modules/StackQueueView.cpp
+    src/gui/modules/TreeView.cpp
 )
 
 add_executable(cdsias_gui

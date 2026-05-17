@@ -141,18 +141,39 @@ void ArrayView::setupOps() {
 }
 
 void ArrayView::onOpSelected(int row) {
-    bool needIndex = (row == 1 || row == 2);
+    // Show input2 ONLY for Insert at Index (needs both Value and Index)
+    bool needIndex = (row == 1);
     input2Label()->setVisible(needIndex);
     input2()->setVisible(needIndex);
 
+    // Reset visibility of input1
+    input1()->show();
+    input1Label()->show();
+
     switch (row) {
-        case 0: input1Label()->setText("Value:"); break;
-        case 1: input1Label()->setText("Value:"); input2Label()->setText("Index:"); break;
-        case 2: input1Label()->setText("Index:"); break;
-        case 3: input1Label()->setText("Value:"); break;
-        case 4: input1()->hide(); input1Label()->hide(); break;
+        case 0: // Insert at End
+            input1Label()->setText("Value:");
+            input1()->setPlaceholderText("e.g. 42");
+            break;
+        case 1: // Insert at Index
+            input1Label()->setText("Value:");
+            input1()->setPlaceholderText("e.g. 42");
+            input2Label()->setText("Index:");
+            input2()->setPlaceholderText("e.g. 0");
+            break;
+        case 2: // Delete at Index
+            input1Label()->setText("Index:");
+            input1()->setPlaceholderText("e.g. 0");
+            break;
+        case 3: // Search Value
+            input1Label()->setText("Value:");
+            input1()->setPlaceholderText("e.g. 42");
+            break;
+        case 4: // Display — no input needed
+            input1()->hide();
+            input1Label()->hide();
+            break;
     }
-    if (row != 4) { input1()->show(); input1Label()->show(); }
 }
 
 void ArrayView::onRun() {
@@ -164,9 +185,15 @@ void ArrayView::onRun() {
 
     switch (row) {
         case 0: op = ArrayWorker::InsertEnd; v1 = input1()->text().toInt(&ok1); break;
-        case 1: op = ArrayWorker::InsertAt;  v1 = input1()->text().toInt(&ok1); v2 = input2()->text().toInt(&ok2); break;
-        case 2: op = ArrayWorker::DeleteAt;  v1 = input1()->text().toInt(&ok1); break;
-        case 3: op = ArrayWorker::Search;    v1 = input1()->text().toInt(&ok1); break;
+        case 1:
+            // input1 = Value, input2 = Index
+            // insertAt(index, value) → pass v1=index(from input2), v2=value(from input1)
+            op = ArrayWorker::InsertAt;
+            v2 = input1()->text().toInt(&ok1);   // value
+            v1 = input2()->text().toInt(&ok2);   // index
+            break;
+        case 2: op = ArrayWorker::DeleteAt; v1 = input1()->text().toInt(&ok1); break;
+        case 3: op = ArrayWorker::Search;   v1 = input1()->text().toInt(&ok1); break;
         default: op = ArrayWorker::Display; break;
     }
 

@@ -27,6 +27,7 @@ public:
     void dequeue();
     void peek();
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
 
 // -------------------------------------------------------
@@ -48,6 +49,7 @@ public:
     void dequeue();
     void peek();
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
 
 // -------------------------------------------------------
@@ -56,7 +58,7 @@ public:
 
 struct PNode {
     int    data;
-    int    priority; // higher number = higher priority, or lower number = higher priority? Let's assume higher number = higher priority.
+    int    priority;
     PNode* next;
     PNode(int val, int prio);
 };

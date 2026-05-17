@@ -28,6 +28,7 @@ public:
 
     void insert(int value);
     void display();
+    TreeNode* getRoot() const { return root; } // GUI helper
 };
 
 #endif
