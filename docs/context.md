@@ -101,7 +101,7 @@ complete-data-structures-implementation-analysis-system/
 
 | Limitation | Notes |
 |-----------|-------|
-| All future modules (Trees, Graph, Search, Sort, Hash) still show "Under Development" in menu | Planned in M3–M6 |
+| All future modules (Graph, Search, Sort, Hash) still show "Under Development" in menu | Planned in M4–M6 |
 | No persistence — performance logs reset on exit | SQLite planned in future phase |
 | No GUI | Qt GUI planned in future phase |
 | Circular LL `insertStart` is O(n) due to tail-finding traversal | Could be optimized with tail pointer |
@@ -121,7 +121,7 @@ complete-data-structures-implementation-analysis-system/
 | main.cpp (full menu, all 4 linear DS wired) | ✅ DONE |
 | Stack (Static + Dynamic) | ✅ DONE |
 | Queue (Simple + Circular + Priority + Deque) | ✅ DONE |
-| Trees (BT + BST + AVL + Heap) | ❌ NOT YET (M3) |
+| Trees (BT + BST + AVL + Heap) | ✅ DONE |
 | Graph (BFS + DFS + Dijkstra + MST) | ❌ NOT YET (M4) |
 | Searching (Linear + Binary) | ❌ NOT YET (M5) |
 | Sorting (5 algorithms) | ❌ NOT YET (M5) |
