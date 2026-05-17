@@ -16,6 +16,7 @@
 #include <iostream>
 #include "../src/core/trees/bt.h"
 #include "../src/core/trees/bst.h"
+#include "../src/core/trees/avl.h"
 #include "../src/analysis/performance.h"
 #include "../src/analysis/visual.h"
 
@@ -118,6 +119,39 @@ void testBST() {
 }
 
 // ============================================================
+//  AVL TREE TESTS
+// ============================================================
+void testAVL() {
+    printSeparator();
+    cout << COL_ACCENT << "  TEST: AVL Tree" << COL_RESET << "\n";
+    printSeparator();
+
+    AVLTree avl;
+
+    // Test LL Rotation
+    cout << "\n[T3.1] LL Rotation Test (Insert 30, 20, 10)\n";
+    avl.insert(30);
+    avl.insert(20);
+    avl.insert(10); // Should trigger LL rotation on 30
+
+    // Test RR Rotation
+    cout << "\n[T3.2] RR Rotation Test (Insert 40, 50)\n";
+    avl.insert(40);
+    avl.insert(50); // Should trigger RR rotation on 30
+
+    // Test LR Rotation
+    cout << "\n[T3.3] LR Rotation Test (Insert 25)\n";
+    avl.insert(25); // Should trigger LR rotation on 20
+
+    // Test RL Rotation
+    cout << "\n[T3.4] RL Rotation Test (Insert 45)\n";
+    avl.insert(45); // Should trigger RL rotation on 50
+
+    cout << "\n[T3.5] Display Final AVL Tree\n";
+    avl.display();
+}
+
+// ============================================================
 //  MAIN
 // ============================================================
 int main() {
@@ -128,6 +162,7 @@ int main() {
 
     testBinaryTree();
     testBST();
+    testAVL();
 
     // Performance report at end
     cout << "\n";

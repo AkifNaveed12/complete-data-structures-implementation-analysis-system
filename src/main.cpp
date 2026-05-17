@@ -16,6 +16,7 @@
 #include "core/stack_queue/queue.h"
 #include "core/trees/bt.h"
 #include "core/trees/bst.h"
+#include "core/trees/avl.h"
 #include "analysis/performance.h"
 #include "analysis/visual.h"
 
@@ -36,6 +37,7 @@ void runPriorityQueueModule(PriorityQueue& queue);
 void runDequeModule(Deque& queue);
 void runBTModule(BinaryTree& tree);
 void runBSTModule(BinarySearchTree& tree);
+void runAVLModule(AVLTree& tree);
 
 // --------------------------------------------------------
 // Utility
@@ -60,6 +62,7 @@ int main() {
     Deque              dq;
     BinaryTree         bt;
     BinarySearchTree   bst;
+    AVLTree            avl;
 
     int choice;
 
@@ -165,7 +168,7 @@ int main() {
                     cout << "\n";
                     cout << "  1. Binary Tree\n";
                     cout << "  2. Binary Search Tree (BST)\n";
-                    cout << "  3. AVL Tree [Under Development]\n";
+                    cout << "  3. AVL Tree\n";
                     cout << "  4. Heap (Min/Max) [Under Development]\n";
                     cout << "  5. Back\n";
                     cout << "\n  Enter choice: ";
@@ -173,6 +176,7 @@ int main() {
 
                     if (subChoice == 1) runBTModule(bt);
                     else if (subChoice == 2) runBSTModule(bst);
+                    else if (subChoice == 3) runAVLModule(avl);
 
                 } while (subChoice != 5);
                 break;
@@ -945,5 +949,51 @@ void runBSTModule(BinarySearchTree& tree) {
 
     } while (choice != 5);
 }
+
+// ============================================================
+//  AVL TREE MODULE RUNNER — M3-T2
+// ============================================================
+void runAVLModule(AVLTree& tree) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  AVL TREE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        tree.display();
+        cout << "\n";
+
+        cout << "  1. Insert Node (Auto-balance)\n";
+        cout << "  2. Display Tree\n";
+        cout << "  3. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to insert: ";
+                cin >> val;
+                tree.insert(val);
+                break;
+            }
+            case 2:
+                cout << "\n";
+                tree.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 2) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 3);
+}
+
 
 
