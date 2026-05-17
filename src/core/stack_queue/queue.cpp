@@ -336,3 +336,177 @@ void CircularQueue::peek() {
     printResult("Front element is " + to_string(arr[front]));
     Performance::log("CircularQueue", "Peek", 1, 0);
 }
+
+// ============================================================
+// PRIORITY QUEUE IMPLEMENTATION
+// ============================================================
+
+// --------------------------------------------------------
+// Internal helper: print full priority queue state
+// Format: FRONT -> [ 10 | P:5 ] -> [ 20 | P:2 ] -> NULL
+// --------------------------------------------------------
+static void printPriorityQueueState(PNode* frontNode, PNode* activeNode = nullptr) {
+    if (frontNode == nullptr) {
+        cout << "[ empty ]\n";
+        return;
+    }
+
+    cout << "FRONT -> ";
+    PNode* cur = frontNode;
+    while (cur != nullptr) {
+        if (cur == activeNode) {
+            cout << highlight("[" + to_string(cur->data) + "|P:" + to_string(cur->priority) + "]") << " -> ";
+        } else {
+            cout << "[" << cur->data << "|P:" << cur->priority << "] -> ";
+        }
+        cur = cur->next;
+    }
+    cout << "NULL\n";
+}
+
+// --------------------------------------------------------
+// PNode Constructor
+// --------------------------------------------------------
+PNode::PNode(int val, int prio) {
+    data = val;
+    priority = prio;
+    next = nullptr;
+}
+
+// --------------------------------------------------------
+// Constructor
+// --------------------------------------------------------
+PriorityQueue::PriorityQueue() {
+    frontNode = nullptr;
+    size = 0;
+}
+
+// --------------------------------------------------------
+// Destructor
+// --------------------------------------------------------
+PriorityQueue::~PriorityQueue() {
+    PNode* cur = frontNode;
+    while (cur != nullptr) {
+        PNode* nxt = cur->next;
+        delete cur;
+        cur = nxt;
+    }
+}
+
+// --------------------------------------------------------
+// display
+// --------------------------------------------------------
+void PriorityQueue::display() {
+    if (frontNode == nullptr) {
+        printError("Structure is empty");
+        return;
+    }
+    printPriorityQueueState(frontNode);
+}
+
+// --------------------------------------------------------
+// enqueue — O(n) due to finding priority position
+// --------------------------------------------------------
+void PriorityQueue::enqueue(int value, int priority) {
+    printHeader("PriorityQueue", "Enqueue: " + to_string(value) + " (Priority: " + to_string(priority) + ")");
+
+    printStep(1, "BEFORE:");
+    printPriorityQueueState(frontNode);
+    sleep_ms(500);
+
+    PNode* newNode = new PNode(value, priority);
+    printStep(2, "Creating new node " + highlight(value) + " with priority " + to_string(priority));
+    sleep_ms(300);
+
+    int comparisons = 0;
+    int steps = 2;
+
+    if (frontNode == nullptr || priority > frontNode->priority) {
+        comparisons++;
+        printStep(steps++, "Inserting at front (highest priority)");
+        newNode->next = frontNode;
+        frontNode = newNode;
+    } else {
+        comparisons++;
+        PNode* cur = frontNode;
+        printStep(steps++, "Traversing to find correct position...");
+        while (cur->next != nullptr && cur->next->priority >= priority) {
+            comparisons++;
+            cur = cur->next;
+            printStep(steps++, "Checking node [" + to_string(cur->data) + "|P:" + to_string(cur->priority) + "]");
+            sleep_ms(300);
+        }
+        if (cur->next != nullptr) comparisons++; // Last failed check
+
+        newNode->next = cur->next;
+        cur->next = newNode;
+    }
+    size++;
+
+    printStep(steps++, "Node inserted");
+    printPriorityQueueState(frontNode, newNode);
+    sleep_ms(300);
+
+    printResult("AFTER: " + to_string(value) + " enqueued");
+    printPriorityQueueState(frontNode);
+
+    Performance::log("PriorityQueue", "Enqueue", steps, comparisons);
+}
+
+// --------------------------------------------------------
+// dequeue — O(1)
+// --------------------------------------------------------
+void PriorityQueue::dequeue() {
+    printHeader("PriorityQueue", "Dequeue");
+
+    if (frontNode == nullptr) {
+        printError("Structure is empty");
+        Performance::log("PriorityQueue", "Dequeue", 0, 0);
+        return;
+    }
+
+    printStep(1, "BEFORE:");
+    printPriorityQueueState(frontNode);
+    sleep_ms(500);
+
+    int dequeuedValue = frontNode->data;
+    int dequeuedPriority = frontNode->priority;
+
+    printStep(2, "Dequeueing highest priority element from front");
+    printPriorityQueueState(frontNode, frontNode);
+    sleep_ms(500);
+
+    PNode* delNode = frontNode;
+    frontNode = frontNode->next;
+    delete delNode;
+    size--;
+
+    printResult("AFTER: " + to_string(dequeuedValue) + " (Priority: " + to_string(dequeuedPriority) + ") dequeued");
+    printPriorityQueueState(frontNode);
+
+    Performance::log("PriorityQueue", "Dequeue", 1, 0);
+}
+
+// --------------------------------------------------------
+// peek — O(1)
+// --------------------------------------------------------
+void PriorityQueue::peek() {
+    printHeader("PriorityQueue", "Peek");
+
+    if (frontNode == nullptr) {
+        printError("Structure is empty");
+        Performance::log("PriorityQueue", "Peek", 0, 0);
+        return;
+    }
+
+    printStep(1, "BEFORE:");
+    printPriorityQueueState(frontNode);
+    sleep_ms(500);
+
+    printStep(2, "Peeking at front element (highest priority)");
+    printPriorityQueueState(frontNode, frontNode);
+    sleep_ms(300);
+
+    printResult("Front element is " + to_string(frontNode->data) + " (Priority: " + to_string(frontNode->priority) + ")");
+    Performance::log("PriorityQueue", "Peek", 1, 0);
+}

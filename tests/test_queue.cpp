@@ -125,6 +125,56 @@ void testCircularQueue() {
 }
 
 // ============================================================
+//  PRIORITY QUEUE TESTS
+// ============================================================
+void testPriorityQueue() {
+    printSeparator();
+    cout << COL_ACCENT << "  TEST: PriorityQueue" << COL_RESET << "\n";
+    printSeparator();
+
+    PriorityQueue pQueue;
+
+    // 1. Normal cases (inserting unsorted priorities)
+    cout << "\n[T5.1] Enqueue: 10 (Priority: 2)\n";
+    pQueue.enqueue(10, 2);
+
+    cout << "\n[T5.2] Enqueue: 20 (Priority: 5) - should be at front\n";
+    pQueue.enqueue(20, 5);
+
+    cout << "\n[T5.3] Enqueue: 30 (Priority: 1) - should be at end\n";
+    pQueue.enqueue(30, 1);
+
+    cout << "\n[T5.4] Enqueue: 40 (Priority: 3) - should be in middle\n";
+    pQueue.enqueue(40, 3);
+
+    cout << "\n[T5.5] Peek (should show 20 with priority 5)\n";
+    pQueue.peek();
+
+    // 2. Normal dequeue
+    cout << "\n[T5.6] Dequeue (should dequeue 20)\n";
+    pQueue.dequeue();
+
+    cout << "\n[T5.7] Dequeue (should dequeue 40)\n";
+    pQueue.dequeue();
+
+    cout << "\n[T5.8] Dequeue (should dequeue 10)\n";
+    pQueue.dequeue();
+
+    cout << "\n[T5.9] Dequeue (should dequeue 30)\n";
+    pQueue.dequeue();
+
+    // 3. Edge: Underflow
+    cout << "\n[T5.10] Dequeue from empty queue (should show Error)\n";
+    pQueue.dequeue();
+
+    cout << "\n[T5.11] Peek empty queue (should show Error)\n";
+    pQueue.peek();
+    
+    cout << "\n[T5.12] Display empty queue\n";
+    pQueue.display();
+}
+
+// ============================================================
 //  MAIN
 // ============================================================
 int main() {
@@ -135,6 +185,7 @@ int main() {
 
     testSimpleQueue();
     testCircularQueue();
+    testPriorityQueue();
 
     // Performance report at end
     cout << "\n";

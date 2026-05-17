@@ -50,4 +50,30 @@ public:
     void display();
 };
 
+// -------------------------------------------------------
+// PRIORITY QUEUE (Linked-List based)
+// -------------------------------------------------------
+
+struct PNode {
+    int    data;
+    int    priority; // higher number = higher priority, or lower number = higher priority? Let's assume higher number = higher priority.
+    PNode* next;
+    PNode(int val, int prio);
+};
+
+class PriorityQueue {
+private:
+    PNode* frontNode;
+    int    size;
+
+public:
+    PriorityQueue();
+    ~PriorityQueue();
+
+    void enqueue(int value, int priority);
+    void dequeue();
+    void peek();
+    void display();
+};
+
 #endif
