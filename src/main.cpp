@@ -80,7 +80,7 @@ int main() {
         cout << "\n";
         cout << "  1. Linear Data Structures\n";
         cout << "  2. Stack & Queue\n";
-        cout << "  3. Trees                   [Under Development]\n";
+        cout << "  3. Trees\n";
         cout << "  4. Graph Algorithms        [Under Development]\n";
         cout << "  5. Searching & Sorting     [Under Development]\n";
         cout << "  6. Hashing                 [Under Development]\n";

@@ -1,5 +1,5 @@
-// ============================================================
-//  CDSIAS — Stack Module
+﻿// ============================================================
+//  CDSIAS â€” Stack Module
 //  src/core/stack_queue/stack.cpp
 //
 //  All output goes through visual.h ONLY.
@@ -7,6 +7,7 @@
 //  Follows BEFORE -> STEP N -> AFTER phase contract.
 // ============================================================
 
+#include <iostream>
 #include <string>
 #include "stack.h"
 #include "../../analysis/visual.h"
@@ -59,7 +60,7 @@ StaticStack::~StaticStack() {
 }
 
 // --------------------------------------------------------
-// display — show full current state
+// display â€” show full current state
 // --------------------------------------------------------
 void StaticStack::display() {
     if (top == -1) {
@@ -70,7 +71,7 @@ void StaticStack::display() {
 }
 
 // --------------------------------------------------------
-// push — O(1)
+// push â€” O(1)
 // --------------------------------------------------------
 void StaticStack::push(int value) {
     printHeader("Stack", "Push: " + to_string(value));
@@ -99,7 +100,7 @@ void StaticStack::push(int value) {
 }
 
 // --------------------------------------------------------
-// pop — O(1)
+// pop â€” O(1)
 // --------------------------------------------------------
 void StaticStack::pop() {
     printHeader("Stack", "Pop");
@@ -129,7 +130,7 @@ void StaticStack::pop() {
 }
 
 // --------------------------------------------------------
-// peek — O(1)
+// peek â€” O(1)
 // --------------------------------------------------------
 void StaticStack::peek() {
     printHeader("Stack", "Peek");
@@ -217,7 +218,7 @@ void DynamicStack::display() {
 }
 
 // --------------------------------------------------------
-// push — O(1)
+// push â€” O(1)
 // --------------------------------------------------------
 void DynamicStack::push(int value) {
     printHeader("DynamicStack", "Push: " + to_string(value));
@@ -245,7 +246,7 @@ void DynamicStack::push(int value) {
 }
 
 // --------------------------------------------------------
-// pop — O(1)
+// pop â€” O(1)
 // --------------------------------------------------------
 void DynamicStack::pop() {
     printHeader("DynamicStack", "Pop");
@@ -278,7 +279,7 @@ void DynamicStack::pop() {
 }
 
 // --------------------------------------------------------
-// peek — O(1)
+// peek â€” O(1)
 // --------------------------------------------------------
 void DynamicStack::peek() {
     printHeader("DynamicStack", "Peek");
@@ -300,4 +301,5 @@ void DynamicStack::peek() {
     printResult("Top element is " + to_string(topNode->data));
     Performance::log("Stack", "Peek", 1, 0);
 }
+
 

@@ -1,76 +1,89 @@
 #ifndef VISUAL_H
 #define VISUAL_H
 
-#include <iostream>
-#include <string>
-#include <thread>
-#include <chrono>
-
-using namespace std;
-
 // ============================================================
 //  CDSIAS Visual Layer — visual.h
 //  All module output goes through these functions ONLY.
 //  No raw cout is allowed in any src/core/ file.
 //  contracts.md §1.1, §1.7
+//
+//  This file supports two modes:
+//    - CLI mode:  prints to console (default)
+//    - GUI mode:  forwards to GlobalGuiNotifier (set CDSIAS_GUI=1)
 // ============================================================
 
-// ANSI Color codes (Windows terminal / modern console)
-#define COL_ACCENT   "\033[96m"   // cyan  — default accent / highlighted elements
-#define COL_SUCCESS  "\033[92m"   // green — Result / success messages
-#define COL_ERROR    "\033[91m"   // red   — Error messages
-#define COL_WARNING  "\033[93m"   // amber — Warnings
-#define COL_MUTED    "\033[90m"   // grey  — labels, separators
-#define COL_RESET    "\033[0m"    // reset to default
+#include <string>
 
-// --------------------------------------------------------
-// sleep_ms — platform delay (contracts.md §1.5)
-// --------------------------------------------------------
+// Colors (still defined, but empty in GUI mode — no ANSI escapes needed)
+#ifdef CDSIAS_GUI
+  #define COL_ACCENT   ""
+  #define COL_SUCCESS  ""
+  #define COL_ERROR    ""
+  #define COL_WARNING  ""
+  #define COL_MUTED    ""
+  #define COL_RESET    ""
+#else
+  #define COL_ACCENT   "\033[96m"
+  #define COL_SUCCESS  "\033[92m"
+  #define COL_ERROR    "\033[91m"
+  #define COL_WARNING  "\033[93m"
+  #define COL_MUTED    "\033[90m"
+  #define COL_RESET    "\033[0m"
+#endif
+
+// ============================================================
+//  Function declarations — implemented in visual_qt.cpp (GUI)
+//  or as inline functions below (CLI)
+// ============================================================
+
+#ifdef CDSIAS_GUI
+
+// --- GUI Mode: just declarations, implemented in visual_qt.cpp ---
+void sleep_ms(int ms);
+void printSeparator();
+void printHeader(const std::string& module, const std::string& op);
+void printStep(int n, const std::string& message);
+void printResult(const std::string& message);
+void printError(const std::string& message);
+std::string highlight(const std::string& val);
+std::string highlight(int val);
+void notifyArrayState(const int* arr, int size, int activeIndex = -1);
+
+#else
+
+// --- CLI Mode: full inline implementations ---
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+using namespace std;
+
 inline void sleep_ms(int ms) {
     std::this_thread::sleep_for(std::chrono::milliseconds(ms));
 }
 
-// --------------------------------------------------------
-// printSeparator — 30 dashes (contracts.md §1.3)
-// --------------------------------------------------------
 inline void printSeparator() {
     cout << COL_MUTED << "------------------------------" << COL_RESET << "\n";
 }
 
-// --------------------------------------------------------
-// printHeader — [MODULE] Operation: value (contracts.md §1.3)
-// --------------------------------------------------------
 inline void printHeader(const string& module, const string& op) {
     printSeparator();
     cout << COL_ACCENT << "[" << module << "] " << COL_RESET << op << "\n";
     printSeparator();
 }
 
-// --------------------------------------------------------
-// printStep — Step N: message (contracts.md §1.3)
-// --------------------------------------------------------
 inline void printStep(int n, const string& message) {
     cout << COL_MUTED << "Step " << n << ": " << COL_RESET << message << "\n";
 }
 
-// --------------------------------------------------------
-// printResult — Result: message (contracts.md §1.3)
-// --------------------------------------------------------
 inline void printResult(const string& message) {
     cout << COL_SUCCESS << "Result: " << COL_RESET << message << "\n";
 }
 
-// --------------------------------------------------------
-// printError — Error: message (contracts.md §1.6)
-// --------------------------------------------------------
 inline void printError(const string& message) {
     cout << COL_ERROR << "Error: " << COL_RESET << message << "\n";
 }
 
-// --------------------------------------------------------
-// highlight — wraps a value in parentheses: "(val)"
-// contracts.md §1.4
-// --------------------------------------------------------
 inline string highlight(const string& val) {
     return "(" + val + ")";
 }
@@ -79,4 +92,21 @@ inline string highlight(int val) {
     return "(" + to_string(val) + ")";
 }
 
-#endif
+inline void notifyArrayState(const int* arr, int size, int activeIndex = -1) {
+    if (size == 0) {
+        cout << "[ empty ]\n";
+        return;
+    }
+    string line = "[ ";
+    for (int i = 0; i < size; i++) {
+        if (i == activeIndex) line += highlight(arr[i]);
+        else line += to_string(arr[i]);
+        if (i < size - 1) line += " | ";
+    }
+    line += " ]";
+    cout << line << "\n";
+}
+
+#endif // CDSIAS_GUI
+
+#endif // VISUAL_H

@@ -1,13 +1,14 @@
-// ============================================================
-//  CDSIAS — Singly Linked List Module
+﻿// ============================================================
+//  CDSIAS â€” Singly Linked List Module
 //  src/core/linear/linked_list.cpp
 //
-//  All output goes through visual.h ONLY — no raw cout.
+//  All output goes through visual.h ONLY â€” no raw cout.
 //  Performance::log() called after every operation.
-//  Follows BEFORE → STEP N → AFTER phase contract.
-//  contracts.md §1, §2, §3
+//  Follows BEFORE â†’ STEP N â†’ AFTER phase contract.
+//  contracts.md Â§1, Â§2, Â§3
 // ============================================================
 
+#include <iostream>
 #include <string>
 #include "linked_list.h"
 #include "../../analysis/visual.h"
@@ -18,7 +19,7 @@ using namespace std;
 // --------------------------------------------------------
 // Internal helper: print full list state
 // Active node shown as (val), others as plain val.
-// Format: (10) → 20 → 30 → NULL  (contracts.md §1.2)
+// Format: (10) â†’ 20 â†’ 30 â†’ NULL  (contracts.md Â§1.2)
 // --------------------------------------------------------
 static void printListState(Node* head, Node* activeNode = nullptr) {
     if (head == nullptr) {
@@ -36,9 +37,9 @@ static void printListState(Node* head, Node* activeNode = nullptr) {
             line += to_string(temp->data);
 
         if (temp->next != nullptr)
-            line += " → ";
+            line += " â†’ ";
         else
-            line += " → NULL";
+            line += " â†’ NULL";
 
         temp = temp->next;
     }
@@ -54,14 +55,14 @@ Node::Node(int val) {
 }
 
 // --------------------------------------------------------
-// LinkedList constructor — starts EMPTY (no demo data)
+// LinkedList constructor â€” starts EMPTY (no demo data)
 // --------------------------------------------------------
 LinkedList::LinkedList() {
     head = nullptr;
 }
 
 // --------------------------------------------------------
-// display — show full current list state
+// display â€” show full current list state
 // NOTE: display is NOT logged
 // --------------------------------------------------------
 void LinkedList::display() {
@@ -73,8 +74,8 @@ void LinkedList::display() {
 }
 
 // --------------------------------------------------------
-// insertAtStart — O(1)
-// contracts.md §2.3
+// insertAtStart â€” O(1)
+// contracts.md Â§2.3
 // --------------------------------------------------------
 void LinkedList::insertAtStart(int value) {
     printHeader("LinkedList", "Insert at Start: " + to_string(value));
@@ -93,7 +94,7 @@ void LinkedList::insertAtStart(int value) {
     newNode->next = head;
     head = newNode;
 
-    printStep(3, "Linking " + highlight(value) + " → rest of list");
+    printStep(3, "Linking " + highlight(value) + " â†’ rest of list");
     printListState(head, newNode);
     sleep_ms(300);
 
@@ -105,8 +106,8 @@ void LinkedList::insertAtStart(int value) {
 }
 
 // --------------------------------------------------------
-// insertAtEnd — O(n)
-// contracts.md §2.3
+// insertAtEnd â€” O(n)
+// contracts.md Â§2.3
 // --------------------------------------------------------
 void LinkedList::insertAtEnd(int value) {
     printHeader("LinkedList", "Insert at End: " + to_string(value));
@@ -121,7 +122,7 @@ void LinkedList::insertAtEnd(int value) {
 
     if (head == nullptr) {
         head = newNode;
-        printStep(2, "List is empty — " + highlight(value) + " becomes head");
+        printStep(2, "List is empty â€” " + highlight(value) + " becomes head");
         printListState(head, newNode);
         sleep_ms(300);
         printResult("AFTER: " + to_string(value) + " inserted (first node)");
@@ -136,13 +137,13 @@ void LinkedList::insertAtEnd(int value) {
     while (temp->next != nullptr) {
         printStep(stepNum++, "Traversing: at node " + highlight(temp->data));
         printListState(head, temp);
-        sleep_ms(300);  // traversal delay (contracts.md §1.5)
+        sleep_ms(300);  // traversal delay (contracts.md Â§1.5)
         temp = temp->next;
         steps++;
     }
 
     // Reached last node
-    printStep(stepNum++, "Reached last node " + highlight(temp->data) + " → attaching new node");
+    printStep(stepNum++, "Reached last node " + highlight(temp->data) + " â†’ attaching new node");
     temp->next = newNode;
     printListState(head, newNode);
     sleep_ms(300);
@@ -154,8 +155,8 @@ void LinkedList::insertAtEnd(int value) {
 }
 
 // --------------------------------------------------------
-// deleteValue — O(n)
-// contracts.md §2.3
+// deleteValue â€” O(n)
+// contracts.md Â§2.3
 // --------------------------------------------------------
 void LinkedList::deleteValue(int value) {
     printHeader("LinkedList", "Delete Value: " + to_string(value));
@@ -178,7 +179,7 @@ void LinkedList::deleteValue(int value) {
     // Check head
     if (head->data == value) {
         comparisons++;
-        printStep(2, "Found " + highlight(value) + " at head — removing");
+        printStep(2, "Found " + highlight(value) + " at head â€” removing");
         Node* temp = head;
         head = head->next;
         delete temp;
@@ -201,7 +202,7 @@ void LinkedList::deleteValue(int value) {
 
         if (temp->next->data == value) {
             steps = comparisons;
-            printStep(stepNum++, "Found " + highlight(value) + " — unlinking");
+            printStep(stepNum++, "Found " + highlight(value) + " â€” unlinking");
             Node* delNode = temp->next;
             temp->next = delNode->next;
             delete delNode;
@@ -220,8 +221,8 @@ void LinkedList::deleteValue(int value) {
 }
 
 // --------------------------------------------------------
-// search — O(n)
-// contracts.md §2.3
+// search â€” O(n)
+// contracts.md Â§2.3
 // --------------------------------------------------------
 void LinkedList::search(int value) {
     printHeader("LinkedList", "Search: " + to_string(value));
@@ -265,9 +266,9 @@ void LinkedList::search(int value) {
 
 
 // ============================================================
-//  DOUBLY LINKED LIST — M1-T1 through M1-T3
-//  Format: NULL ← (val) ↔ val ↔ val → NULL
-//  contracts.md §1, §2.3
+//  DOUBLY LINKED LIST â€” M1-T1 through M1-T3
+//  Format: NULL â† (val) â†” val â†” val â†’ NULL
+//  contracts.md Â§1, Â§2.3
 // ============================================================
 
 // --------------------------------------------------------
@@ -288,7 +289,7 @@ DoublyLinkedList::DoublyLinkedList() {
 }
 
 // --------------------------------------------------------
-// DoublyLinkedList destructor — free all nodes
+// DoublyLinkedList destructor â€” free all nodes
 // --------------------------------------------------------
 DoublyLinkedList::~DoublyLinkedList() {
     DNode* cur = head;
@@ -301,7 +302,7 @@ DoublyLinkedList::~DoublyLinkedList() {
 
 // --------------------------------------------------------
 // Internal helper: print full doubly list state
-// Format: NULL ← (val) ↔ val ↔ val → NULL
+// Format: NULL â† (val) â†” val â†” val â†’ NULL
 // --------------------------------------------------------
 static void printDListState(DNode* head, DNode* activeNode = nullptr) {
     if (head == nullptr) {
@@ -309,7 +310,7 @@ static void printDListState(DNode* head, DNode* activeNode = nullptr) {
         return;
     }
 
-    string line = "NULL ← ";
+    string line = "NULL â† ";
     DNode* temp = head;
 
     while (temp != nullptr) {
@@ -319,9 +320,9 @@ static void printDListState(DNode* head, DNode* activeNode = nullptr) {
             line += to_string(temp->data);
 
         if (temp->next != nullptr)
-            line += " ↔ ";
+            line += " â†” ";
         else
-            line += " → NULL";
+            line += " â†’ NULL";
 
         temp = temp->next;
     }
@@ -340,7 +341,7 @@ void DoublyLinkedList::display() {
 }
 
 // --------------------------------------------------------
-// DoublyLinkedList::insertStart — O(1)
+// DoublyLinkedList::insertStart â€” O(1)
 // --------------------------------------------------------
 void DoublyLinkedList::insertStart(int value) {
     printHeader("DoublyLL", "Insert at Start: " + to_string(value));
@@ -355,12 +356,12 @@ void DoublyLinkedList::insertStart(int value) {
 
     if (head == nullptr) {
         head = tail = newNode;
-        printStep(3, "List was empty — " + highlight(value) + " is head and tail");
+        printStep(3, "List was empty â€” " + highlight(value) + " is head and tail");
     } else {
         newNode->next = head;
         head->prev    = newNode;
         head          = newNode;
-        printStep(3, "Linking " + highlight(value) + " ↔ " + to_string(head->next->data));
+        printStep(3, "Linking " + highlight(value) + " â†” " + to_string(head->next->data));
     }
 
     printDListState(head, newNode);
@@ -373,7 +374,7 @@ void DoublyLinkedList::insertStart(int value) {
 }
 
 // --------------------------------------------------------
-// DoublyLinkedList::insertEnd — O(n)
+// DoublyLinkedList::insertEnd â€” O(n)
 // --------------------------------------------------------
 void DoublyLinkedList::insertEnd(int value) {
     printHeader("DoublyLL", "Insert at End: " + to_string(value));
@@ -387,7 +388,7 @@ void DoublyLinkedList::insertEnd(int value) {
 
     if (head == nullptr) {
         head = tail = newNode;
-        printStep(2, "List was empty — " + highlight(value) + " is head and tail");
+        printStep(2, "List was empty â€” " + highlight(value) + " is head and tail");
         printDListState(head, newNode);
         sleep_ms(300);
         printResult("AFTER: " + to_string(value) + " inserted (first node)");
@@ -421,7 +422,7 @@ void DoublyLinkedList::insertEnd(int value) {
 }
 
 // --------------------------------------------------------
-// DoublyLinkedList::deleteByValue — O(n)
+// DoublyLinkedList::deleteByValue â€” O(n)
 // --------------------------------------------------------
 void DoublyLinkedList::deleteByValue(int value) {
     printHeader("DoublyLL", "Delete Value: " + to_string(value));
@@ -468,7 +469,7 @@ void DoublyLinkedList::deleteByValue(int value) {
 }
 
 // --------------------------------------------------------
-// DoublyLinkedList::search — O(n)
+// DoublyLinkedList::search â€” O(n)
 // --------------------------------------------------------
 bool DoublyLinkedList::search(int value) {
     printHeader("DoublyLL", "Search: " + to_string(value));
@@ -511,9 +512,9 @@ bool DoublyLinkedList::search(int value) {
 
 
 // ============================================================
-//  CIRCULAR LINKED LIST — M1-T6
-//  Format: (10) → 20 → 30 → [HEAD]
-//  contracts.md §1, §2.3
+//  CIRCULAR LINKED LIST â€” M1-T6
+//  Format: (10) â†’ 20 â†’ 30 â†’ [HEAD]
+//  contracts.md Â§1, Â§2.3
 // ============================================================
 
 // --------------------------------------------------------
@@ -547,7 +548,7 @@ CircularLinkedList::~CircularLinkedList() {
 
 // --------------------------------------------------------
 // Internal helper: print full circular list state
-// Format: 10 → 20 → (30) → [HEAD]
+// Format: 10 â†’ 20 â†’ (30) â†’ [HEAD]
 // --------------------------------------------------------
 static void printCListState(CNode* head, int size, CNode* activeNode = nullptr) {
     if (head == nullptr || size == 0) {
@@ -563,7 +564,7 @@ static void printCListState(CNode* head, int size, CNode* activeNode = nullptr) 
         else
             line += to_string(cur->data);
 
-        line += " → ";
+        line += " â†’ ";
         cur = cur->next;
     }
     line += "[HEAD]";
@@ -582,7 +583,7 @@ void CircularLinkedList::display() {
 }
 
 // --------------------------------------------------------
-// CircularLinkedList::insertStart — O(1)
+// CircularLinkedList::insertStart â€” O(1)
 // --------------------------------------------------------
 void CircularLinkedList::insertStart(int value) {
     printHeader("CircularLL", "Insert at Start: " + to_string(value));
@@ -596,7 +597,7 @@ void CircularLinkedList::insertStart(int value) {
     if (head == nullptr) {
         head = newNode;
         newNode->next = head;  // circular
-        printStep(2, "List was empty — " + highlight(value) + " points to itself");
+        printStep(2, "List was empty â€” " + highlight(value) + " points to itself");
     } else {
         // Find tail (last node pointing to head)
         CNode* tail = head;
@@ -606,7 +607,7 @@ void CircularLinkedList::insertStart(int value) {
         tail->next    = newNode;
         head          = newNode;
 
-        printStep(2, "Inserted " + highlight(value) + " as new head, tail → new head");
+        printStep(2, "Inserted " + highlight(value) + " as new head, tail â†’ new head");
     }
 
     size++;
@@ -620,7 +621,7 @@ void CircularLinkedList::insertStart(int value) {
 }
 
 // --------------------------------------------------------
-// CircularLinkedList::insertEnd — O(n)
+// CircularLinkedList::insertEnd â€” O(n)
 // --------------------------------------------------------
 void CircularLinkedList::insertEnd(int value) {
     printHeader("CircularLL", "Insert at End: " + to_string(value));
@@ -635,7 +636,7 @@ void CircularLinkedList::insertEnd(int value) {
     if (head == nullptr) {
         head = newNode;
         newNode->next = head;
-        printStep(2, "List was empty — " + highlight(value) + " is head, points to itself");
+        printStep(2, "List was empty â€” " + highlight(value) + " is head, points to itself");
         size++;
         printCListState(head, size, newNode);
         sleep_ms(300);
@@ -659,7 +660,7 @@ void CircularLinkedList::insertEnd(int value) {
     newNode->next = head;
     size++;
 
-    printStep(stepNum++, "Attaching " + highlight(value) + " after " + to_string(tail->data) + " → [HEAD]");
+    printStep(stepNum++, "Attaching " + highlight(value) + " after " + to_string(tail->data) + " â†’ [HEAD]");
     printCListState(head, size, newNode);
     sleep_ms(300);
 
@@ -670,7 +671,7 @@ void CircularLinkedList::insertEnd(int value) {
 }
 
 // --------------------------------------------------------
-// CircularLinkedList::deleteByValue — O(n)
+// CircularLinkedList::deleteByValue â€” O(n)
 // --------------------------------------------------------
 void CircularLinkedList::deleteByValue(int value) {
     printHeader("CircularLL", "Delete Value: " + to_string(value));
@@ -695,7 +696,7 @@ void CircularLinkedList::deleteByValue(int value) {
     // Delete head case
     if (head->data == value) {
         comparisons++;
-        printStep(stepNum++, "Found " + highlight(value) + " at head — removing");
+        printStep(stepNum++, "Found " + highlight(value) + " at head â€” removing");
         if (size == 1) {
             delete head;
             head = nullptr;
@@ -741,7 +742,7 @@ void CircularLinkedList::deleteByValue(int value) {
 }
 
 // --------------------------------------------------------
-// CircularLinkedList::search — O(n)
+// CircularLinkedList::search â€” O(n)
 // --------------------------------------------------------
 bool CircularLinkedList::search(int value) {
     printHeader("CircularLL", "Search: " + to_string(value));
@@ -779,4 +780,5 @@ bool CircularLinkedList::search(int value) {
     Performance::log("CircularLL", "Search", comparisons, comparisons);
     return false;
 }
+
 

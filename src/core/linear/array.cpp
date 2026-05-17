@@ -21,16 +21,7 @@ using namespace std;
 // contracts.md §1.2, §1.4
 // --------------------------------------------------------
 static void printArrayState(int arr[], int size, int activeIndex = -1) {
-    string line = "[ ";
-    for (int i = 0; i < size; i++) {
-        if (i == activeIndex)
-            line += highlight(arr[i]);
-        else
-            line += to_string(arr[i]);
-        if (i < size - 1) line += " | ";
-    }
-    line += " ]";
-    cout << line << "\n";
+    notifyArrayState(arr, size, activeIndex);
 }
 
 // --------------------------------------------------------
@@ -52,8 +43,16 @@ Array::~Array() {
 // --------------------------------------------------------
 // getSize
 // --------------------------------------------------------
-int Array::getSize() {
+int Array::getSize() const {
     return size;
+}
+
+int Array::getCapacity() const {
+    return capacity;
+}
+
+const int* Array::getArray() const {
+    return arr;
 }
 
 // --------------------------------------------------------
@@ -85,7 +84,7 @@ void Array::insertEnd(int value) {
     // BEFORE
     printStep(1, "BEFORE:");
     if (size == 0)
-        cout << "[ empty ]\n";
+        notifyArrayState(nullptr, 0);
     else
         printArrayState(arr, size);
 
@@ -131,7 +130,7 @@ void Array::insertAt(int index, int value) {
     // BEFORE
     printStep(1, "BEFORE:");
     if (size == 0)
-        cout << "[ empty ]\n";
+        notifyArrayState(nullptr, 0);
     else
         printArrayState(arr, size);
     sleep_ms(500);
@@ -214,7 +213,7 @@ void Array::deleteAt(int index) {
 
     printResult("AFTER: " + to_string(deletedVal) + " deleted | Shifts: " + to_string(shifts));
     if (size == 0)
-        cout << "[ empty ]\n";
+        notifyArrayState(nullptr, 0);
     else
         printArrayState(arr, size);
 

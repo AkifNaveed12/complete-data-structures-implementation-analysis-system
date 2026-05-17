@@ -17,7 +17,9 @@ public:
     int search(int value);
     void display();
 
-    int getSize();
+    int getSize() const;
+    int getCapacity() const;
+    const int* getArray() const;
 };
 
 #endif
