@@ -40,7 +40,7 @@ class TreeWorker : public QObject {
     Q_OBJECT
 public:
     enum TreeType { BT_T, BST_T, AVL_T, HEAP_T };
-    enum Op { Insert, Remove, Search, Display, Extract };
+    enum Op { Insert, Remove, Search, Display, Extract, Inorder, Preorder, Postorder };
     TreeWorker(void* t, TreeType tt, Op op, int val = 0)
         : m_t(t), m_tt(tt), m_op(op), m_val(val) {}
 public slots: void run();

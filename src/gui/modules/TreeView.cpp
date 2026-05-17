@@ -145,6 +145,9 @@ void TreeWorker::run() {
     if (m_tt == BT_T) {
         auto* t = static_cast<BinaryTree*>(m_t);
         if      (m_op == Insert)  t->insert(m_val);
+        else if (m_op == Inorder) t->inorder();
+        else if (m_op == Preorder) t->preorder();
+        else if (m_op == Postorder) t->postorder();
         else if (m_op == Display) t->display();
     } else if (m_tt == BST_T) {
         auto* t = static_cast<BinarySearchTree*>(m_t);
@@ -244,7 +247,10 @@ void TreeView::onStateChanged() {
 void TreeView::setupBTOps() {
     m_panel->operationList()->clear();
     m_panel->operationList()->addItem("Insert");
-    m_panel->operationList()->addItem("Display (Inorder)");
+    m_panel->operationList()->addItem("In-order Traversal");
+    m_panel->operationList()->addItem("Pre-order Traversal");
+    m_panel->operationList()->addItem("Post-order Traversal");
+    m_panel->operationList()->addItem("Display Tree");
     m_panel->operationList()->setCurrentRow(0);
     m_panel->input1Label()->setText("Value:");
     m_panel->input2()->hide(); m_panel->input2Label()->hide();
@@ -308,9 +314,13 @@ void TreeView::onRun() {
 
     TreeWorker::Op op;
     if (m_treeIndex <= 2) {
-        static const TreeWorker::Op btOps[]  = { TreeWorker::Insert, TreeWorker::Display };
+        static const TreeWorker::Op btOps[]  = { TreeWorker::Insert, TreeWorker::Inorder, TreeWorker::Preorder, TreeWorker::Postorder, TreeWorker::Display };
         static const TreeWorker::Op bstOps[] = { TreeWorker::Insert, TreeWorker::Remove, TreeWorker::Search, TreeWorker::Display };
-        op = (m_treeIndex == 1) ? bstOps[row] : btOps[row];
+        static const TreeWorker::Op avlOps[] = { TreeWorker::Insert, TreeWorker::Display };
+        
+        if (m_treeIndex == 0) op = btOps[row];
+        else if (m_treeIndex == 1) op = bstOps[row];
+        else op = avlOps[row];
     } else {
         static const TreeWorker::Op heapOps[] = { TreeWorker::Insert, TreeWorker::Extract, TreeWorker::Display };
         op = heapOps[row];
