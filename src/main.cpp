@@ -12,6 +12,8 @@
 #include <cstdlib>
 #include "core/linear/array.h"
 #include "core/linear/linked_list.h"
+#include "core/stack_queue/stack.h"
+#include "core/stack_queue/queue.h"
 #include "analysis/performance.h"
 #include "analysis/visual.h"
 
@@ -24,6 +26,9 @@ void runArrayModule(Array& arr);
 void runLinkedListModule(LinkedList& list);
 void runDoublyLLModule(DoublyLinkedList& dll);
 void runCircularLLModule(CircularLinkedList& cll);
+void runStaticStackModule(StaticStack& stack);
+void runDynamicStackModule(DynamicStack& stack);
+void runSimpleQueueModule(SimpleQueue& queue);
 
 // --------------------------------------------------------
 // Utility
@@ -40,6 +45,9 @@ int main() {
     LinkedList         list;
     DoublyLinkedList   dll;
     CircularLinkedList cll;
+    StaticStack        sStack(100);
+    DynamicStack       dStack;
+    SimpleQueue        sQueue(100);
 
     int choice;
 
@@ -52,7 +60,7 @@ int main() {
 
         cout << "\n";
         cout << "  1. Linear Data Structures\n";
-        cout << "  2. Stack & Queue           [Under Development]\n";
+        cout << "  2. Stack & Queue\n";
         cout << "  3. Trees                   [Under Development]\n";
         cout << "  4. Graph Algorithms        [Under Development]\n";
         cout << "  5. Searching & Sorting     [Under Development]\n";
@@ -90,7 +98,48 @@ int main() {
                 break;
             }
 
-            case 2:
+            case 2: {
+                int subChoice;
+                do {
+                    clearScreen();
+                    printSeparator();
+                    cout << COL_ACCENT << "  STACK & QUEUE" << COL_RESET << "\n";
+                    printSeparator();
+                    cout << "\n";
+                    cout << "  1. Static Stack (Array-based)\n";
+                    cout << "  2. Dynamic Stack (Linked List-based)\n";
+                    cout << "  3. Queue Variants\n";
+                    cout << "  4. Back\n";
+                    cout << "\n  Enter choice: ";
+                    cin >> subChoice;
+
+                    if (subChoice == 1) runStaticStackModule(sStack);
+                    else if (subChoice == 2) runDynamicStackModule(dStack);
+                    else if (subChoice == 3) {
+                        int qChoice;
+                        do {
+                            clearScreen();
+                            printSeparator();
+                            cout << COL_ACCENT << "  QUEUE VARIANTS" << COL_RESET << "\n";
+                            printSeparator();
+                            cout << "\n";
+                            cout << "  1. Simple Queue (Array-based)\n";
+                            cout << "  2. Circular Queue [Under Development]\n";
+                            cout << "  3. Priority Queue [Under Development]\n";
+                            cout << "  4. Deque [Under Development]\n";
+                            cout << "  5. Back\n";
+                            cout << "\n  Enter choice: ";
+                            cin >> qChoice;
+
+                            if (qChoice == 1) runSimpleQueueModule(sQueue);
+
+                        } while (qChoice != 5);
+                    }
+
+                } while (subChoice != 4);
+                break;
+            }
+
             case 3:
             case 4:
             case 5:
@@ -413,3 +462,163 @@ void runCircularLLModule(CircularLinkedList& cll) {
 
     } while (choice != 6);
 }
+
+// ============================================================
+//  STATIC STACK MODULE RUNNER — M2-T0
+// ============================================================
+void runStaticStackModule(StaticStack& stack) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  STATIC STACK MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        stack.display();
+        cout << "\n";
+
+        cout << "  1. Push\n";
+        cout << "  2. Pop\n";
+        cout << "  3. Peek\n";
+        cout << "  4. Display\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to push: ";
+                cin >> val;
+                stack.push(val);
+                break;
+            }
+            case 2:
+                stack.pop();
+                break;
+            case 3:
+                stack.peek();
+                break;
+            case 4:
+                cout << "\n";
+                stack.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+
+// ============================================================
+//  DYNAMIC STACK MODULE RUNNER — M2-T1
+// ============================================================
+void runDynamicStackModule(DynamicStack& stack) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  DYNAMIC STACK MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        stack.display();
+        cout << "\n";
+
+        cout << "  1. Push\n";
+        cout << "  2. Pop\n";
+        cout << "  3. Peek\n";
+        cout << "  4. Display\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to push: ";
+                cin >> val;
+                stack.push(val);
+                break;
+            }
+            case 2:
+                stack.pop();
+                break;
+            case 3:
+                stack.peek();
+                break;
+            case 4:
+                cout << "\n";
+                stack.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+
+// ============================================================
+//  SIMPLE QUEUE MODULE RUNNER — M2-T2
+// ============================================================
+void runSimpleQueueModule(SimpleQueue& queue) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  SIMPLE QUEUE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        queue.display();
+        cout << "\n";
+
+        cout << "  1. Enqueue\n";
+        cout << "  2. Dequeue\n";
+        cout << "  3. Peek\n";
+        cout << "  4. Display\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to enqueue: ";
+                cin >> val;
+                queue.enqueue(val);
+                break;
+            }
+            case 2:
+                queue.dequeue();
+                break;
+            case 3:
+                queue.peek();
+                break;
+            case 4:
+                cout << "\n";
+                queue.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+

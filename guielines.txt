@@ -2,3 +2,10 @@ main        → Production / Stable
 dev         → Integration branch
 akif-dev    → Your working branch
 arslan-dev  → Arslan’s working branch
+
+running commands 
+g++ tests/test_array.cpp src/core/linear/array.cpp src/analysis/performance.cpp -o test_array
+.\test_array.exe
+
+g++ tests/test_linked_list.cpp src/core/linear/linked_list.cpp src/analysis/performance.cpp -o test_ll
+.\test_ll.exe
