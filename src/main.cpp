@@ -15,6 +15,7 @@
 #include "core/stack_queue/stack.h"
 #include "core/stack_queue/queue.h"
 #include "core/trees/bt.h"
+#include "core/trees/bst.h"
 #include "analysis/performance.h"
 #include "analysis/visual.h"
 
@@ -34,6 +35,7 @@ void runCircularQueueModule(CircularQueue& queue);
 void runPriorityQueueModule(PriorityQueue& queue);
 void runDequeModule(Deque& queue);
 void runBTModule(BinaryTree& tree);
+void runBSTModule(BinarySearchTree& tree);
 
 // --------------------------------------------------------
 // Utility
@@ -57,6 +59,7 @@ int main() {
     PriorityQueue      pQueue;
     Deque              dq;
     BinaryTree         bt;
+    BinarySearchTree   bst;
 
     int choice;
 
@@ -161,7 +164,7 @@ int main() {
                     printSeparator();
                     cout << "\n";
                     cout << "  1. Binary Tree\n";
-                    cout << "  2. Binary Search Tree (BST) [Under Development]\n";
+                    cout << "  2. Binary Search Tree (BST)\n";
                     cout << "  3. AVL Tree [Under Development]\n";
                     cout << "  4. Heap (Min/Max) [Under Development]\n";
                     cout << "  5. Back\n";
@@ -169,6 +172,7 @@ int main() {
                     cin >> subChoice;
 
                     if (subChoice == 1) runBTModule(bt);
+                    else if (subChoice == 2) runBSTModule(bst);
 
                 } while (subChoice != 5);
                 break;
@@ -880,4 +884,66 @@ void runBTModule(BinaryTree& tree) {
 
     } while (choice != 6);
 }
+
+// ============================================================
+//  BINARY SEARCH TREE MODULE RUNNER — M3-T1
+// ============================================================
+void runBSTModule(BinarySearchTree& tree) {
+    int choice;
+
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  BINARY SEARCH TREE MODULE" << COL_RESET << "\n";
+        printSeparator();
+
+        cout << "\n  Current state:\n";
+        tree.display();
+        cout << "\n";
+
+        cout << "  1. Insert Node\n";
+        cout << "  2. Delete Node\n";
+        cout << "  3. Search Node\n";
+        cout << "  4. Display Tree\n";
+        cout << "  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                int val;
+                cout << "  Value to insert: ";
+                cin >> val;
+                tree.insert(val);
+                break;
+            }
+            case 2: {
+                int val;
+                cout << "  Value to delete: ";
+                cin >> val;
+                tree.remove(val);
+                break;
+            }
+            case 3: {
+                int val;
+                cout << "  Value to search: ";
+                cin >> val;
+                tree.search(val);
+                break;
+            }
+            case 4:
+                cout << "\n";
+                tree.display();
+                break;
+        }
+
+        if (choice >= 1 && choice <= 4) {
+            cout << "\n  Press Enter to continue...\n";
+            cin.ignore();
+            cin.get();
+        }
+
+    } while (choice != 5);
+}
+
 

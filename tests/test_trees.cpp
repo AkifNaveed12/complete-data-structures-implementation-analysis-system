@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include "../src/core/trees/bt.h"
+#include "../src/core/trees/bst.h"
 #include "../src/analysis/performance.h"
 #include "../src/analysis/visual.h"
 
@@ -70,6 +71,53 @@ void testBinaryTree() {
 }
 
 // ============================================================
+//  BINARY SEARCH TREE TESTS
+// ============================================================
+void testBST() {
+    printSeparator();
+    cout << COL_ACCENT << "  TEST: Binary Search Tree" << COL_RESET << "\n";
+    printSeparator();
+
+    BinarySearchTree bst;
+
+    cout << "\n[T2.1] Search empty tree\n";
+    bst.search(50);
+
+    cout << "\n[T2.2] Delete from empty tree\n";
+    bst.remove(50);
+
+    cout << "\n[T2.3] Insert: 50, 30, 70, 20, 40, 60, 80\n";
+    bst.insert(50);
+    bst.insert(30);
+    bst.insert(70);
+    bst.insert(20);
+    bst.insert(40);
+    bst.insert(60);
+    bst.insert(80);
+
+    cout << "\n[T2.4] Insert duplicate: 30\n";
+    bst.insert(30);
+
+    cout << "\n[T2.5] Search: 40 (Existing)\n";
+    bst.search(40);
+
+    cout << "\n[T2.6] Search: 90 (Not found)\n";
+    bst.search(90);
+
+    cout << "\n[T2.7] Delete: 20 (Case 1: Leaf node)\n";
+    bst.remove(20);
+
+    cout << "\n[T2.8] Delete: 30 (Case 2: One child - currently 40 is right child, 20 was deleted)\n";
+    bst.remove(30);
+
+    cout << "\n[T2.9] Delete: 50 (Case 3: Two children)\n";
+    bst.remove(50);
+
+    cout << "\n[T2.10] Display Final BST\n";
+    bst.display();
+}
+
+// ============================================================
 //  MAIN
 // ============================================================
 int main() {
@@ -79,6 +127,7 @@ int main() {
     printSeparator();
 
     testBinaryTree();
+    testBST();
 
     // Performance report at end
     cout << "\n";
