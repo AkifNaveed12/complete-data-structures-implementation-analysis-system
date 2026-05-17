@@ -746,3 +746,26 @@ int CircularQueue::getSnapshot(int* out, int maxSize) const {
     }
     return count;
 }
+
+// --------------------------------------------------------
+// GUI Helpers
+// --------------------------------------------------------
+int PriorityQueue::getSnapshot(int* out, int maxSize) const {
+    int count = 0;
+    PNode* temp = frontNode;
+    while (temp != nullptr && count < maxSize) {
+        out[count++] = temp->data;
+        temp = temp->next;
+    }
+    return count;
+}
+
+int Deque::getSnapshot(int* out, int maxSize) const {
+    int count = 0;
+    DQNode* temp = frontNode;
+    while (temp != nullptr && count < maxSize) {
+        out[count++] = temp->data;
+        temp = temp->next;
+    }
+    return count;
+}

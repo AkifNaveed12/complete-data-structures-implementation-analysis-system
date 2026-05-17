@@ -76,6 +76,7 @@ public:
     void dequeue();
     void peek();
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
 
 // -------------------------------------------------------
@@ -104,6 +105,7 @@ public:
     void deleteFront();
     void deleteRear();
     void display();
+    int  getSnapshot(int* out, int maxSize) const; // GUI helper
 };
 
 #endif

@@ -166,8 +166,18 @@ void MainWindow::setupDashboard() {
     linearTabs->addTab(new LinkedListView(linearTabs), "Linked List");
     m_moduleStack->addWidget(linearTabs);
 
-    // M1: Stack & Queue
-    m_moduleStack->addWidget(new StackQueueView(m_moduleStack));
+    // M1: Stack & Queue (Grouped in QTabWidget to match Linear Structures)
+    QTabWidget* sqTabs = new QTabWidget(m_moduleStack);
+    sqTabs->setStyleSheet(R"(
+        QTabWidget::pane { border: none; }
+        QTabBar::tab { background: #1a1a2e; color: #8888aa; padding: 12px 30px; font-size: 15px; border-top-left-radius: 6px; border-top-right-radius: 6px; margin-right: 4px; }
+        QTabBar::tab:selected { background: #1e1e2e; color: #FFB74D; font-weight: bold; border-bottom: 2px solid #FFB74D; }
+        QTabBar::tab:hover:!selected { background: #252540; }
+    )");
+    sqTabs->addTab(new StackView(sqTabs), "Stack");
+    sqTabs->addTab(new QueueView(sqTabs), "Queue");
+    m_moduleStack->addWidget(sqTabs);
+
     // M2: Trees
     m_moduleStack->addWidget(new TreeView(m_moduleStack));
 

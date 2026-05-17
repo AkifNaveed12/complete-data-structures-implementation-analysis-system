@@ -68,11 +68,11 @@ signals:     void finished();
 private: void* m_q; QueueType m_t; Op m_op; int m_val; int m_prio;
 };
 
-// ─── Main View ────────────────────────────────────────────────────────────────
-class StackQueueView : public QWidget {
+// ─── Stack View ─────────────────────────────────────────────────────────────────
+class StackView : public QWidget {
     Q_OBJECT
 public:
-    explicit StackQueueView(QWidget* parent = nullptr);
+    explicit StackView(QWidget* parent = nullptr);
 
 private slots:
     void onDSTypeChanged(int idx);
@@ -83,23 +83,48 @@ private slots:
 
 private:
     void setupStackOps();
-    void setupQueueOps();
     void setRunning(bool r);
     void refreshCanvas();
 
     QComboBox*   m_typeCombo;
     ModulePanel* m_panel;
     StackCanvas* m_stackCanvas;
+
+    StaticStack*  m_staticStack;
+    DynamicStack* m_dynamicStack;
+
+    int      m_dsIndex = 0;   // 0=Static, 1=Dynamic
+    QThread* m_thread = nullptr;
+};
+
+// ─── Queue View ───────────────────────────────────────────────────────────────
+class QueueView : public QWidget {
+    Q_OBJECT
+public:
+    explicit QueueView(QWidget* parent = nullptr);
+
+private slots:
+    void onDSTypeChanged(int idx);
+    void onOpSelected(int row);
+    void onRun();
+    void onReset();
+    void onWorkerFinished();
+
+private:
+    void setupQueueOps();
+    void setRunning(bool r);
+    void refreshCanvas();
+
+    QComboBox*   m_typeCombo;
+    ModulePanel* m_panel;
     QueueCanvas* m_queueCanvas;
 
-    StaticStack*   m_staticStack;
-    DynamicStack*  m_dynamicStack;
     SimpleQueue*   m_simpleQueue;
     CircularQueue* m_circularQueue;
     PriorityQueue* m_priorityQueue;
     Deque*         m_deque;
 
-    int      m_dsIndex = 0;   // 0=StaticStack, 1=DynStack, 2=SimpleQ, 3=CircQ, 4=PrioQ, 5=Deque
+    int      m_dsIndex = 0;   // 0=Simple, 1=Circular, 2=Priority, 3=Deque
     QThread* m_thread = nullptr;
 };
 
