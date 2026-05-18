@@ -122,9 +122,9 @@ complete-data-structures-implementation-analysis-system/
 | Stack (Static + Dynamic) | ✅ DONE |
 | Queue (Simple + Circular + Priority + Deque) | ✅ DONE |
 | Trees (BT + BST + AVL + Heap) | ✅ DONE |
-| Graph (BFS + DFS + Dijkstra + MST) | ❌ NOT YET (M4) |
-| Searching (Linear + Binary) | ❌ NOT YET (M5) |
-| Sorting (5 algorithms) | ❌ NOT YET (M5) |
-| Hashing (Chaining + Linear Probe) | ❌ NOT YET (M6) |
-| Qt GUI | ❌ FUTURE PHASE |
+| Graph (BFS + DFS + Dijkstra + MST) | ✅ DONE |
+| Searching (Linear + Binary) | ✅ DONE |
+| Sorting (5 algorithms) | ✅ DONE |
+| Hashing (Chaining + Linear Probe) | ✅ DONE |
+| Qt GUI | ✅ DONE |
 | SQLite | ❌ FUTURE PHASE |

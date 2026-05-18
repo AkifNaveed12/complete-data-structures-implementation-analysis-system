@@ -42,6 +42,7 @@
 
 # Build and IDE directories
 build/
+build_gui/
 .vscode/
 .idea/
 CMakeCache.txt

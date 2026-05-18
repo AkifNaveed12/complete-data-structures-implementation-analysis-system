@@ -5,6 +5,9 @@
 #include "modules/StackQueueView.h"
 #include "modules/TreeView.h"
 #include "modules/PerformanceView.h"
+#include "modules/GraphView.h"
+#include "modules/SearchingSortingView.h"
+#include "modules/HashingView.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -181,24 +184,14 @@ void MainWindow::setupDashboard() {
     // M2: Trees
     m_moduleStack->addWidget(new TreeView(m_moduleStack));
 
-    // M3-M5: Placeholder panels
-    static const char* PH[] = {
-        "Graph Algorithms", "Searching & Sorting", "Hashing"
-    };
-    for (int i = 0; i < 3; i++) {
-        QWidget* ph = new QWidget(m_moduleStack);
-        ph->setStyleSheet("background:#0d0d0d;");
-        QLabel* lbl = new QLabel(
-            QString("<span style='font-size:22px;font-weight:bold;color:%1;'>%2</span>"
-                    "<br><br><span style='color:#444466;font-size:14px;'>Module coming in next phase</span>")
-                .arg(MODULE_DEFS[i+3].accent).arg(PH[i]),
-            ph);
-        lbl->setAlignment(Qt::AlignCenter);
-        lbl->setTextFormat(Qt::RichText);
-        QVBoxLayout* pvl = new QVBoxLayout(ph);
-        pvl->addWidget(lbl);
-        m_moduleStack->addWidget(ph);
-    }
+    // M3: Graph Algorithms
+    m_moduleStack->addWidget(new GraphView(m_moduleStack));
+    
+    // M4: Searching & Sorting
+    m_moduleStack->addWidget(new SearchingSortingView(m_moduleStack));
+    
+    // M5: Hashing
+    m_moduleStack->addWidget(new HashingView(m_moduleStack));
 
     // M6: Performance Report
     m_moduleStack->addWidget(new PerformanceView(m_moduleStack));

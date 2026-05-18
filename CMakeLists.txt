@@ -7,7 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Configure Qt 6 path if it exists
 set(CMAKE_PREFIX_PATH "C:/Qt/6.11.0/mingw_64")
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+# Find Qt6 or fallback to Qt5
+find_package(Qt6 COMPONENTS Core Gui Widgets)
+if(Qt6_FOUND)
+    message(STATUS "Found Qt6, building with Qt6...")
+    set(QT_LIBRARIES Qt6::Core Qt6::Gui Qt6::Widgets)
+else()
+    find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
+    message(STATUS "Qt6 not found. Found Qt5, building with Qt5...")
+    set(QT_LIBRARIES Qt5::Core Qt5::Gui Qt5::Widgets)
+endif()
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -23,6 +32,10 @@ set(CORE_SOURCES
     src/core/trees/bst.cpp
     src/core/trees/avl.cpp
     src/core/trees/heap.cpp
+    src/core/graph/graph.cpp
+    src/core/searching_sorting/searching.cpp
+    src/core/searching_sorting/sorting.cpp
+    src/core/hashing/hash.cpp
     src/analysis/performance.cpp
 )
 
@@ -38,6 +51,9 @@ set(GUI_SOURCES
     src/gui/modules/StackQueueView.cpp
     src/gui/modules/TreeView.cpp
     src/gui/modules/PerformanceView.cpp
+    src/gui/modules/GraphView.cpp
+    src/gui/modules/SearchingSortingView.cpp
+    src/gui/modules/HashingView.cpp
 )
 
 add_executable(cdsias_gui
@@ -45,7 +61,7 @@ add_executable(cdsias_gui
     ${GUI_SOURCES}
 )
 
-target_link_libraries(cdsias_gui PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
+target_link_libraries(cdsias_gui PRIVATE ${QT_LIBRARIES})
 
 target_include_directories(cdsias_gui PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src

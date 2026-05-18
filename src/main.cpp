@@ -18,6 +18,10 @@
 #include "core/trees/bst.h"
 #include "core/trees/avl.h"
 #include "core/trees/heap.h"
+#include "core/graph/graph.h"
+#include "core/searching_sorting/searching.h"
+#include "core/searching_sorting/sorting.h"
+#include "core/hashing/hash.h"
 #include "analysis/performance.h"
 #include "analysis/visual.h"
 
@@ -40,6 +44,9 @@ void runBTModule(BinaryTree& tree);
 void runBSTModule(BinarySearchTree& tree);
 void runAVLModule(AVLTree& tree);
 void runHeapModule(Heap& minH, Heap& maxH);
+void runGraphModule(Graph& g);
+void runSearchingSortingModule();
+void runHashingModule(HashChaining& hc, HashLinearProbe& hp);
 
 // --------------------------------------------------------
 // Utility
@@ -67,6 +74,9 @@ int main() {
     AVLTree            avl;
     Heap               minHeap(100, true);
     Heap               maxHeap(100, false);
+    Graph              graph(10);
+    HashChaining       hashChain;
+    HashLinearProbe    hashProbe;
 
     int choice;
 
@@ -81,9 +91,9 @@ int main() {
         cout << "  1. Linear Data Structures\n";
         cout << "  2. Stack & Queue\n";
         cout << "  3. Trees\n";
-        cout << "  4. Graph Algorithms        [Under Development]\n";
-        cout << "  5. Searching & Sorting     [Under Development]\n";
-        cout << "  6. Hashing                 [Under Development]\n";
+        cout << "  4. Graph Algorithms\n";
+        cout << "  5. Searching & Sorting\n";
+        cout << "  6. Hashing\n";
         cout << "  7. Performance Report\n";
         cout << "  8. Exit\n";
         cout << "\n";
@@ -188,13 +198,13 @@ int main() {
             }
 
             case 4:
+                runGraphModule(graph);
+                break;
             case 5:
+                runSearchingSortingModule();
+                break;
             case 6:
-                cout << "\n";
-                printError("Module under development");
-                cout << "\n  Press Enter to continue...\n";
-                cin.ignore();
-                cin.get();
+                runHashingModule(hashChain, hashProbe);
                 break;
 
             case 7:
@@ -1060,6 +1070,76 @@ void runHeapModule(Heap& minH, Heap& maxH) {
     } while (choice != 5);
 }
 
+void runGraphModule(Graph& g) {
+    int choice;
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  GRAPH ALGORITHMS MODULE" << COL_RESET << "\n";
+        printSeparator();
+        cout << "\n  1. Add Edge\n  2. Display Matrix\n  3. Display List\n  4. BFS\n  5. DFS\n  6. Dijkstra\n  7. MST Kruskal\n  8. MST Prim\n  9. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+        
+        switch (choice) {
+            case 1: { int u, v, w; cout << "  From: "; cin >> u; cout << "  To: "; cin >> v; cout << "  Weight: "; cin >> w; g.addEdge(u, v, w); break; }
+            case 2: g.displayMatrix(); break;
+            case 3: g.displayList(); break;
+            case 4: { int s; cout << "  Start Node: "; cin >> s; g.bfs(s); break; }
+            case 5: { int s; cout << "  Start Node: "; cin >> s; g.dfs(s); break; }
+            case 6: { int s; cout << "  Start Node: "; cin >> s; g.dijkstra(s); break; }
+            case 7: g.mstKruskal(); break;
+            case 8: g.mstPrim(); break;
+        }
+        if (choice >= 1 && choice <= 8) { cout << "\n  Press Enter to continue...\n"; cin.ignore(); cin.get(); }
+    } while (choice != 9);
+}
 
+void runSearchingSortingModule() {
+    int choice;
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  SEARCHING & SORTING MODULE" << COL_RESET << "\n";
+        printSeparator();
+        cout << "\n  Using predefined array [64, 34, 25, 12, 22, 11, 90, 88, 45, 33]\n";
+        cout << "\n  1. Linear Search\n  2. Binary Search\n  3. Bubble Sort\n  4. Selection Sort\n  5. Insertion Sort\n  6. Merge Sort\n  7. Quick Sort\n  8. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+        
+        int arr[] = {64, 34, 25, 12, 22, 11, 90, 88, 45, 33};
+        int n = 10;
+        
+        switch (choice) {
+            case 1: { int k; cout << "  Key: "; cin >> k; Searching::linearSearch(arr, n, k); break; }
+            case 2: { int k; cout << "  Key: "; cin >> k; Searching::binarySearch(arr, n, k); break; }
+            case 3: Sorting::bubbleSort(arr, n); break;
+            case 4: Sorting::selectionSort(arr, n); break;
+            case 5: Sorting::insertionSort(arr, n); break;
+            case 6: Sorting::mergeSort(arr, n); break;
+            case 7: Sorting::quickSort(arr, n); break;
+        }
+        if (choice >= 1 && choice <= 7) { cout << "\n  Press Enter to continue...\n"; cin.ignore(); cin.get(); }
+    } while (choice != 8);
+}
 
-
+void runHashingModule(HashChaining& hc, HashLinearProbe& hp) {
+    int choice;
+    do {
+        clearScreen();
+        printSeparator();
+        cout << COL_ACCENT << "  HASHING MODULE" << COL_RESET << "\n";
+        printSeparator();
+        cout << "\n  1. Insert (Chaining)\n  2. Display (Chaining)\n  3. Insert (Linear Probing)\n  4. Display (Linear Probing)\n  5. Back\n";
+        cout << "\n  Enter choice: ";
+        cin >> choice;
+        
+        switch (choice) {
+            case 1: { int k; cout << "  Key: "; cin >> k; hc.insert(k); break; }
+            case 2: hc.display(); break;
+            case 3: { int k; cout << "  Key: "; cin >> k; hp.insert(k); break; }
+            case 4: hp.display(); break;
+        }
+        if (choice >= 1 && choice <= 4) { cout << "\n  Press Enter to continue...\n"; cin.ignore(); cin.get(); }
+    } while (choice != 5);
+}
