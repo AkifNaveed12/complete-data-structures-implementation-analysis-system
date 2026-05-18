@@ -314,8 +314,16 @@ void TreeView::onTreeTypeChanged(int idx) {
 }
 
 void TreeView::onOpSelected(int row) {
-    bool needsVal = (row == 0); // only Insert
-    if (m_treeIndex >= 3 && row == 0) needsVal = true;  // heap insert
+    bool needsVal = false;
+    if (m_treeIndex == 0) { // BT
+        needsVal = (row == 0); // Insert
+    } else if (m_treeIndex == 1) { // BST
+        needsVal = (row == 0 || row == 1 || row == 2); // Insert, Delete, Search
+    } else if (m_treeIndex == 2) { // AVL
+        needsVal = (row == 0); // Insert
+    } else if (m_treeIndex >= 3) { // Heap
+        needsVal = (row == 0); // Insert
+    }
     m_panel->input1()->setVisible(needsVal);
     m_panel->input1Label()->setVisible(needsVal);
 }
