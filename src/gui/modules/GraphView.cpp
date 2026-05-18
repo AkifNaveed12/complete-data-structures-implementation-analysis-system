@@ -1,23 +1,138 @@
 #include "GraphView.h"
+#include <QPainter>
+#include <QPainterPath>
+#include <QRegularExpression>
+#include <cmath>
 
+// ─────────────────────────────────────────────────────────────────────────────
+// GraphCanvas
+// ─────────────────────────────────────────────────────────────────────────────
+GraphCanvas::GraphCanvas(QWidget* parent) : QWidget(parent) {
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+}
+
+void GraphCanvas::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event);
+    QPainter p(this);
+    p.setRenderHint(QPainter::Antialiasing);
+
+    // Dark background
+    p.fillRect(rect(), QColor("#0d0d0d"));
+
+    if (!m_graph) return;
+
+    int N = m_graph->getNumVertices();
+    if (N <= 0) return;
+
+    // Calculate positions
+    int cx = width() / 2;
+    int cy = height() / 2;
+    int r = qMin(width(), height()) / 2 - 50;
+    if (r < 50) r = 50;
+
+    QVector<QPoint> pts(N);
+    const double PI = 3.141592653589793;
+    for (int i = 0; i < N; i++) {
+        double angle = i * 2.0 * PI / N - PI / 2.0; // Start at top
+        pts[i] = QPoint(cx + r * std::cos(angle), cy + r * std::sin(angle));
+    }
+
+    // 1. Draw Edges
+    for (int u = 0; u < N; u++) {
+        for (int v = 0; v < N; v++) {
+            int w = m_graph->getWeight(u, v);
+            if (w <= 0 || w == INF) continue;
+
+            // To prevent duplicate lines for undirected graphs:
+            if (!m_graph->directed() && u > v) continue;
+
+            QPoint p1 = pts[u];
+            QPoint p2 = pts[v];
+
+            // Check if MST edge
+            bool isMst = false;
+            for (auto& edge : m_mstEdges) {
+                if ((edge.first == u && edge.second == v) || (!m_graph->directed() && edge.first == v && edge.second == u)) {
+                    isMst = true;
+                    break;
+                }
+            }
+
+            QPen pen;
+            if (isMst) {
+                pen = QPen(QColor("#69F0AE"), 4); // Glowing green
+            } else {
+                pen = QPen(QColor("#2a2a3e"), 1.5); // Sleek dark edge
+            }
+            p.setPen(pen);
+            p.drawLine(p1, p2);
+
+            // Draw arrow if directed
+            if (m_graph->directed()) {
+                double angle = std::atan2(p2.y() - p1.y(), p2.x() - p1.x());
+                int nodeR = 20;
+                QPoint arrowHead(p2.x() - nodeR * std::cos(angle), p2.y() - nodeR * std::sin(angle));
+                double arrowSize = 10;
+                QPoint arrowP1(arrowHead.x() - arrowSize * std::cos(angle - PI/6), arrowHead.y() - arrowSize * std::sin(angle - PI/6));
+                QPoint arrowP2(arrowHead.x() - arrowSize * std::cos(angle + PI/6), arrowHead.y() - arrowSize * std::sin(angle + PI/6));
+                p.setBrush(QColor(isMst ? "#69F0AE" : "#2a2a3e"));
+                p.drawPolygon(QPolygon() << arrowHead << arrowP1 << arrowP2);
+            }
+
+            // Draw Weight
+            QPoint mid = (p1 + p2) / 2;
+            p.setPen(QColor("#8888aa"));
+            p.setFont(QFont("Consolas", 10));
+            p.drawText(mid + QPoint(5, -5), QString::number(w));
+        }
+    }
+
+    // 2. Draw Vertices
+    int nodeR = 20;
+    for (int i = 0; i < N; i++) {
+        QPoint pt = pts[i];
+        bool isActive = (i == m_activeNode);
+
+        if (isActive) {
+            p.setBrush(QColor("#FF7043"));
+            p.setPen(QPen(QColor("#FFCCBC"), 3));
+        } else {
+            p.setBrush(QColor("#1a1a2e"));
+            p.setPen(QPen(QColor("#E57373"), 1.5));
+        }
+
+        p.drawEllipse(pt, nodeR, nodeR);
+
+        p.setPen(Qt::white);
+        p.setFont(QFont("Segoe UI", 10, QFont::Bold));
+        p.drawText(QRect(pt.x() - nodeR, pt.y() - nodeR, nodeR * 2, nodeR * 2), Qt::AlignCenter, QString::number(i));
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GraphView
+// ─────────────────────────────────────────────────────────────────────────────
 GraphView::GraphView(QWidget* parent) : ModulePanel("Graph", "#E57373", parent) {
     m_graph = new Graph(10); // Default 10 vertices
     
-    QLabel* info = new QLabel("Visual canvas not required for advanced algorithms.<br>Execution logs will be shown in the right panel.", canvasArea());
-    info->setStyleSheet("color: #8888aa; font-size: 16px;");
-    info->setAlignment(Qt::AlignCenter);
+    // Create visual canvas
+    m_canvas = new GraphCanvas(canvasArea());
+    m_canvas->setGraph(m_graph);
+    
     QVBoxLayout* vl = new QVBoxLayout(canvasArea());
-    vl->addWidget(info);
+    vl->setContentsMargins(0, 0, 0, 0);
+    vl->addWidget(m_canvas);
     canvasArea()->setLayout(vl);
     
     operationList()->addItems({"Add Edge", "BFS", "DFS", "Dijkstra", "MST Kruskal", "MST Prim", "Display Matrix", "Display List"});
     operationList()->setCurrentRow(0);
     
     auto* notifier = GlobalGuiNotifier::instance();
-    connect(notifier, &GlobalGuiNotifier::stepLogged, this, &GraphView::onStep, Qt::QueuedConnection);
+    connect(notifier, &GlobalGuiNotifier::stepLogged,   this, &GraphView::onStep, Qt::QueuedConnection);
     connect(notifier, &GlobalGuiNotifier::resultLogged, this, &GraphView::onResult, Qt::QueuedConnection);
-    connect(notifier, &GlobalGuiNotifier::errorLogged, this, &GraphView::onError, Qt::QueuedConnection);
+    connect(notifier, &GlobalGuiNotifier::errorLogged,  this, &GraphView::onError, Qt::QueuedConnection);
     connect(notifier, &GlobalGuiNotifier::headerLogged, this, &GraphView::onHeader, Qt::QueuedConnection);
+    connect(notifier, &GlobalGuiNotifier::stateChanged, this, &GraphView::onStateChanged, Qt::QueuedConnection);
     
     connect(this, &ModulePanel::runRequested, this, &GraphView::onRun);
     connect(this, &ModulePanel::resetRequested, this, &GraphView::onReset);
@@ -50,6 +165,7 @@ void GraphView::onRun() {
     }
     
     clearLog();
+    m_canvas->clearActive();
     runButton()->setEnabled(false);
     
     m_thread = new QThread(this);
@@ -65,6 +181,26 @@ void GraphView::onRun() {
     m_thread->start();
 }
 
+void GraphView::onStep(int n, const QString& msg) {
+    logStep(n, msg);
+
+    // Parse active node (e.g. "Visiting (3)" or "Selected vertex (3)")
+    QRegularExpression re("\\((\\d+)\\)");
+    QRegularExpressionMatch match = re.match(msg);
+    if (match.hasMatch()) {
+        m_canvas->setActiveNode(match.captured(1).toInt());
+    }
+
+    // Parse MST edges (e.g. "Added edge (3)-(4)")
+    QRegularExpression mstRe("Added edge \\((\\d+)\\)-\\((\\d+)\\)");
+    QRegularExpressionMatch mstMatch = mstRe.match(msg);
+    if (mstMatch.hasMatch()) {
+        int u = mstMatch.captured(1).toInt();
+        int v = mstMatch.captured(2).toInt();
+        m_canvas->addMstEdge(u, v);
+    }
+}
+
 void GraphView::onWorkerFinished() {
     runButton()->setEnabled(true);
 }
@@ -72,6 +208,12 @@ void GraphView::onWorkerFinished() {
 void GraphView::onReset() {
     delete m_graph;
     m_graph = new Graph(10);
+    m_canvas->setGraph(m_graph);
+    m_canvas->clearActive();
     clearLog();
     logResult("Graph cleared.");
+}
+
+void GraphView::onStateChanged() {
+    m_canvas->update();
 }

@@ -148,31 +148,31 @@ void BinaryTree::insert(int value) {
 // --------------------------------------------------------
 // Traversals Helper
 // --------------------------------------------------------
-void BinaryTree::inorderHelper(TreeNode* node, int& steps) {
+void BinaryTree::inorderHelper(TreeNode* node, int& steps, string& res) {
     if (node == nullptr) return;
-    inorderHelper(node->left, steps);
-    cout << node->data << " ";
-    steps++;
-    sleep_ms(100);
-    inorderHelper(node->right, steps);
+    inorderHelper(node->left, steps, res);
+    res += to_string(node->data) + " ";
+    printStep(steps++, "Visiting node " + highlight(node->data));
+    sleep_ms(300);
+    inorderHelper(node->right, steps, res);
 }
 
-void BinaryTree::preorderHelper(TreeNode* node, int& steps) {
+void BinaryTree::preorderHelper(TreeNode* node, int& steps, string& res) {
     if (node == nullptr) return;
-    cout << node->data << " ";
-    steps++;
-    sleep_ms(100);
-    preorderHelper(node->left, steps);
-    preorderHelper(node->right, steps);
+    res += to_string(node->data) + " ";
+    printStep(steps++, "Visiting node " + highlight(node->data));
+    sleep_ms(300);
+    preorderHelper(node->left, steps, res);
+    preorderHelper(node->right, steps, res);
 }
 
-void BinaryTree::postorderHelper(TreeNode* node, int& steps) {
+void BinaryTree::postorderHelper(TreeNode* node, int& steps, string& res) {
     if (node == nullptr) return;
-    postorderHelper(node->left, steps);
-    postorderHelper(node->right, steps);
-    cout << node->data << " ";
-    steps++;
-    sleep_ms(100);
+    postorderHelper(node->left, steps, res);
+    postorderHelper(node->right, steps, res);
+    res += to_string(node->data) + " ";
+    printStep(steps++, "Visiting node " + highlight(node->data));
+    sleep_ms(300);
 }
 
 // --------------------------------------------------------
@@ -186,11 +186,10 @@ void BinaryTree::inorder() {
         return;
     }
     
-    printStep(1, "Result: ");
     int steps = 1;
-    inorderHelper(root, steps);
-    cout << "\n";
-    printResult("Traversal complete");
+    string res = "";
+    inorderHelper(root, steps, res);
+    printResult("Traversal complete: " + res);
     Performance::log("BinaryTree", "Inorder", steps, 0);
 }
 
@@ -202,11 +201,10 @@ void BinaryTree::preorder() {
         return;
     }
     
-    printStep(1, "Result: ");
     int steps = 1;
-    preorderHelper(root, steps);
-    cout << "\n";
-    printResult("Traversal complete");
+    string res = "";
+    preorderHelper(root, steps, res);
+    printResult("Traversal complete: " + res);
     Performance::log("BinaryTree", "Preorder", steps, 0);
 }
 
@@ -218,10 +216,9 @@ void BinaryTree::postorder() {
         return;
     }
     
-    printStep(1, "Result: ");
     int steps = 1;
-    postorderHelper(root, steps);
-    cout << "\n";
-    printResult("Traversal complete");
+    string res = "";
+    postorderHelper(root, steps, res);
+    printResult("Traversal complete: " + res);
     Performance::log("BinaryTree", "Postorder", steps, 0);
 }

@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QFont>
 #include <cmath>
+#include <QRegularExpression>
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TreeCanvas
@@ -35,7 +36,7 @@ void TreeCanvas::paintEvent(QPaintEvent*) {
         return;
     }
 
-    drawNode(p, m_root, width() / 2, 40, width() / 4, 0, -1);
+    drawNode(p, m_root, width() / 2, 40, width() / 4, 0, m_activeVal);
 }
 
 void TreeCanvas::drawNode(QPainter& p, TreeNode* node, int x, int y, int spread, int depth, int activeVal) {
@@ -75,11 +76,18 @@ void TreeCanvas::drawNode(QPainter& p, TreeNode* node, int x, int y, int spread,
     p.drawText(QRect(x - NODE_R, y - NODE_R, NODE_R * 2, NODE_R * 2),
                Qt::AlignCenter, QString::number(node->data));
 
-    // AVL height indicator
-    if (node->height > 1) {
-        p.setFont(QFont("Segoe UI", 7));
-        p.setPen(QColor("#8888aa"));
-        p.drawText(x + NODE_R, y - NODE_R, QString("h=%1").arg(node->height));
+    // AVL BF indicator (for AVL trees, node height is updated)
+    int hl = node->left ? node->left->height : 0;
+    int hr = node->right ? node->right->height : 0;
+    int bf = hl - hr;
+    
+    // Only show BF if we are in AVL mode (we can guess by checking if heights are being maintained > 0)
+    // Actually all TreeNode constructors set height=1. So we can just show BF always, it's 0 for BT/BST.
+    if (node->height > 0) {
+        p.setFont(QFont("Segoe UI", 8, QFont::Bold));
+        QColor bfColor = (bf > 1 || bf < -1) ? QColor("#FF5370") : QColor("#8888aa");
+        p.setPen(bfColor);
+        p.drawText(x + NODE_R + 2, y - NODE_R + 10, QString("BF:%1").arg(bf));
     }
 }
 
@@ -220,6 +228,7 @@ TreeView::TreeView(QWidget* parent) : QWidget(parent) {
 
     auto* notifier = GlobalGuiNotifier::instance();
     connect(notifier, &GlobalGuiNotifier::stepLogged,   m_panel, &ModulePanel::logStep);
+    connect(notifier, &GlobalGuiNotifier::stepLogged,   this,    &TreeView::onStepLogged);
     connect(notifier, &GlobalGuiNotifier::resultLogged, m_panel, &ModulePanel::logResult);
     connect(notifier, &GlobalGuiNotifier::errorLogged,  m_panel, &ModulePanel::logError);
     connect(notifier, &GlobalGuiNotifier::headerLogged, m_panel, &ModulePanel::logHeader);
@@ -241,6 +250,16 @@ void TreeView::onStateChanged() {
         int buf[100]; int n = h->getSnapshot(buf, 100);
         QVector<int> v; for (int i = 0; i < n; i++) v.append(buf[i]);
         m_canvas->setHeapData(v, h->isMin());
+    }
+}
+
+void TreeView::onStepLogged(int stepNum, const QString& msg) {
+    QRegularExpression re("\\((\\d+)\\)");
+    QRegularExpressionMatch match = re.match(msg);
+    if (match.hasMatch()) {
+        m_canvas->setActiveVal(match.captured(1).toInt());
+    } else {
+        m_canvas->setActiveVal(-1);
     }
 }
 

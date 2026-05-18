@@ -31,6 +31,9 @@ public:
     void dijkstra(int src);
     void mstKruskal();
     void mstPrim();
+    int getNumVertices() const { return numVertices; }
+    int getWeight(int u, int v) const { return (u >= 0 && u < numVertices && v >= 0 && v < numVertices) ? adjMatrix[u][v] : 0; }
+    bool directed() const { return isDirected; }
 };
 
 #endif

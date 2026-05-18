@@ -33,6 +33,7 @@ void Graph::addEdge(int u, int v, int weight) {
         adjListWeights[v][listSizes[v]] = weight;
         listSizes[v]++;
     }
+    printResult("Added edge: " + to_string(u) + " - " + to_string(v) + " (weight: " + to_string(weight) + ")");
 }
 
 void Graph::displayMatrix() {

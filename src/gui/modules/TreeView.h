@@ -21,6 +21,7 @@ public:
     void setRoot(TreeNode* root);
     void setHeapData(const QVector<int>& data, bool isMin);
     void clear();
+    void setActiveVal(int v) { m_activeVal = v; update(); }
 protected:
     void paintEvent(QPaintEvent*) override;
 private:
@@ -30,6 +31,7 @@ private:
     QVector<int> m_heap;
     bool         m_isMin  = true;
     bool         m_heapMode = false;
+    int          m_activeVal = -1;
     QString      m_accent = "#81C784";
     static const int NODE_R = 22;
     static const int LEVEL_H = 70;
@@ -60,6 +62,7 @@ private slots:
     void onReset();
     void onWorkerFinished();
     void onStateChanged();
+    void onStepLogged(int stepNum, const QString& msg);
 private:
     void setupBTOps();
     void setupBSTOps();

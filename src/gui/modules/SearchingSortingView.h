@@ -21,7 +21,12 @@ public slots:
         int n = 10;
         switch (m_op) {
             case LSearch: Searching::linearSearch(arr, n, m_key); break;
-            case BSearch: Searching::binarySearch(arr, n, m_key); break;
+            case BSearch: {
+                // binary search requires a sorted array
+                int sortedArr[] = {11, 12, 22, 25, 33, 34, 45, 64, 88, 90};
+                Searching::binarySearch(sortedArr, n, m_key);
+                break;
+            }
             case Bubble: Sorting::bubbleSort(arr, n); break;
             case Selection: Sorting::selectionSort(arr, n); break;
             case Insertion: Sorting::insertionSort(arr, n); break;

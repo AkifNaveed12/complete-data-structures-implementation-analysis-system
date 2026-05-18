@@ -1112,7 +1112,12 @@ void runSearchingSortingModule() {
         
         switch (choice) {
             case 1: { int k; cout << "  Key: "; cin >> k; Searching::linearSearch(arr, n, k); break; }
-            case 2: { int k; cout << "  Key: "; cin >> k; Searching::binarySearch(arr, n, k); break; }
+            case 2: {
+                int k; cout << "  Key: "; cin >> k;
+                int sortedArr[] = {11, 12, 22, 25, 33, 34, 45, 64, 88, 90};
+                Searching::binarySearch(sortedArr, n, k);
+                break;
+            }
             case 3: Sorting::bubbleSort(arr, n); break;
             case 4: Sorting::selectionSort(arr, n); break;
             case 5: Sorting::insertionSort(arr, n); break;

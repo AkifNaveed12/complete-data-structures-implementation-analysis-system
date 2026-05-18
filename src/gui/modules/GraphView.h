@@ -37,6 +37,24 @@ private:
     Graph* m_g; Op m_op; int m_v1, m_v2, m_w;
 };
 
+class GraphCanvas : public QWidget {
+    Q_OBJECT
+private:
+    Graph* m_graph = nullptr;
+    int m_activeNode = -1;
+    QVector<QPair<int, int>> m_mstEdges;
+
+public:
+    explicit GraphCanvas(QWidget* parent = nullptr);
+    void setGraph(Graph* g) { m_graph = g; update(); }
+    void setActiveNode(int node) { m_activeNode = node; update(); }
+    void clearActive() { m_activeNode = -1; m_mstEdges.clear(); update(); }
+    void addMstEdge(int u, int v) { m_mstEdges.append({u, v}); update(); }
+
+protected:
+    void paintEvent(QPaintEvent* event) override;
+};
+
 class GraphView : public ModulePanel {
     Q_OBJECT
 public:
@@ -45,15 +63,17 @@ public:
 private slots:
     void onRun();
     void onReset();
-    void onStep(int n, const QString& msg) { logStep(n, msg); }
+    void onStep(int n, const QString& msg);
     void onResult(const QString& msg) { logResult(msg); }
     void onError(const QString& msg) { logError(msg); }
     void onHeader(const QString& mod, const QString& op) { logHeader(mod, op); }
     void onWorkerFinished();
     void onOpSelected(int row);
+    void onStateChanged();
 
 private:
     Graph* m_graph;
+    GraphCanvas* m_canvas;
     QThread* m_thread = nullptr;
     GraphWorker* m_worker = nullptr;
 };

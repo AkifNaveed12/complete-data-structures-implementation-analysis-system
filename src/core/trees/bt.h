@@ -12,9 +12,9 @@ class BinaryTree {
 private:
     TreeNode* root;
 
-    void inorderHelper(TreeNode* node, int& steps);
-    void preorderHelper(TreeNode* node, int& steps);
-    void postorderHelper(TreeNode* node, int& steps);
+    void inorderHelper(TreeNode* node, int& steps, std::string& res);
+    void preorderHelper(TreeNode* node, int& steps, std::string& res);
+    void postorderHelper(TreeNode* node, int& steps, std::string& res);
     void deleteTree(TreeNode* node);
 
 public:

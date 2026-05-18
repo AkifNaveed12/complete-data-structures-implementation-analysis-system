@@ -280,12 +280,22 @@ void LinkedListView::onWorkerFinished() {
 // Rebuilds canvas by traversing the active list
 void LinkedListView::rebuildCurrentView() {
     QVector<int> vals;
+    int arr[100];
+    int count = 0;
+    
     if (m_curType == LLCanvas::Singly) {
-        // We need to traverse — but LinkedList doesn't expose head publicly.
-        // For now, we rely on the stateChanged signal fired by visual_qt during operations.
+        count = m_singly->getSnapshot(arr, 100);
+    } else if (m_curType == LLCanvas::Doubly) {
+        count = m_doubly->getSnapshot(arr, 100);
+    } else {
+        count = m_circular->getSnapshot(arr, 100);
     }
-    // Just trigger repaint — the canvas keeps its own state updated via signals
-    m_canvas->update();
+    
+    for (int i = 0; i < count; i++) {
+        vals.append(arr[i]);
+    }
+    
+    m_canvas->updateState(vals, -1, m_curType);
 }
 
 void LinkedListView::setRunning(bool r) {
