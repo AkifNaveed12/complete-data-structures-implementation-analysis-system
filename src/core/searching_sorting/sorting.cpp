@@ -3,6 +3,7 @@
 using namespace std;
 
 void Sorting::displayArray(int arr[], int n, int active1, int active2) {
+    notifyArrayState(arr, n, active1);
     string row = "[ ";
     for (int i = 0; i < n; i++) {
         if (i == active1 || i == active2) row += highlight(arr[i]);
@@ -124,6 +125,7 @@ void Sorting::merge(int arr[], int left, int mid, int right, int& steps, int& co
     int i = 0, j = 0, k = left;
     
     printStep(steps + 2, "Merging [" + to_string(left) + ".." + to_string(mid) + "] and [" + to_string(mid+1) + ".." + to_string(right) + "]");
+    notifyArrayState(arr, 10, left);
     sleep_ms(200);
     steps++;
     
@@ -183,6 +185,7 @@ int Sorting::partition(int arr[], int low, int high, int& steps, int& comps) {
     int i = (low - 1);
     
     printStep(steps + 2, "Partitioning [" + to_string(low) + ".." + to_string(high) + "] with pivot " + highlight(pivot));
+    notifyArrayState(arr, 10, high);
     sleep_ms(200);
     steps++;
     

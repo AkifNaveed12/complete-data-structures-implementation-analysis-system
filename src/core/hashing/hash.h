@@ -21,6 +21,7 @@ public:
     HashChaining();
     void insert(int key);
     void display();
+    HashNode* const* getTable() const { return table; }
 };
 
 class HashLinearProbe {
@@ -31,6 +32,7 @@ public:
     HashLinearProbe();
     void insert(int key);
     void display();
+    const int* getTable() const { return table; }
 };
 
 #endif

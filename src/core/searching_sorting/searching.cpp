@@ -10,6 +10,7 @@ int Searching::linearSearch(int arr[], int n, int key) {
     int comps = 0;
     
     for (int i = 0; i < n; i++) {
+        notifyArrayState(arr, n, i);
         printStep(steps + 2, "Checking index " + to_string(i) + " value: " + highlight(arr[i]));
         sleep_ms(300);
         steps++;
@@ -40,6 +41,7 @@ int Searching::binarySearch(int arr[], int n, int key) {
         steps++;
         comps++;
         
+        notifyArrayState(arr, n, mid);
         printStep(steps + 1, "[left=" + to_string(left) + "] [mid=" + to_string(mid) + "(" + highlight(arr[mid]) + ")] [right=" + to_string(right) + "]");
         sleep_ms(300);
         

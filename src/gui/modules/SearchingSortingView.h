@@ -2,6 +2,7 @@
 #define SEARCHING_SORTING_VIEW_H
 
 #include "ModulePanel.h"
+#include "ArrayView.h"
 #include "../../core/searching_sorting/searching.h"
 #include "../../core/searching_sorting/sorting.h"
 #include "../../gui/GlobalGuiNotifier.h"
@@ -48,15 +49,17 @@ public:
 
 private slots:
     void onRun();
-    void onReset() { clearLog(); }
+    void onReset();
     void onStep(int n, const QString& msg) { logStep(n, msg); }
     void onResult(const QString& msg) { logResult(msg); }
     void onError(const QString& msg) { logError(msg); }
     void onHeader(const QString& mod, const QString& op) { logHeader(mod, op); }
     void onWorkerFinished();
     void onOpSelected(int row);
+    void onArrayState(const int* arr, int size, int activeIndex);
 
 private:
+    ArrayCanvas* m_arrayCanvas;
     QThread* m_thread = nullptr;
     SSWorker* m_worker = nullptr;
 };

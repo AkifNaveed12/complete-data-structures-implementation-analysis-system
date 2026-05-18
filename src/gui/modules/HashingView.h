@@ -31,6 +31,25 @@ private:
     HashChaining* m_hc; HashLinearProbe* m_hp; Op m_op; int m_key;
 };
 
+class HashCanvas : public QWidget {
+    Q_OBJECT
+private:
+    HashChaining* m_hc = nullptr;
+    HashLinearProbe* m_hp = nullptr;
+    bool m_isChaining = true;
+    int m_activeIndex = -1;
+
+public:
+    explicit HashCanvas(QWidget* parent = nullptr);
+    void setChaining(HashChaining* hc) { m_hc = hc; m_isChaining = true; update(); }
+    void setProbing(HashLinearProbe* hp) { m_hp = hp; m_isChaining = false; update(); }
+    void setActiveIndex(int idx) { m_activeIndex = idx; update(); }
+    void clearActive() { m_activeIndex = -1; update(); }
+
+protected:
+    void paintEvent(QPaintEvent* event) override;
+};
+
 class HashingView : public ModulePanel {
     Q_OBJECT
 public:
@@ -39,16 +58,18 @@ public:
 private slots:
     void onRun();
     void onReset();
-    void onStep(int n, const QString& msg) { logStep(n, msg); }
+    void onStep(int n, const QString& msg);
     void onResult(const QString& msg) { logResult(msg); }
     void onError(const QString& msg) { logError(msg); }
     void onHeader(const QString& mod, const QString& op) { logHeader(mod, op); }
     void onWorkerFinished();
     void onOpSelected(int row);
+    void onStateChanged();
 
 private:
     HashChaining* m_hc;
     HashLinearProbe* m_hp;
+    HashCanvas* m_canvas;
     QThread* m_thread = nullptr;
     HashWorker* m_worker = nullptr;
 };
