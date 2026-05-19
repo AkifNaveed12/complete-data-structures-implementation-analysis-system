@@ -145,7 +145,7 @@ void GraphView::onOpSelected(int row) {
     
     if (row == 0) { // Add Edge
         input1Label()->setText("From:"); input1()->setPlaceholderText("0");
-        input2Label()->setText("To:"); input2()->setPlaceholderText("1");
+        input2Label()->setText("To, Weight:"); input2()->setPlaceholderText("1, 15");
         input2()->show(); input2Label()->show();
     } else if (row >= 1 && row <= 3) { // BFS, DFS, Dijkstra
         input1Label()->setText("Start Node:"); input1()->setPlaceholderText("0");
@@ -156,10 +156,13 @@ void GraphView::onOpSelected(int row) {
 
 void GraphView::onRun() {
     int row = operationList()->currentRow();
-    int v1 = 0, v2 = 0; bool ok;
+    int v1 = 0, v2 = 0, w = 1; bool ok;
     
     if (row == 0) {
-        v1 = input1()->text().toInt(&ok); v2 = input2()->text().toInt();
+        v1 = input1()->text().toInt(&ok); 
+        QStringList parts = input2()->text().split(QRegularExpression("[, ]+"), Qt::SkipEmptyParts);
+        if (parts.size() >= 1) v2 = parts[0].toInt();
+        if (parts.size() >= 2) w = parts[1].toInt();
     } else if (row >= 1 && row <= 3) {
         v1 = input1()->text().toInt(&ok);
     }
@@ -169,7 +172,7 @@ void GraphView::onRun() {
     runButton()->setEnabled(false);
     
     m_thread = new QThread(this);
-    m_worker = new GraphWorker(m_graph, static_cast<GraphWorker::Op>(row), v1, v2);
+    m_worker = new GraphWorker(m_graph, static_cast<GraphWorker::Op>(row), v1, v2, w);
     m_worker->moveToThread(m_thread);
     
     connect(m_thread, &QThread::started, m_worker, &GraphWorker::run);
@@ -184,20 +187,22 @@ void GraphView::onRun() {
 void GraphView::onStep(int n, const QString& msg) {
     logStep(n, msg);
 
-    // Parse active node (e.g. "Visiting (3)" or "Selected vertex (3)")
-    QRegularExpression re("\\((\\d+)\\)");
-    QRegularExpressionMatch match = re.match(msg);
-    if (match.hasMatch()) {
-        m_canvas->setActiveNode(match.captured(1).toInt());
-    }
-
-    // Parse MST edges (e.g. "Added edge (3)-(4)")
-    QRegularExpression mstRe("Added edge \\((\\d+)\\)-\\((\\d+)\\)");
-    QRegularExpressionMatch mstMatch = mstRe.match(msg);
-    if (mstMatch.hasMatch()) {
-        int u = mstMatch.captured(1).toInt();
-        int v = mstMatch.captured(2).toInt();
-        m_canvas->addMstEdge(u, v);
+    if (msg.contains("Added edge")) {
+        // Parse MST edges (e.g. "Added edge (3)-(4)")
+        QRegularExpression mstRe("Added edge \\((\\d+)\\)-\\((\\d+)\\)");
+        QRegularExpressionMatch mstMatch = mstRe.match(msg);
+        if (mstMatch.hasMatch()) {
+            int u = mstMatch.captured(1).toInt();
+            int v = mstMatch.captured(2).toInt();
+            m_canvas->addMstEdge(u, v);
+        }
+    } else {
+        // Parse active node (e.g. "Visiting (3)" or "Selected vertex (3)")
+        QRegularExpression re("\\((\\d+)\\)");
+        QRegularExpressionMatch match = re.match(msg);
+        if (match.hasMatch()) {
+            m_canvas->setActiveNode(match.captured(1).toInt());
+        }
     }
 }
 
