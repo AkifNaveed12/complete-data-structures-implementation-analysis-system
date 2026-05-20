@@ -4,8 +4,8 @@ echo ============================================================
 echo  CDSIAS — C++ GUI Application Builder
 echo ============================================================
 echo.
-echo [1/4] Configuring MSYS2 UCRT64 Toolchain PATH...
-set "PATH=C:\msys64\ucrt64\bin;C:\msys64\usr\bin;%PATH%"
+echo [1/4] Configuring Toolchain and Qt6 PATH...
+set "PATH=C:\Qt\6.11.0\mingw_64\bin;C:\mingw64\bin;C:\msys64\ucrt64\bin;C:\msys64\usr\bin;%PATH%"
 
 echo.
 echo [2/4] Setting up build directory...
