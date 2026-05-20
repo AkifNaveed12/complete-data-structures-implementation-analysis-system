@@ -195,7 +195,11 @@ void ModulePanel::logStep(int n, const QString& msg) {
 }
 
 void ModulePanel::logResult(const QString& msg) {
-    m_stepLog->append(QString("<span style='color:#69F0AE; font-weight:bold;'>✔ Result: %1</span>").arg(msg.toHtmlEscaped()));
+    QString formattedMsg = msg.toHtmlEscaped();
+    if (formattedMsg.contains("\nOperation Count:")) {
+        formattedMsg.replace("\nOperation Count:", "</span><br><span style='color:#FFB74D; font-weight:bold;'>Operation Count:");
+    }
+    m_stepLog->append(QString("<span style='color:#69F0AE; font-weight:bold;'>✔ Result: %1</span>").arg(formattedMsg));
     m_stepLog->append("");
 }
 

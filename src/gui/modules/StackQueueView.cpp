@@ -7,6 +7,8 @@
 #include <QComboBox>
 #include <QFont>
 
+extern int g_sqOperationCount;
+
 // ─────────────────────────────────────────────────────────────────────────────
 // StackCanvas — draws vertical tower of elements
 // ─────────────────────────────────────────────────────────────────────────────
@@ -288,6 +290,7 @@ void StackView::onRun() {
 void StackView::onReset() {
     delete m_staticStack;   m_staticStack   = new StaticStack(20);
     delete m_dynamicStack;  m_dynamicStack  = new DynamicStack();
+    g_sqOperationCount = 0;
     m_stackCanvas->clear();
     m_panel->clearLog();
     m_panel->logResult("Stack cleared.");
@@ -473,6 +476,7 @@ void QueueView::onReset() {
     delete m_circularQueue; m_circularQueue = new CircularQueue(20);
     delete m_priorityQueue; m_priorityQueue = new PriorityQueue();
     delete m_deque;         m_deque         = new Deque();
+    g_sqOperationCount = 0;
     m_queueCanvas->clear();
     m_panel->clearLog();
     m_panel->logResult("Queue cleared.");

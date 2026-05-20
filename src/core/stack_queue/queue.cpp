@@ -15,6 +15,8 @@
 
 using namespace std;
 
+extern int g_sqOperationCount;
+
 // --------------------------------------------------------
 // Internal helper: print full simple queue state
 // Format: FRONT -> [ 10 ] [ 20 ] [ (30) ] <- REAR
@@ -95,7 +97,8 @@ void SimpleQueue::enqueue(int value) {
     printSimpleQueueState(arr, front, rear, rear);
     sleep_ms(300);
 
-    printResult("AFTER: " + to_string(value) + " enqueued");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(value) + " enqueued\nOperation Count: " + to_string(g_sqOperationCount));
     printSimpleQueueState(arr, front, rear);
 
     Performance::log("Queue", "Enqueue", 1, 0);
@@ -130,7 +133,8 @@ void SimpleQueue::dequeue() {
         rear = -1;
     }
 
-    printResult("AFTER: " + to_string(dequeuedValue) + " dequeued");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(dequeuedValue) + " dequeued\nOperation Count: " + to_string(g_sqOperationCount));
     printSimpleQueueState(arr, front, rear);
 
     Performance::log("Queue", "Dequeue", 1, 0);
@@ -270,7 +274,8 @@ void CircularQueue::enqueue(int value) {
     printCircularQueueState(arr, capacity, front, rear, size, rear);
     sleep_ms(300);
 
-    printResult("AFTER: " + to_string(value) + " enqueued");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(value) + " enqueued\nOperation Count: " + to_string(g_sqOperationCount));
     printCircularQueueState(arr, capacity, front, rear, size);
 
     Performance::log("CircularQueue", "Enqueue", 1, 0);
@@ -307,7 +312,8 @@ void CircularQueue::dequeue() {
     }
     size--;
 
-    printResult("AFTER: " + to_string(dequeuedValue) + " dequeued");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(dequeuedValue) + " dequeued\nOperation Count: " + to_string(g_sqOperationCount));
     printCircularQueueState(arr, capacity, front, rear, size);
 
     Performance::log("CircularQueue", "Dequeue", 1, 0);
@@ -447,7 +453,8 @@ void PriorityQueue::enqueue(int value, int priority) {
     printPriorityQueueState(frontNode, newNode);
     sleep_ms(300);
 
-    printResult("AFTER: " + to_string(value) + " enqueued");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(value) + " enqueued\nOperation Count: " + to_string(g_sqOperationCount));
     printPriorityQueueState(frontNode);
 
     Performance::log("PriorityQueue", "Enqueue", steps, comparisons);
@@ -481,7 +488,8 @@ void PriorityQueue::dequeue() {
     delete delNode;
     size--;
 
-    printResult("AFTER: " + to_string(dequeuedValue) + " (Priority: " + to_string(dequeuedPriority) + ") dequeued");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(dequeuedValue) + " (Priority: " + to_string(dequeuedPriority) + ") dequeued\nOperation Count: " + to_string(g_sqOperationCount));
     printPriorityQueueState(frontNode);
 
     Performance::log("PriorityQueue", "Dequeue", 1, 0);
@@ -610,7 +618,8 @@ void Deque::insertFront(int value) {
     printDequeState(frontNode, newNode);
     sleep_ms(300);
 
-    printResult("AFTER: " + to_string(value) + " inserted at front");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(value) + " inserted at front\nOperation Count: " + to_string(g_sqOperationCount));
     printDequeState(frontNode);
 
     Performance::log("Deque", "InsertFront", 1, 0);
@@ -643,7 +652,8 @@ void Deque::insertRear(int value) {
     printDequeState(frontNode, newNode);
     sleep_ms(300);
 
-    printResult("AFTER: " + to_string(value) + " inserted at rear");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(value) + " inserted at rear\nOperation Count: " + to_string(g_sqOperationCount));
     printDequeState(frontNode);
 
     Performance::log("Deque", "InsertRear", 1, 0);
@@ -681,7 +691,8 @@ void Deque::deleteFront() {
     delete delNode;
     size--;
 
-    printResult("AFTER: " + to_string(deletedValue) + " deleted from front");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(deletedValue) + " deleted from front\nOperation Count: " + to_string(g_sqOperationCount));
     printDequeState(frontNode);
 
     Performance::log("Deque", "DeleteFront", 1, 0);
@@ -719,7 +730,8 @@ void Deque::deleteRear() {
     delete delNode;
     size--;
 
-    printResult("AFTER: " + to_string(deletedValue) + " deleted from rear");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(deletedValue) + " deleted from rear\nOperation Count: " + to_string(g_sqOperationCount));
     printDequeState(frontNode);
 
     Performance::log("Deque", "DeleteRear", 1, 0);

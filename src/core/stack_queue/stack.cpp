@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 //  CDSIAS â€” Stack Module
 //  src/core/stack_queue/stack.cpp
 //
@@ -14,6 +14,8 @@
 #include "../../analysis/performance.h"
 
 using namespace std;
+
+int g_sqOperationCount = 0;
 
 // --------------------------------------------------------
 // Internal helper: print full stack state (Vertical)
@@ -93,7 +95,8 @@ void StaticStack::push(int value) {
     printStaticStackState(arr, top, top);
     sleep_ms(300);
 
-    printResult("AFTER: " + to_string(value) + " pushed onto stack");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(value) + " pushed onto stack\nOperation Count: " + to_string(g_sqOperationCount));
     printStaticStackState(arr, top);
 
     Performance::log("Stack", "Push", 1, 0);
@@ -123,7 +126,8 @@ void StaticStack::pop() {
 
     top--;
 
-    printResult("AFTER: " + to_string(poppedValue) + " popped from stack");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(poppedValue) + " popped from stack\nOperation Count: " + to_string(g_sqOperationCount));
     printStaticStackState(arr, top);
 
     Performance::log("Stack", "Pop", 1, 0);
@@ -239,7 +243,8 @@ void DynamicStack::push(int value) {
     printDynamicStackState(topNode, topNode);
     sleep_ms(300);
 
-    printResult("AFTER: " + to_string(value) + " pushed onto stack");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(value) + " pushed onto stack\nOperation Count: " + to_string(g_sqOperationCount));
     printDynamicStackState(topNode);
 
     Performance::log("Stack", "Push", 1, 0);
@@ -272,7 +277,8 @@ void DynamicStack::pop() {
     delete delNode;
     size--;
 
-    printResult("AFTER: " + to_string(poppedValue) + " popped from stack");
+    g_sqOperationCount++;
+    printResult("AFTER: " + to_string(poppedValue) + " popped from stack\nOperation Count: " + to_string(g_sqOperationCount));
     printDynamicStackState(topNode);
 
     Performance::log("Stack", "Pop", 1, 0);
