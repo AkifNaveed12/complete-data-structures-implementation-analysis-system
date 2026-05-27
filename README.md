@@ -29,3 +29,5 @@ See /src for core implementation.
 g++ src/main.cpp src/core/linear/array.cpp src/core/linear/linked_list.cpp src/analysis/performance.cpp -o app
 
 .\app.exe
+
+version 1 released!
